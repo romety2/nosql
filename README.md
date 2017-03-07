@@ -1,5 +1,7 @@
 ## Łukasz Mielewczyk
 
+Wybrany zbiór danych - [Trades - UWAGA wejście w link może powodować obciążenie przeglądarki!!! POBRAĆ nie wchodzić](https://dl.dropboxusercontent.com/u/15056258/mongodb/trades.json)
+
 (zaliczenie)
 
 - [ ] EDA
@@ -9,13 +11,12 @@
 
 - [ ] MapReduce
 
-**Uwaga:**
-W pliku z projektem należy wpisać,
-[w tabelce](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables),
-informacje o komputerze na którym były wykonywane obliczenia:
-
-* jaki procesor
-* ile pamięci RAM, jaki dysk (HD, SSD)
-* jaki system operacyjny + wersja, 32-bit czy 64-bit
-* wersje użytych baz danych, wersje bibliotek (o ile były użyte jakieś biblioteki)
+| Nazwa | Wartosć    |
+|-----------------------|------------|
+| Procesor | Core(TM) i3-4005U CPU 1,7 GHz 1,7 GHz |
+| RAM | 12 GB |
+| Dysk | HDD |
+| System operacyjny | Windows 10 64-bit |
+| Wersje użytych baz danych | |
+| Wersje bibliotek | |
 
