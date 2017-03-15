@@ -1,6 +1,6 @@
 ## Łukasz Mielewczyk
 
-Wybrany zbiór danych - [Trades - UWAGA wejście w link może powodować obciążenie przeglądarki!!! POBRAĆ nie wchodzić](https://dl.dropboxusercontent.com/u/15056258/mongodb/trades.json)
+Wybrany zbiór danych - [NHS Postcode Directory (Latest) Centroids] (https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids)
 
 (zaliczenie)
 
