@@ -1,6 +1,6 @@
 ## Łukasz Mielewczyk
 
-Wybrany zbiór danych - [NHS Postcode Directory (Latest) Centroids] (https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids)
+Wybrany zbiór danych - [NHS Postcode Directory (Latest) Centroids](https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids)
 
 (zaliczenie)
 
