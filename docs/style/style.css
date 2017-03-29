@@ -3,32 +3,38 @@ body
 	background: #FFEEEE;
 }
 
-ul
+.dane 
 {
-  list-style-type: none;
-}
-
-table 
-{
-	text-align: center;
 	border-style: double;
 	border-color: #000000;
-	margin: 20px auto;
 	border-width: 5px;
 	border-collapse: collapse;
 }
-th		
+.dane th		
 {
 	border-width: 1px;
 	padding: 2px;
 	border-style: solid;
 	border-color: #000000;
-	background: #DCDCDC;}
-td
+	background: #DCDCDC;
+}
+.dane td
 {
 	border-width: 1px;
 	padding: 2px;
 	border-style: solid;
 	border-color: #000000;
 	background: #F8F8FF;
+}
+
+.text-center
+{
+	color: #482F4B;
+	text-align: center;
+}
+
+.table-center
+{
+    margin-left: auto;
+    margin-right: auto;
 }
