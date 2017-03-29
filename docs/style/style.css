@@ -1,26 +1,28 @@
 body
 {
 	background: #FFEEEE;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
-.dane 
+.informations 
 {
 	border-style: double;
 	border-color: #000000;
-	border-width: 5px;
+	border-width: 3px;
 	border-collapse: collapse;
+	font-size: 13px;
 }
-.dane th		
+.informations th		
 {
-	border-width: 1px;
+	border-width: 0.5px;
 	padding: 2px;
 	border-style: solid;
 	border-color: #000000;
-	background: #DCDCDC;
+	background: #E6E6FA;
 }
-.dane td
+.informations td
 {
-	border-width: 1px;
+	border-width: 0.5px;
 	padding: 2px;
 	border-style: solid;
 	border-color: #000000;
@@ -37,4 +39,25 @@ body
 {
     margin-left: auto;
     margin-right: auto;
+}
+
+.description-data
+{
+	font-size: 20px;
+}
+
+.description-works
+{
+	font-size: 15px;
+}
+
+.map-center
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.return
+{
+	font-size: 10px;
 }

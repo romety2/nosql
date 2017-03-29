@@ -1,6 +1,6 @@
 ## Łukasz Mielewczyk
 
-[Rozwiązanie zadań](https://romety2.github.io/nosql/)
+[Informacje oraz wykonane zadania](https://romety2.github.io/nosql/)
 
 (zaliczenie)
 
