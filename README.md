@@ -1,14 +1,14 @@
 ## Łukasz Mielewczyk
 
-Wybrany zbiór danych - [NHS Postcode Directory (Latest) Centroids](https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids)
+[Rozwiązanie zadań](https://romety2.github.io/nosql/)
 
 (zaliczenie)
 
 - [ ] EDA
-- [ ] Aggregation Pipeline
 
 (egzamin)
 
+- [ ] Aggregation Pipeline
 - [ ] MapReduce
 
 | Nazwa | Wartosć    |
@@ -19,8 +19,11 @@ Wybrany zbiór danych - [NHS Postcode Directory (Latest) Centroids](https://data
 | System operacyjny | Windows 10 64-bit |
 | Wersje użytych baz danych | |
 | Wersje bibliotek | |
-
 |
+
+WZORZEC:
+
+
 ## Przedstawić dane
 
 Przykładowy rekord. Ile tego jest/będzie (w sztukach, w GB)
