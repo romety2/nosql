@@ -12,7 +12,7 @@
 		<a href="../index.html">powrót</a>
 	</div>
 	<div class = "description">
-		<h1 class="text-center">Zadanie GEO</h1>
+		<h1 class="text-center">Zadanie 3</h1>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
@@ -22,15 +22,17 @@
 			</br>
 			Ilość: 2593752
 		</p>
-		<div class="text-center">
-			<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
-		</div>
 		<h2>Instalacja i konfiguracja oprogramowania</h2>
-		<h3>postgreSQL</h3>
+		<h3>mongoDB</h3>
 		<p>
-			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją
-			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">pobrać</a>,
-			zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
+			Do rozwiązania zadania użyto bazy mongoDB. Należy ją
+			<a href="https://www.mongodb.com/download-center#community" target="_blank">pobrać</a>,
+			zainstalować. Następnie aby uruchomić bazę danych, należy w konsoli cmd i wydać polecenie: 
+			<div class="command">
+				<code>
+mongod
+				</code>
+			</div>
 		</p>
 		<h3>jq</h3>
 		<p>
@@ -89,16 +91,108 @@ jq ".features" map.geojson > mapPom.geojson
 			</br></br>
 			Wykonanie trwało ok. 35 minut.
 			</br></br>
+			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w cmd polecenie:
+			<div class="command">
+				<code>
+mongoimport --db test --collection test --jsonArray < mapPom.geojson
+				</code>
+			</div>
+			Również i import powodował duże zużycie zasobów (ilustracja niżej):
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen4.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas importu danych</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen5.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas importu danych</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen6.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas importu danych</div>
+			</br></br>
+			Wykonanie trwało ok. 10 minut.
+			</br>
+			Ostatecznie pojawił się komunikat: "imported 2593752 documents"
+			</br></br>
+			<h3>Przykładowe pole</h3>
 		</p>
-		Następnie aby uruchomić bazę danych, należy w konsoli cmd wykonujemy polecenie
-		<i>cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin</i>, następnie logujemy się
-		jako domyślnie utworzonego użytkonika <i>postgres</i> polecenie:
+		<p>
+		Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 		<div class="command">
 			<code>
-psql -U postgres
+mongo
 			</code>
 		</div>
-		oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+		Następnie należy wykonać polecenie:
+		<div class="command">
+			<code>		
+db.test.findOne()
+			</code>
+		</div>
+		Wówczas otrzymano:
+		<div class="code">
+			<pre>
+				<code>
+"_id" : ObjectId("58df73b89a55fcf34cdf702b"),
+"type" : "Feature",
+"properties" : {
+	"objectid" : 2002,
+	"pcd2" : "AB1  7FG",
+	"pcds" : "AB1 7FG",
+	"dointr" : "199405",
+	"doterm" : "199606",
+	"oseast100m" : "3917",
+	"osnrth100m" : "08047",
+	"oscty" : "S99999999",
+	"odslaua" : "S92",
+	"oslaua" : "S12000033",
+	"osward" : "S13002486",
+	"usertype" : "0",
+	"osgrdind" : "1",
+	"ctry" : "S92000003",
+	"oshlthau" : "SN9",
+	"gor" : "S99999999",
+	"oldha" : "SN9",
+	"nhscr" : "S92",
+	"ccg" : "012",
+	"psed" : "99ZZ0099",
+	"cened" : "ZZ0099",
+	"edind" : "9",
+	"ward98" : "00QA38",
+	"oa01" : "S00001596",
+	"nhsrg" : "S92",
+	"hro" : "S00",
+	"lsoa01" : "S01000067",
+	"ur01ind" : "1",
+	"msoa01" : "S02000013",
+	"cannet" : "Z99",
+	"scn" : "Z99",
+	"oshaprev" : "SN9",
+	"oldpct" : "X98",
+	"oldhro" : "S00",
+	"pcon" : "S14000002",
+	"canreg" : "Z9999",
+	"pct" : "012",
+	"oseast1m" : "391763",
+	"osnrth1m" : "0804797",
+	"oa11" : "S00090654",
+	"lsoa11" : "S01006545",
+	"msoa11" : "S02001242"
+     },
+"geometry" : {
+	"type" : "Point",
+	"coordinates" : [
+		-2.1377206301181557,
+		57.133993966719444
+	]
+}
+				</code>
+			</pre>
+		</div>			
 	</div>
 	</br>
 	<div class = "return">

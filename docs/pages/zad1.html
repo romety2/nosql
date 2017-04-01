@@ -12,7 +12,7 @@
 		<a href="../index.html">powrót</a>
 	</div>
 	<div class = "description">
-		<h1 class="text-center">Zadanie GEO</h1>
+		<h1 class="text-center">Zadanie 1</h1>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
@@ -22,16 +22,7 @@
 			</br>
 			Ilość: 2593752
 		</p>
-		<div class="text-center">
-			<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
-		</div>
 		<h2>Instalacja i konfiguracja oprogramowania</h2>
-		<h3>postgreSQL</h3>
-		<p>
-			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją
-			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">pobrać</a>,
-			zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
-		</p>
 		<h3>jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
@@ -90,15 +81,6 @@ jq ".features" map.geojson > mapPom.geojson
 			Wykonanie trwało ok. 35 minut.
 			</br></br>
 		</p>
-		Następnie aby uruchomić bazę danych, należy w konsoli cmd wykonujemy polecenie
-		<i>cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin</i>, następnie logujemy się
-		jako domyślnie utworzonego użytkonika <i>postgres</i> polecenie:
-		<div class="command">
-			<code>
-psql -U postgres
-			</code>
-		</div>
-		oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
 	</div>
 	</br>
 	<div class = "return">
