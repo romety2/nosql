@@ -19,6 +19,8 @@
 			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>.
 			</br>
 			Rozmiar: 2 GB
+			</br>
+			Ilość: 2593752
 			<h3>Przykładowe pole</h3>
 			<div class="code">
 				<pre>
@@ -146,30 +148,48 @@ jq ".features" map.geojson > mapPom.geojson
 			<div class="text-center">
 				<img src="../images/screen1.png" height="400em" width="500em">
 			</div>
-			<div class="description-image">Zużycie procesora podczas przekształcania danych</div>
+			<div class="description-image">Procesor podczas przekształcania danych</div>
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen2.png" height="400em" width="500em">
 			</div>
-			<div class="description-image">Zużycie pamięci podczas przekształcania danych</div>
+			<div class="description-image">Pamięć podczas przekształcania danych</div>
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen3.png" height="400em" width="500em">
 			</div>
-			<div class="description-image">Zużycie dysku podczas przekształcania danych</div>
+			<div class="description-image">Dysk podczas przekształcania danych</div>
 			</br></br>
-			Wykonanie trwało ok. ?? minut.
+			Wykonanie trwało ok. 35 minut.
 			</br></br>
-			Następnie aby zaimportwać (oczywiście baza danych musi być uruchomiona) z pliku do bazy danych należy wydać w cmd polecenie:
+			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w cmd polecenie:
 			<div class="command">
 				<code>
-mongoimport --db test --collection test --file mapPom.geojson
+mongoimport --db test --collection test --jsonArray < mapPom.geojson
 				</code>
 			</div>
 		</p>
-		Powodowało to duże zużycie zasobów (ilustracja niżej):
-
-		Dane się jeszcze importują :)
+		Również i import powodował duże zużycie zasobów (ilustracja niżej):
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen4.png" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas importu danych</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen5.png" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas importu danych</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen6.png" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas importu danych</div>
+			</br></br>
+			Wykonanie trwało ok. 10 minut.
+			</br>
+			Ostatecznie pojawił się komunikat: "imported 2593752 documents"
+			</br></br>
 	</div>
 	</br>
 	<div class = "return">
