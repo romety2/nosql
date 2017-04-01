@@ -11,8 +11,8 @@
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
-	<div class = "text-center">
-		<h1>Zadanie GEO</h1>
+	<div class = "description">
+		<h1 class="text-center">Zadanie GEO</h1>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
@@ -81,12 +81,15 @@
 				</pre>
 			</div>
 		</p>
-		<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
-		<h2>Uruchomienie bazy danych</h2>	
+		<div class="text-center">
+			<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
+		</div>
+		<h2>Instalacja i konfiguracja oprogramowania</h2>
+		<h3>mongoDB</h3>
 		<p>
 			Do rozwiązania zadania użyto bazy MongoDB. Należy ją
 			<a href="https://www.mongodb.com/download-center#community" target="_blank">pobrać</a>,
-			zainstalować. Następnie uruchomić konsolę cmd i wydać polecenie: 
+			zainstalować. Następnie aby uruchomić bazę danych, należy w konsoli cmd i wydać polecenie: 
 			<div class="command">
 				<code>
 mongod
@@ -98,24 +101,77 @@ mongod
 mongo
 				</code>
 			</div>
-			Wówczas zostaniemy połączeniu do bazy danych <i>test</i>, oraz możemy zacząć wykonywać zapytania. -->
+			Wówczas zostaniemy połączeniu do bazy danych <i>test</i>, oraz możemy zacząć wykonywać zapytania. -->	
 		</p>
+		<h3>jq</h3>
+		<p>
+			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
+			W naszym przypadku będą to dane które zawierają współrzędne geograficzne.
+			</br>
+			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
+			Uruchamiamy konsolę cmd <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
+			<div class="command">
+				<code>
+@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+				</code>
+			</div>
+			Następnie, aby zaintalować jq należy wydać polecenie:
+			<div class="command">
+				<code>
+chocolatey install jq
+				</code>
+			</div>
+			Więcej na:
+			<ul>
+				<li><a href = "https://chocolatey.org/">chocolatey</a></li>
+				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
+			</ul>
+		</p>
+
 		</br>
 		<h2>Import danych</h2>	
 		<p>
-			Zaimportowanie pliku do bazy danych wykonano poleceniem:
+			Początkowo musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
+			</br>
+			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
+			</br>
+			W moim przypadku interesujące pole to features, więc aby to zrobić w cmd wydajemy polecenie:
 			<div class="command">
 				<code>
-mongoimport --db test --collection test --file NHS_Postcode_Directory_Latest_Centroids.geojson
+jq ".features" map.geojson > mapPom.geojson
+				</code>
+			</div>
+			Podczas wykonywania tej operacji doszło do zużycia zasobów (ilustracja niżej). 
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen1.png" height="400em" width="500em">
+			</div>
+			<div class="description-image">Zużycie procesora podczas przekształcania danych</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen2.png" height="400em" width="500em">
+			</div>
+			<div class="description-image">Zużycie pamięci podczas przekształcania danych</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen3.png" height="400em" width="500em">
+			</div>
+			<div class="description-image">Zużycie dysku podczas przekształcania danych</div>
+			</br></br>
+			Wykonanie trwało ok. ?? minut.
+			</br></br>
+			Następnie aby zaimportwać (oczywiście baza danych musi być uruchomiona) z pliku do bazy danych należy wydać w cmd polecenie:
+			<div class="command">
+				<code>
+mongoimport --db test --collection test --file mapPom.geojson
 				</code>
 			</div>
 		</p>
 		Powodowało to duże zużycie zasobów (ilustracja niżej):
-		</br></br>
-		<img src="../images/screen1.png" height="500em" width="1000em"> 
-		</br></br>
+
 		Dane się jeszcze importują :)
 	</div>
+	</br>
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
