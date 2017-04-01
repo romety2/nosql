@@ -15,8 +15,8 @@
 		<h1>Zadanie GEO</h1>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
-			Są to najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii, pobrane z następującego
-			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">źródła</a>.
+			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
+			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>.
 			</br>
 			Rozmiar: 2 GB
 			<h3>Przykładowe pole</h3>
@@ -82,6 +82,39 @@
 			</div>
 		</p>
 		<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
+		<h2>Uruchomienie bazy danych</h2>	
+		<p>
+			Do rozwiązania zadania użyto bazy MongoDB. Należy ją
+			<a href="https://www.mongodb.com/download-center#community" target="_blank">pobrać</a>,
+			zainstalować. Następnie uruchomić konsolę cmd i wydać polecenie: 
+			<div class="command">
+				<code>
+mongod
+				</code>
+			</div>
+			Następnie w oddzielnej konsoli wykonujemy polecenie:
+			<div class="command">
+				<code>
+mongo
+				</code>
+			</div>
+			Wówczas zostaniemy połączeniu do bazy danych <i>test</i>, oraz możemy zacząć wykonywać zapytania.
+		</p>
+		</br>
+		<h2>Import danych</h2>	
+		<p>
+			Zaimportowanie pliku do bazy danych wykonano poleceniem:
+			<div class="command">
+				<code>
+mongoimport --db test --collection test --file NHS_Postcode_Directory_Latest_Centroids.geojson
+				</code>
+			</div>
+		</p>
+		Powodowało to duże zużycie zasobów (ilustracja niżej):
+		</br></br>
+		<img src="../images/screen1.png" height="500em" width="1000em"> 
+		</br></br>
+		Dane się jeszcze importują :)
 	</div>
 	<div class = "return">
 		<a href="../index.html">powrót</a>

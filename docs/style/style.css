@@ -4,20 +4,28 @@ body
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-pre
-{
+.command
+{ 
 	text-align: left;
-	padding-left: 5%;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	padding-left: 2%;
+	background-color: rgba(0, 0, 0, 0.04);
+	border-radius: 10px;
+	width: 75%;
+	margin: 0 auto;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .code
 { 
-	padding: 0;
-	margin: 0;
+	text-align: left;
+	padding-left: 2%;
 	font-size: 85%;
 	background-color: rgba(0, 0, 0, 0.04);
 	border-radius: 10px;
-	width: 50%;
+	width: 75%;
 	margin: 0 auto;
 }
 
