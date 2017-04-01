@@ -134,9 +134,16 @@ mongoimport --db test --collection test --jsonArray < mapPom.geojson
 		Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 		<div class="command">
 			<code>
-				mongo
+mongo
 			</code>
 		</div>
+		Następnie należy wykonać polecenie:
+		<div class="command">
+			<code>		
+db.test.findOne()
+			</code>
+		</div>
+		Wówczas otrzymano:
 		<div class="code">
 			<pre>
 				<code>
