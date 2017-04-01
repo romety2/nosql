@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="generator" content="pandoc"/>
   <title>Technologie NoSQL</title>
   <link rel="stylesheet" href="../style/style.css">
 </head>
@@ -13,12 +15,75 @@
 		<h1>Zadanie GEO</h1>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
-			Są to najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
+			Są to najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii, pobrane z następującego
+			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">źródła</a>.
 			</br>
-			Rozmiar: 2,01 GB
-			</br>
-			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>
+			Rozmiar: 2 GB
+			<h3>Przykładowe pole</h3>
+			<div class="code">
+				<pre>
+					<code>
+{
+    "type": "Feature",
+    "properties": {
+        "objectid": 2001,
+        "pcd2": "AB1  7FA",
+        "pcds": "AB1 7FA",
+        "dointr": "198511",
+        "doterm": "199606",
+        "oseast100m": "3922",
+        "osnrth100m": "08034",
+        "oscty": "S99999999",
+        "odslaua": "S92",
+        "oslaua": "S12000033",
+        "osward": "S13002486",
+        "usertype": "0",
+        "osgrdind": "1",
+        "ctry": "S92000003",
+        "oshlthau": "SN9",
+        "gor": "S99999999",
+        "oldha": "SN9",
+        "nhscr": "S92",
+        "ccg": "012",
+        "psed": "99ZZ0099",
+        "cened": "ZZ0099",
+        "edind": "9",
+        "ward98": "00QA40",
+        "oa01": "S00000330",
+        "nhsrg": "S92",
+        "hro": "S00",
+        "lsoa01": "S01000042",
+        "ur01ind": "1",
+        "msoa01": "S02000008",
+        "cannet": "Z99",
+        "scn": "Z99",
+        "oshaprev": "SN9",
+        "oldpct": "X98",
+        "oldhro": "S00",
+        "pcon": "S14000002",
+        "canreg": "Z9999",
+        "pct": "012",
+        "oseast1m": "392292",
+        "osnrth1m": "0803442",
+        "oa11": "S00089305",
+        "lsoa11": "S01006530",
+        "msoa11": "S02001239"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -2.1289395815098775,
+            57.12183112435592
+        ]
+    }
+}
+					</code>
+				</pre>
+			</div>
 		</p>
 		<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
+	</div>
+	<div class = "return">
+		<a href="../index.html">powrót</a>
 	</div>
 </body>
