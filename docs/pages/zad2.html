@@ -58,11 +58,14 @@ chocolatey install jq
 				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
 			</ul>
 		</p>
-
 		</br>
 		<h2>Import danych</h2>	
 		<p>
-			Początkowo musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> pobieramy plik z rozszeżeniem geojson.	
+		</p>	
+		<h3>Przekształcenie danych</h3>			
+		<p>
+			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
 			</br>
@@ -91,6 +94,9 @@ jq ".features" map.geojson > mapPom.geojson
 			</br></br>
 			Wykonanie trwało ok. 35 minut.
 			</br></br>
+		</p>
+		<h3>Import danych do mongoDB</h3>
+		<p>
 			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w cmd polecenie:
 			<div class="command">
 				<code>
@@ -102,41 +108,43 @@ mongoimport --db test --collection test --jsonArray < mapPom.geojson
 			<div class="text-center">
 				<img src="../images/screen4.PNG" height="400em" width="500em">
 			</div>
-			<div class="description-image">Procesor podczas importu danych</div>
+			<div class="description-image">Procesor podczas importu danych do mongoDB</div>
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen5.PNG" height="400em" width="500em">
 			</div>
-			<div class="description-image">Pamięć podczas importu danych</div>
+			<div class="description-image">Pamięć podczas importu danych do mongoDB</div>
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen6.PNG" height="400em" width="500em">
 			</div>
-			<div class="description-image">Dysk podczas importu danych</div>
+			<div class="description-image">Dysk podczas importu danych do mongoDB</div>
 			</br></br>
 			Wykonanie trwało ok. 10 minut.
 			</br>
 			Ostatecznie pojawił się komunikat: "imported 2593752 documents"
 			</br></br>
-			<h3>Przykładowe pole</h3>
 		</p>
+		<h2>Przykładowe pole</h2>
 		<p>
-		Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
-		<div class="command">
-			<code>
-mongo
-			</code>
-		</div>
-		Następnie należy wykonać polecenie:
-		<div class="command">
-			<code>		
-db.test.findOne()
-			</code>
-		</div>
-		Wówczas otrzymano:
-		<div class="code">
-			<pre>
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony<a/> ściagamy plik z rozszeżeniem geojson.
+			</br>
+			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
+			<div class="command">
 				<code>
+mongo
+				</code>
+			</div>
+			Następnie należy wykonać polecenie:
+			<div class="command">
+				<code>		
+db.test.findOne()
+				</code>
+			</div>
+			Wówczas otrzymano:
+			<div class="code">
+				<pre>
+					<code>
 "_id" : ObjectId("58df73b89a55fcf34cdf702b"),
 "type" : "Feature",
 "properties" : {
@@ -190,9 +198,10 @@ db.test.findOne()
 		57.133993966719444
 	]
 }
-				</code>
-			</pre>
-		</div>			
+					</code>
+				</pre>
+			</div>
+		</p>				
 	</div>
 	</br>
 	<div class = "return">

@@ -32,7 +32,7 @@
 			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">pobrać</a>,
 			zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
 		</p>
-		<h3>jq</h3>
+		<!-- <h3>jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
 			W naszym przypadku będą to dane które zawierają współrzędne geograficzne.
@@ -55,12 +55,16 @@ chocolatey install jq
 				<li><a href = "https://chocolatey.org/">chocolatey</a></li>
 				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
 			</ul>
-		</p>
-
+		</p> -->
 		</br>
-		<h2>Import danych</h2>	
+		<h2>Import danych</h2>
 		<p>
-			Początkowo musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> pobieramy plik z rozszeżeniem csv.
+		</p>
+		<!-- <h3>Przekształcenie danych</h3>			
+		<p>
+			</br>
+			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
 			</br>
@@ -88,18 +92,117 @@ jq ".features" map.geojson > mapPom.geojson
 			<div class="description-image">Dysk podczas przekształcania danych</div>
 			</br></br>
 			Wykonanie trwało ok. 35 minut.
+		</p> -->
+		<h3>Import danych do postreSQL</h3>
+		<p>
+			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
+			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
+			</br>
+			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
+			<div class="command">
+				<code>
+pgfutter --pass "[moje hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
+				</code>
+			</div>
+			</br>
+			Import danych średnio zużywał zasoby komputera.
 			</br></br>
-		</p>
-		Następnie aby uruchomić bazę danych, należy w konsoli cmd wykonujemy polecenie
-		<i>cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin</i>, następnie logujemy się
-		jako domyślnie utworzonego użytkonika <i>postgres</i> polecenie:
-		<div class="command">
-			<code>
+			<div class="text-center">
+				<img src="../images/screen7.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas importu danych do postreSQL</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen8.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas importu danych do postreSQL</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen9.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas importu danych do postreSQL</div>
+			</br></br>
+			Wykonanie trwało ok. 2 minut, 35 sekund.
+			</br>
+			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
+			<div class="text-center">
+				<img src="../images/screen13.PNG" height="50em" width="1200em">
+			</div>
+			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.
+			<!--Następnie aby uruchomić bazę danych, należy w konsoli cmd wykonujemy polecenie
+			<i>cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin</i>, następnie logujemy się
+			jako domyślnie utworzonego użytkonika <i>postgres</i> polecenie:
+			<div class="command">
+				<code>
 psql -U postgres
-			</code>
-		</div>
-		oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
-	</div>
+				</code>
+			</div>
+			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			</br></br>
+			Następnie tworzymy tymczasową tabelę, polecenie:	
+			<div class="command">
+				<code>
+create table public.test(
+	x float,
+	y float,
+	objectid integer primary key,
+	pcd2 varchar,
+	pcds varchar,
+	dointr integer,
+	doterm integer,
+	oseast100m integer,
+	osnrth100m integer,
+	oscty varchar,
+	odslaua varchar,
+	oslaua varchar,
+	osward varchar,
+	usertype integer,
+	osgrdind integer,
+	ctry varchar,
+	oshlthau varchar,
+	gor varchar,
+	oldha varchar,
+	nhscr varchar,
+	ccg varchar,
+	psed varchar,
+	cened varchar,
+	edind integer,
+	ward98 varchar,
+	oa01 varchar,
+	nhsrg varchar,
+	hro varchar,
+	lsoa01 varchar,
+	ur01ind integer,
+	msoa01 varchar,
+	cannet varchar,
+	scn varchar,
+	oshaprev varchar,
+	oldpct varchar,
+	oldhro varchar,
+	pcon varchar,
+	canreg varchar,
+	pct varchar,
+	oseast1m integer,
+	osnrth1m integer,
+	oa11 varchar,
+	lsoa11 varchar,
+	msoa11 varchar
+);
+				</code>
+			</div>
+			Oraz dokonujemy importu wydając polecenie:
+			<div class="command">
+				<code>		
+copy test from '[ściezka do pliku]\mapPom.geojson';	
+				</code>
+			</div>
+			<div class="command">
+				<code>
+select * from test limit 1;
+				</code>
+			</div>-->			
+		</p>
+	</div>		
 	</br>
 	<div class = "return">
 		<a href="../index.html">powrót</a>

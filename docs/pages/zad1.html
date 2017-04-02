@@ -23,6 +23,12 @@
 			Ilość: 2593752
 		</p>
 		<h2>Instalacja i konfiguracja oprogramowania</h2>
+		<h3>postgreSQL</h3>
+		<p>
+			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją
+			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">pobrać</a>,
+			zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
+		</p>
 		<h3>jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
@@ -47,11 +53,13 @@ chocolatey install jq
 				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
 			</ul>
 		</p>
-
 		</br>
 		<h2>Import danych</h2>	
+		<h3>Przekształcenie danych</h3>			
 		<p>
-			Początkowo musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> ściagamy plik z rozszeżeniem geojson.
+			</br>
+			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
 			</br>
