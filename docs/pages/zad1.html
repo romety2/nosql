@@ -13,6 +13,7 @@
 	</div>
 	<div class = "description">
 		<h1 class="text-center">Zadanie 1</h1>
+		</br>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
@@ -22,72 +23,68 @@
 			</br>
 			Ilość: 2593752
 		</p>
+		</br>
 		<h2>Instalacja i konfiguracja oprogramowania</h2>
 		<h3>postgreSQL</h3>
 		<p>
-			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją
-			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">pobrać</a>,
-			zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
+			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją pobrać ze 
+			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">strony</a>
+			i zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
 		</p>
-		<h3>jq</h3>
+		<h3>jdk</h3>
 		<p>
-			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
-			W naszym przypadku będą to dane które zawierają współrzędne geograficzne.
+			Aby uruchomić bazę elasticsearch potrzebny jest najnowyszy jdk, który jest możliwy do sciągniećia ze
+			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> i zainstalować.
+			</br></br>
+			Upewnijmy się czy zmienne środowiskowe są odpowiednio skonfigurowane.
 			</br>
-			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
-			Uruchamiamy konsolę cmd <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
-			<div class="command">
-				<code>
-@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-				</code>
+			<div class="text-center">
+				<i>Panel sterowania -> System -> Zmień ustawienia -> Zaawansowane (zakładka) -> Zmienne środowiskowe...</i>
 			</div>
-			Następnie, aby zaintalować jq należy wydać polecenie:
-			<div class="command">
-				<code>
-chocolatey install jq
-				</code>
-			</div>
-			Więcej na:
-			<ul>
-				<li><a href = "https://chocolatey.org/">chocolatey</a></li>
-				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
-			</ul>
+			</br>
+			W <i>zmienne systemowe</i> szukamy zmiennej <i>JAVA_HOME</i> oraz sprawdzamy czy ścieżka
+			jest ustawiona na zainstalowany przez z nas <i>jdk</i>.
+			</br>
+			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
 		</p>
 		</br>
 		<h2>Import danych</h2>	
-		<h3>Przekształcenie danych</h3>			
+		<h3>Import danych do postreSQL</h3>
 		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> ściagamy plik z rozszeżeniem geojson.
+			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
+			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
 			</br>
-			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
-			</br>
-			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
-			</br>
-			W moim przypadku interesujące pole to features, więc aby to zrobić w cmd wydajemy polecenie:
+			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
 			<div class="command">
 				<code>
-jq ".features" map.geojson > mapPom.geojson
+pgfutter --pass "[moje hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
 				</code>
 			</div>
-			Podczas wykonywania tej operacji doszło do zużycia zasobów (ilustracja niżej). 
+			</br>
+			Import danych średnio zużywał zasoby komputera.
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen1.PNG" height="400em" width="500em">
+				<img src="../images/screen7.PNG" height="400em" width="500em">
 			</div>
-			<div class="description-image">Procesor podczas przekształcania danych</div>
+			<div class="description-image">Procesor podczas importu danych do postreSQL</div>
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen2.PNG" height="400em" width="500em">
+				<img src="../images/screen8.PNG" height="400em" width="500em">
 			</div>
-			<div class="description-image">Pamięć podczas przekształcania danych</div>
+			<div class="description-image">Pamięć podczas importu danych do postreSQL</div>
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen3.PNG" height="400em" width="500em">
+				<img src="../images/screen9.PNG" height="400em" width="500em">
 			</div>
-			<div class="description-image">Dysk podczas przekształcania danych</div>
+			<div class="description-image">Dysk podczas importu danych do postreSQL</div>
 			</br></br>
-			Wykonanie trwało ok. 35 minut.
-			</br></br>
+			Wykonanie trwało ok. 2 minut, 35 sekund.
+			</br>
+			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
+			<div class="text-center">
+				<img src="../images/screen13.PNG" height="30em" width="1200em">
+			</div>
+			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.
 		</p>
 	</div>
 	</br>

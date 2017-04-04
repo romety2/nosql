@@ -13,6 +13,7 @@
 	</div>
 	<div class = "description">
 		<h1 class="text-center">Zadanie 2</h1>
+		</br>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
@@ -22,12 +23,14 @@
 			</br>
 			Ilość: 2593752
 		</p>
+		</br>
 		<h2>Instalacja i konfiguracja oprogramowania</h2>
 		<h3>mongoDB</h3>
 		<p>
-			Do rozwiązania zadania użyto bazy mongoDB. Należy ją
-			<a href="https://www.mongodb.com/download-center#community" target="_blank">pobrać</a>,
-			zainstalować. Następnie aby uruchomić bazę danych, należy w konsoli cmd i wydać polecenie: 
+		
+			Do rozwiązania zadania użyto bazy mongoDB. Należy ją pobrać ze 
+			<a href="https://www.mongodb.com/download-center#community" target="_blank">strony</a>
+			i zainstalować. Następnie aby uruchomić bazę danych, należy w konsoli <i>cmd</i> i wydać polecenie: 
 			<div class="command">
 				<code>
 mongod
@@ -40,7 +43,7 @@ mongod
 			W naszym przypadku będą to dane które zawierają współrzędne geograficzne.
 			</br>
 			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
-			Uruchamiamy konsolę cmd <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
+			Uruchamiamy konsolę <i>cmd</i> <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
 			<div class="command">
 				<code>
 @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
@@ -69,7 +72,7 @@ chocolatey install jq
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
 			</br>
-			W moim przypadku interesujące pole to features, więc aby to zrobić w cmd wydajemy polecenie:
+			W moim przypadku interesujące pole to features, więc aby to zrobić w <i>cmd</i> wydajemy polecenie:
 			<div class="command">
 				<code>
 jq ".features" map.geojson > mapPom.geojson
@@ -97,7 +100,7 @@ jq ".features" map.geojson > mapPom.geojson
 		</p>
 		<h3>Import danych do mongoDB</h3>
 		<p>
-			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w cmd polecenie:
+			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w <i>cmd</i> polecenie:
 			<div class="command">
 				<code>
 mongoimport --db test --collection test --jsonArray < mapPom.geojson
@@ -125,9 +128,12 @@ mongoimport --db test --collection test --jsonArray < mapPom.geojson
 			Ostatecznie pojawił się komunikat: "imported 2593752 documents"
 			</br></br>
 		</p>
+		</br>
 		<h2>Przykładowe pole</h2>
+		<h3>Użycie mongoDB</h3>
 		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony<a/> ściagamy plik z rozszeżeniem geojson.
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony<a/>
+			ściagamy plik z rozszeżeniem <i>geojson</i>.
 			</br>
 			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 			<div class="command">
