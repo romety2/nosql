@@ -80,14 +80,14 @@ chocolatey install jq
 		<h3>Przekształcenie danych</h3>			
 		<p>
 			</br>
-			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
+			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego dane geograficzne pod nazwa <i>location</i>.
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
 			</br>
 			W moim przypadku interesujące pole to features, więc aby to zrobić w cmd wydajemy polecenie:
 			<div class="command">
 				<code>
-jq ".features[]" map.geojson > mapPom.geojson
+jq ".features[] | (.geometry.coordinates) as $l | .properties |= .+ {location: $l} | .properties" map.geojson > mapPom.geojson
 				</code>
 			</div>
 			Następnie
@@ -254,65 +254,66 @@ curl -s "http://localhost:9200/test/test/_search?size=1&pretty=1" | jq .hits.hit
 				<pre>
 					<code>
 {
-  "type": "Feature",
-  "properties": {
-    "objectid": 2003,
-    "pcd2": "AB1  7FH",
-    "pcds": "AB1 7FH",
-    "dointr": "199405",
-    "doterm": "199606",
-    "oseast100m": "3916",
-    "osnrth100m": "08048",
-    "oscty": "S99999999",
-    "odslaua": "S92",
-    "oslaua": "S12000033",
-    "osward": "S13002486",
-    "usertype": "0",
-    "osgrdind": "1",
-    "ctry": "S92000003",
-    "oshlthau": "SN9",
-    "gor": "S99999999",
-    "oldha": "SN9",
-    "nhscr": "S92",
-    "ccg": "012",
-    "psed": "99ZZ0099",
-    "cened": "ZZ0099",
-    "edind": "9",
-    "ward98": "00QA38",
-    "oa01": "S00001594",
-    "nhsrg": "S92",
-    "hro": "S00",
-    "lsoa01": "S01000067",
-    "ur01ind": "1",
-    "msoa01": "S02000013",
-    "cannet": "Z99",
-    "scn": "Z99",
-    "oshaprev": "SN9",
-    "oldpct": "X98",
-    "oldhro": "S00",
-    "pcon": "S14000002",
-    "canreg": "Z9999",
-    "pct": "012",
-    "oseast1m": "391668",
-    "osnrth1m": "0804810",
-    "oa11": "S00090652",
-    "lsoa11": "S01006545",
-    "msoa11": "S02001242"
-  },
-  "geometry": {
-    "type": "Point",
-    "coordinates": [
-      -2.1392904748620363,
-      57.1341090148791
-    ]
-  }
+  "objectid": 2005,
+  "pcd2": "AB1  7FS",
+  "pcds": "AB1 7FS",
+  "dointr": "199205",
+  "doterm": "199606",
+  "oseast100m": "3912",
+  "osnrth100m": "08033",
+  "oscty": "S99999999",
+  "odslaua": "S92",
+  "oslaua": "S12000033",
+  "osward": "S13002486",
+  "usertype": "0",
+  "osgrdind": "1",
+  "ctry": "S92000003",
+  "oshlthau": "SN9",
+  "gor": "S99999999",
+  "oldha": "SN9",
+  "nhscr": "S92",
+  "ccg": "012",
+  "psed": "99ZZ0099",
+  "cened": "ZZ0099",
+  "edind": "9",
+  "ward98": "00QA39",
+  "oa01": "S00001586",
+  "nhsrg": "S92",
+  "hro": "S00",
+  "lsoa01": "S01000039",
+  "ur01ind": "1",
+  "msoa01": "S02000008",
+  "cannet": "Z99",
+  "scn": "Z99",
+  "oshaprev": "SN9",
+  "oldpct": "X98",
+  "oldhro": "S00",
+  "pcon": "S14000002",
+  "canreg": "Z9999",
+  "pct": "012",
+  "oseast1m": "391250",
+  "osnrth1m": "0803360",
+  "oa11": "S00090643",
+  "lsoa11": "S01006526",
+  "msoa11": "S02001239",
+  "location": [
+    -2.14614501355345,
+    57.12107567680422
+  ]
 }
 					</code>
 				</pre>
 			</div>
+		</p>
+		<h2>Mapki</h2>
+			Pierwsze 1000 danych zobrazowanych, uzykanych przy pomocy polecenia:
+			<div class="command">
+				<code>
+curl -s "http://localhost:9200/test/test/_search?size=1000&pretty=1"  | jq .hits.hits[].\"_source\" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map1.geojson
+				</code>
+			</div>		
 		</p>				
 	</div>
-	</div>		
 	</br>
 	<div class="text-center">
 		<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
