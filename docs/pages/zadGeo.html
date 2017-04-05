@@ -72,22 +72,21 @@ chocolatey install jq
 			</ul>
 		</p>
 		</br>
-		<h2>Import danych</h2>
-		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a>
-			pobieramy plik z rozszeżeniem <i>csv</i>,  <i>geojson</i>.
-		</p>
+		<h2>Elasticsearch</h2>
 		<h3>Przekształcenie danych</h3>			
 		<p>
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a>
+			pobieramy plik z rozszeżeniem  <i>geojson</i>.
 			</br>
-			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego dane geograficzne pod nazwa <i>location</i>.
+			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego zaokrąglone dane geograficzne pod nazwa <i>location</i>
+			, aby móc na nich odpowiednio operować. Zaokrąglenie współrzędnych jest konieczne, aby dane przeszły walidację z mappingiem podczas importu.
 			</br>
-			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
+			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na <i>map.geojson</i>.
 			</br>
-			W moim przypadku interesujące pole to features, więc aby to zrobić w cmd wydajemy polecenie:
+			W moim przypadku interesujące pole to <i>features</i>, więc aby to zrobić w <i>cmd</i> wydajemy polecenie:
 			<div class="command">
 				<code>
-jq ".features[] | (.geometry.coordinates) as $l | .properties |= .+ {location: $l} | .properties" map.geojson > mapPom.geojson
+jq ".features[] | (.geometry.coordinates) as $l | .properties |= .+ {location: $l} | .properties" map.geojson > mapPom.geojson 
 				</code>
 			</div>
 			Następnie
@@ -115,45 +114,8 @@ jq ".features[] | (.geometry.coordinates) as $l | .properties |= .+ {location: $
 			</br></br>
 			Wykonanie trwało ok. 35 minut.
 		</p>
-		<h3>Import danych do postreSQL</h3>
-		<p>
-			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
-			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
-			</br>
-			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
-			<div class="command">
-				<code>
-pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
-				</code>
-			</div>
-			</br>
-			Import danych średnio zużywał zasoby komputera.
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen7.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Procesor podczas importu danych do postreSQL</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen8.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Pamięć podczas importu danych do postreSQL</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen9.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Dysk podczas importu danych do postreSQL</div>
-			</br></br>
-			Wykonanie trwało ok. 2 minut, 35 sekund.
-			</br>
-			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
-			<div class="text-center">
-				<img src="../images/screen13.PNG" height="30em" width="1200em">
-			</div>
-			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.	
-		</p>
 		</br>
-		<h3>Import danych do elasticsearch</h3>
+		<h3>Import danych</h3>
 		<p>
 			Pobieramy ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
 			</br>
@@ -170,17 +132,17 @@ pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Cent
 copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka wykonywany jest projekt]\curl.exe
 				</code>
 			</div>
-			W nowej konsoli tworzymy bazę danych (w moim przypadku o nazwie test), polecenie:
+			W nowej konsoli tworzymy bazę danych z mappingiem, który konieczny jest do wykonywania działań na współrzędnych (w moim przypadku o nazwie test), polecenie:
 			<div class="command">
 				<code>
-curl -XPUT localhost:9200/test
+curl -XPUT http://localhost:9200/test -d "{\"mappings\": {\"place\": {\"properties\": {\"objectid\": {\"type\": \"integer\"},\"pcd2\": {\"type\": \"string\"},\"pcds\": {\"type\": \"string\"},\"dointr\": {\"type\": \"string\"},\"oseast100m\": {\"type\": \"string\"},\"osnrth100m\": {\"type\": \"string\"},\"oscty\": {\"type\": \"string\"},\"odslaua\": {\"type\": \"string\"},\"oslaua\": {\"type\": \"string\"},\"osward\": {\"type\": \"string\"},\"usertype\": {\"type\": \"string\"},\"osgrdind\": {\"type\": \"string\"},\"ctry\": {\"type\": \"string\"},\"oshlthau\": {\"type\": \"string\"},\"gor\": {\"type\": \"string\"},\"oldha\": {\"type\": \"string\"},\"nhscr\": {\"type\": \"string\"},\"ccg\": {\"type\": \"string\"},\"psed\": {\"type\": \"string\"},\"cened\": {\"type\": \"string\"},\"edind\": {\"type\": \"string\"},\"ward98\": {\"type\": \"string\"},\"oa01\": {\"type\": \"string\"},\"nhsrg\": {\"type\": \"string\"},\"hro\": {\"type\": \"string\"},\"lsoa01\": {\"type\": \"string\"},\"ur01ind\": {\"type\": \"string\"},\"msoa01\": {\"type\": \"string\"},\"cannet\": {\"type\": \"string\"},\"scn\": {\"type\": \"string\"},\"oshaprev\": {\"type\": \"string\"},\"oldpct\": {\"type\": \"string\"},\"oldhro\": {\"type\": \"string\"},\"pcon\": {\"type\": \"string\"},\"canreg\": {\"type\": \"string\"},\"pct\": {\"type\": \"string\"},\"oseast1m\": {\"type\": \"string\"},\"osnrth1m\": {\"type\": \"string\"},\"oa11\": {\"type\": \"string\"},\"lsoa11\": {\"type\": \"string\"},\"msoa11\": {\"type\": \"string\"},\"location\": {\"type\": \"geo_point\" }}}}}"
 				</code>
 			</div>
 			</br>
 			Następnie dokonujemy importu poprzez polecenie: 
 			<div class="command">
 				<code>
-curl -XPOST localhost:9200/test/test/_bulk --data-binary @mapPom.bulk		
+curl -XPOST localhost:9200/test/_bulk --data-binary @mapPom.bulk		
 				</code>
 			</div>
 			Import danych średnio zużywał zasoby komputera.
@@ -200,53 +162,31 @@ curl -XPOST localhost:9200/test/test/_bulk --data-binary @mapPom.bulk
 			</div>
 			<div class="description-image">Dysk podczas importu danych do elasticsearch</div>
 			</br></br>
-			Wykonanie trwało ok. 5 sekund.
+			Wykonanie trwało ok. 5 minut.
 			</br>
 			</br>
 			Sprawdzamy czy wszystkie dane zostały zaimportowane, polecenie:
 			<div class="command">
 				<code>
-curl -XGET localhost:9200/test/test/_count
+curl -XGET localhost:9200/test/_count
 				</code>
 			</div>
 			Po czym pojawiła się informacja:
-			<div class="command">
-				<code>
+			<div class="code">
+				<pre>
+					<code>
 {"count":2593752,"_shards":{"total":5,"successful":5,"failed":0}}
-				</code>
+					</code>
+				</pre>
 			</div>
 		</p>
-		<h2>Przykładowe pole</h2>
-		<h3>Użycie postgreSQL</h3>
-		<p>
-			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
-			<div class="command">
-				<code>
-cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
-				</code>
-			</div>
-			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
-			<div class="command">
-				<code>
-psql -U postgres
-				</code>
-			</div>
-			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
-			</br></br>
-			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
-			<div class="command">
-				<code>
-select * from import.test limit 1;
-				</code>
-			</div>
-		</p>
-		<h3>Użycie elasticsearch</h3>
+		<h3>Przykładowe pole</h3>
 		<p>
 			Po zaimportowaniu danych podajemy polecenie:
 		</p>
 			<div class="command">
 				<code>
-curl -s "http://localhost:9200/test/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
+curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
 				</code>
 			</div>
 			Wówczas otrzymano:
@@ -305,19 +245,79 @@ curl -s "http://localhost:9200/test/test/_search?size=1&pretty=1" | jq .hits.hit
 				</pre>
 			</div>
 		</p>
-		<h2>Mapki</h2>
+		<h3>Mapki</h3>
 			Pierwsze 1000 danych zobrazowanych, uzykanych przy pomocy polecenia:
 			<div class="command">
 				<code>
 curl -s "http://localhost:9200/test/test/_search?size=1000&pretty=1"  | jq .hits.hits[].\"_source\" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map1.geojson
 				</code>
-			</div>		
-		</p>				
+			</div>	
+			<div class="text-center">
+				<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
+			</div>
+		</p>
+		<h2>PostgreSQL</h2>
+		<h3>Import danych</h3>
+		<p>
+			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
+			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
+			</br>
+			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
+			<div class="command">
+				<code>
+pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
+				</code>
+			</div>
+			</br>
+			Import danych średnio zużywał zasoby komputera.
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen7.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas importu danych do postreSQL</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen8.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas importu danych do postreSQL</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen9.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas importu danych do postreSQL</div>
+			</br></br>
+			Wykonanie trwało ok. 2 minut, 35 sekund.
+			</br>
+			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
+			<div class="text-center">
+				<img src="../images/screen13.PNG" height="30em" width="1200em">
+			</div>
+			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.	
+		</p>
+		<p>
+			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
+				</code>
+			</div>
+			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			<div class="command">
+				<code>
+psql -U postgres
+				</code>
+			</div>
+			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			</br></br>
+			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
+			<div class="command">
+				<code>
+select * from import.test limit 1;
+				</code>
+			</div>
+		</p>
 	</div>
 	</br>
-	<div class="text-center">
-		<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
-	</div>
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
