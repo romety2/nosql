@@ -246,7 +246,7 @@ select * from import.test limit 1;
 		</p>
 			<div class="command">
 				<code>
-curl -s "http://localhost:9200/test/test/_search?size=1&pretty=1"
+curl -s "http://localhost:9200/test/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
 				</code>
 			</div>
 			Wówczas otrzymano:
@@ -254,77 +254,56 @@ curl -s "http://localhost:9200/test/test/_search?size=1&pretty=1"
 				<pre>
 					<code>
 {
-  "took" : 3,
-  "timed_out" : false,
-  "_shards" : {
-    "total" : 5,
-    "successful" : 5,
-    "failed" : 0
+  "type": "Feature",
+  "properties": {
+    "objectid": 2003,
+    "pcd2": "AB1  7FH",
+    "pcds": "AB1 7FH",
+    "dointr": "199405",
+    "doterm": "199606",
+    "oseast100m": "3916",
+    "osnrth100m": "08048",
+    "oscty": "S99999999",
+    "odslaua": "S92",
+    "oslaua": "S12000033",
+    "osward": "S13002486",
+    "usertype": "0",
+    "osgrdind": "1",
+    "ctry": "S92000003",
+    "oshlthau": "SN9",
+    "gor": "S99999999",
+    "oldha": "SN9",
+    "nhscr": "S92",
+    "ccg": "012",
+    "psed": "99ZZ0099",
+    "cened": "ZZ0099",
+    "edind": "9",
+    "ward98": "00QA38",
+    "oa01": "S00001594",
+    "nhsrg": "S92",
+    "hro": "S00",
+    "lsoa01": "S01000067",
+    "ur01ind": "1",
+    "msoa01": "S02000013",
+    "cannet": "Z99",
+    "scn": "Z99",
+    "oshaprev": "SN9",
+    "oldpct": "X98",
+    "oldhro": "S00",
+    "pcon": "S14000002",
+    "canreg": "Z9999",
+    "pct": "012",
+    "oseast1m": "391668",
+    "osnrth1m": "0804810",
+    "oa11": "S00090652",
+    "lsoa11": "S01006545",
+    "msoa11": "S02001242"
   },
-  "hits" : {
-    "total" : 10765,
-    "max_score" : 1.0,
-    "hits" : [
-      {
-        "_index" : "test",
-        "_type" : "test",
-        "_id" : "AVs-EGAvFAxjKcsbSSlf",
-        "_score" : 1.0,
-        "_source" : {
-          "type" : "Feature",
-          "properties" : {
-            "objectid" : 2003,
-            "pcd2" : "AB1  7FH",
-            "pcds" : "AB1 7FH",
-            "dointr" : "199405",
-            "doterm" : "199606",
-            "oseast100m" : "3916",
-            "osnrth100m" : "08048",
-            "oscty" : "S99999999",
-            "odslaua" : "S92",
-            "oslaua" : "S12000033",
-            "osward" : "S13002486",
-            "usertype" : "0",
-            "osgrdind" : "1",
-            "ctry" : "S92000003",
-            "oshlthau" : "SN9",
-            "gor" : "S99999999",
-            "oldha" : "SN9",
-            "nhscr" : "S92",
-            "ccg" : "012",
-            "psed" : "99ZZ0099",
-            "cened" : "ZZ0099",
-            "edind" : "9",
-            "ward98" : "00QA38",
-            "oa01" : "S00001594",
-            "nhsrg" : "S92",
-            "hro" : "S00",
-            "lsoa01" : "S01000067",
-            "ur01ind" : "1",
-            "msoa01" : "S02000013",
-            "cannet" : "Z99",
-            "scn" : "Z99",
-            "oshaprev" : "SN9",
-            "oldpct" : "X98",
-            "oldhro" : "S00",
-            "pcon" : "S14000002",
-            "canreg" : "Z9999",
-            "pct" : "012",
-            "oseast1m" : "391668",
-            "osnrth1m" : "0804810",
-            "oa11" : "S00090652",
-            "lsoa11" : "S01006545",
-            "msoa11" : "S02001242"
-          },
-          "geometry" : {
-            "type" : "Point",
-            "coordinates" : [
-              -2.1392904748620363,
-              57.1341090148791
-            ]
-          }
-        }
-      }
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -2.1392904748620363,
+      57.1341090148791
     ]
   }
 }
