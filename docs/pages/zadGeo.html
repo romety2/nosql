@@ -78,8 +78,8 @@ chocolatey install jq
 			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a>
 			pobieramy plik z rozszeżeniem  <i>geojson</i>.
 			</br>
-			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego zaokrąglone dane geograficzne pod nazwa <i>location</i>
-			, aby móc na nich odpowiednio operować. Zaokrąglenie współrzędnych jest konieczne, aby dane przeszły walidację z mappingiem podczas importu.
+			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego dane geograficzne pod nazwa <i>location</i>
+			, aby móc na nich odpowiednio operować.
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na <i>map.geojson</i>.
 			</br>
@@ -249,7 +249,7 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 			Pierwsze 1000 danych zobrazowanych, uzykanych przy pomocy polecenia:
 			<div class="command">
 				<code>
-curl -s "http://localhost:9200/test/test/_search?size=1000&pretty=1"  | jq .hits.hits[].\"_source\" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map1.geojson
+curl -s "http://localhost:9200/test/test/_search?size=1000&pretty=1" | jq .hits.hits[].\"_source\" | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward,usertype,osgrdind,ctry,oshlthau,gor,oldha,nhscr,ccg,psed,cened,edind,ward98,oa01,nhsrg,hro,lsoa01,ur01ind,msoa01,cannet,scn,oshaprev,oldpct,oldhro,pcon,canreg,pct,oseast1m,osnrth1m,oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map1.geojson
 				</code>
 			</div>	
 			<div class="text-center">
