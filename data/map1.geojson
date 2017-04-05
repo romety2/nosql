@@ -1,15 +1,4 @@
-{
-  "took" : 43,
-  "timed_out" : false,
-  "_shards" : {
-    "total" : 5,
-    "successful" : 5,
-    "failed" : 0
-  },
-  "hits" : {
-    "total" : 10765,
-    "max_score" : 1.0,
-    "hits" : [
+
       {
         "_index" : "test",
         "_type" : "test",
@@ -60004,6 +59993,3 @@
           }
         }
       }
-    ]
-  }
-}
