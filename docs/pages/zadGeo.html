@@ -23,9 +23,6 @@
 			</br>
 			Ilość: 2593752
 		</p>
-		<div class="text-center">
-			<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
-		</div>
 		</br>	
 		<h2>Instalacja i konfiguracja oprogramowania</h2>
 		<h3>postgreSQL</h3>
@@ -50,7 +47,7 @@
 			</br>
 			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
 		</p>
-		<!-- <h3>jq</h3>
+		<h3>jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
 			W naszym przypadku będą to dane które zawierają współrzędne geograficzne.
@@ -73,14 +70,14 @@ chocolatey install jq
 				<li><a href = "https://chocolatey.org/">chocolatey</a></li>
 				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
 			</ul>
-		</p> -->
+		</p>
 		</br>
 		<h2>Import danych</h2>
 		<p>
 			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a>
-			pobieramy plik z rozszeżeniem <i>csv</i>.
+			pobieramy plik z rozszeżeniem <i>csv</i>,  <i>geojson</i>.
 		</p>
-		<!-- <h3>Przekształcenie danych</h3>			
+		<h3>Przekształcenie danych</h3>			
 		<p>
 			</br>
 			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
@@ -90,7 +87,13 @@ chocolatey install jq
 			W moim przypadku interesujące pole to features, więc aby to zrobić w cmd wydajemy polecenie:
 			<div class="command">
 				<code>
-jq ".features" map.geojson > mapPom.geojson
+jq ".features[]" map.geojson > mapPom.geojson
+				</code>
+			</div>
+			Następnie
+			<div class="command">
+				<code>
+< mapPom.geojson jq --compact-output "{ \"index\": { \"_type\": \"test\" } }, ." > mapPom.bulk
 				</code>
 			</div>
 			Podczas wykonywania tej operacji doszło do zużycia zasobów (ilustracja niżej). 
@@ -111,7 +114,7 @@ jq ".features" map.geojson > mapPom.geojson
 			<div class="description-image">Dysk podczas przekształcania danych</div>
 			</br></br>
 			Wykonanie trwało ok. 35 minut.
-		</p> -->
+		</p>
 		<h3>Import danych do postreSQL</h3>
 		<p>
 			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
@@ -120,7 +123,7 @@ jq ".features" map.geojson > mapPom.geojson
 			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
 			<div class="command">
 				<code>
-pgfutter --pass "[moje hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
+pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
 				</code>
 			</div>
 			</br>
@@ -147,7 +150,110 @@ pgfutter --pass "[moje hasło]" --table "test" csv NHS_Postcode_Directory_Latest
 			<div class="text-center">
 				<img src="../images/screen13.PNG" height="30em" width="1200em">
 			</div>
-			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.
+			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.	
+		</p>
+		</br>
+		<h3>Import danych do elasticsearch</h3>
+		<p>
+			Pobieramy ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
+			</br>
+			Następnie aby uruchomić serwer wykonujemy polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+[ścieżka gdzie pobrano elasticsearch]\elasticsearch-5.3.0\bin\elasticsearch.bat
+				</code>
+			</div>
+			Pobieramy ze <a href="https://curl.haxx.se/download.html">strony</a> <i>curl'a</i> po czym kopijemy plik binarny do folderu w ktorym pracujemy,
+			polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka wykonywany jest projekt]\curl.exe
+				</code>
+			</div>
+			W nowej konsoli tworzymy bazę danych (w moim przypadku o nazwie test), polecenie:
+			<div class="command">
+				<code>
+curl -XPUT localhost:9200/test
+				</code>
+			</div>
+			</br>
+			Następnie dokonujemy importu poprzez polecenie: 
+			<div class="command">
+				<code>
+curl -XPOST localhost:9200/test/test/_bulk --data-binary @mapPom.bulk		
+				</code>
+			</div>
+			Import danych średnio zużywał zasoby komputera.
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen10.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas importu danych do elasticsearch</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen11.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas importu danych do elasticsearch</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen12.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas importu danych do elasticsearch</div>
+			</br></br>
+			Wykonanie trwało ok. 5 sekund.
+			</br>
+			</br>
+			Sprawdzamy czy wszystkie dane zostały zaimportowane, polecenie:
+			<div class="command">
+				<code>
+curl -XGET localhost:9200/test/test/_count
+				</code>
+			</div>
+			Po czym pojawiła się informacja:
+			<div class="command">
+				<code>
+{"count":2593752,"_shards":{"total":5,"successful":5,"failed":0}}
+				</code>
+			</div>
+		</p>
+		<h2>Przykładowe pole</h2>
+		<h3>Użycie postgreSQL</h3>
+		<p>
+			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
+				</code>
+			</div>
+			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			<div class="command">
+				<code>
+psql -U postgres
+				</code>
+			</div>
+			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			</br></br>
+			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
+			<div class="command">
+				<code>
+select * from import.test limit 1;
+				</code>
+			</div>
+		</p>
+		<h3>Użycie elasticsearch</h3>
+		<p>
+			Po zaimportowaniu danych podajemy polecenie:
+		</p>
+	</div>		
+	</br>
+	<div class="text-center">
+		<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
+	</div>
+	<div class = "return">
+		<a href="../index.html">powrót</a>
+	</div>
+</body>
+
 			<!--
 			Następnie tworzymy tymczasową tabelę, polecenie:	
 			<div class="command">
@@ -199,45 +305,4 @@ create table public.test(
 	msoa11 varchar
 );
 				</code>
-			</div>-->			
-		</p>
-		</br>
-		<h3>Import danych do elasticsearch</h3>
-		<p>
-			Pobieramy ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch,
-			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
-			</br>
-			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
-			<div class="command">
-				<code>
-cd [ścieżka gdzie jest zainstalowany elasticsearch]\elasticsearch-5.3.0\bin
-				</code>
-			</div>
-			</br>		
-		</p>
-		<h2>Przykładowe pole</h2>
-		<h3>Użycie postgreSQL</h3>
-		<p>
-			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
-			<div class="command">
-				<code>
-cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
-				</code>
-			</div>
-			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
-			<div class="command">
-				<code>
-psql -U postgres
-				</code>
-			</div>
-			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
-			</br></br>
-		</p>
-		<!-- select * from import.test limit 1; -->
-		<!-- https://curl.haxx.se/download.html -->
-	</div>		
-	</br>
-	<div class = "return">
-		<a href="../index.html">powrót</a>
-	</div>
-</body>
+			</div>-->		
