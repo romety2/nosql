@@ -246,10 +246,10 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 			</div>
 		</p>
 		<h3>Mapki</h3>
-			Pierwsze 500 danych zobrazowanych, polecenie:
+			Pierwsze 2000 danych zobrazowanych, polecenie:
 			<div class="command">
 				<code>
-curl -s "http://localhost:9200/test/test/_search?size=500&pretty=1" | jq .hits.hits[].\"_source\" | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map1.geojson
+curl -s "http://localhost:9200/test/test/_search?size=2000&pretty=1" | jq .hits.hits[].\"_source\" | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map1.geojson
 				</code>
 			</div>
 			<div class="text-center">
@@ -259,7 +259,7 @@ curl -s "http://localhost:9200/test/test/_search?size=500&pretty=1" | jq .hits.h
 			Wspórzędne w promieniu 500 km od Aberdeen (współrzędne: [-2.099075, 57.149651]), polecenie:
 			<div class="command">
 				<code>
-curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":5000,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_distance\":{\"distance\":\"500km\",\"location\":{\"lat\":57.149651,\"lon\":-2.099075}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map2.geojson
+curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_distance\":{\"distance\":\"500km\",\"location\":{\"lat\":57.149651,\"lon\":-2.099075}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map2.geojson
 				</code>
 			</div>
 			<div class="text-center">
