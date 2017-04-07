@@ -4,6 +4,46 @@ body
 	font-family: Arial, Helvetica, sans-serif;
 }
 
+.menu
+{
+	width: 25%;
+	font-size: 13px;
+	background: #FFC2C1;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	border-radius: 10px;
+	opacity: 0.9;
+}
+
+.menu ul
+{
+	list-style-type: none;
+}
+
+.menu a:link
+{
+    color: #C71585;
+	text-decoration: none;
+}
+
+.menu a:visited
+{
+    color: #C71585;
+	text-decoration: none;
+}
+
+.menu a:hover
+{
+    color: #C71585;
+	text-decoration: none;
+}
+
+.menu a:active
+{
+    color: #C71585;
+	text-decoration: none;
+}
+
 .command
 { 
 	text-align: left;

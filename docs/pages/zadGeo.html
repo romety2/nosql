@@ -14,7 +14,32 @@
 	<div class = "description">
 		<h1 class="text-center">Zadanie GEO</h1>
 		</br>
-		<h2>Informacje o danych</h2>	
+		<div class="menu">
+			<ul>
+				<li><a href="#iod">Informacje o danych</a></li>
+				<li><a href="#iiko">Instalacja i konfiguracja oprogramowania</a></li>
+				<ul>
+					<li><a href="#iiko1">postgreSQL</a></li>
+					<li><a href="#iiko2">jdk</a></li>
+					<li><a href="#iiko3">jq</a></li>
+					<li><a href="#iiko4">python</a></li>
+				</ul>
+				<li><a href="#el">Elasticsearch</a></li>
+				<ul>
+					<li><a href="#el1">przekształcenie danych</a></li>
+					<li><a href="#el2">import danych</a></li>
+					<li><a href="#el3">przykładowy rekord</a></li>
+					<li><a href="#el4">mapki</a></li>
+				</ul>
+				<li><a href="#post">PostgreSQL</a></li>
+				<ul>
+					<li><a href="#post1">import danych</a></li>
+					<li><a href="#post2">przykładowy rekord</a></li>
+					<li><a href="#post3">mapki</a></li>
+				</ul>
+			</ul>
+		</div>
+		<h2 id="iod">Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
 			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>.
@@ -24,14 +49,14 @@
 			Ilość: 2593752
 		</p>
 		</br>	
-		<h2>Instalacja i konfiguracja oprogramowania</h2>
-		<h3>postgreSQL</h3>
+		<h2 id="iiko">Instalacja i konfiguracja oprogramowania</h2>
+		<h3 id="iiko1">postgreSQL</h3>
 		<p>
 			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją pobrać ze 
 			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">strony</a>
 			i zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
 		</p>
-		<h3>jdk</h3>
+		<h3 id="iiko2">jdk</h3>
 		<p>
 			Aby uruchomić bazę elasticsearch potrzebny jest najnowyszy jdk, który jest możliwy do sciągniećia ze
 			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> i zainstalować.
@@ -47,7 +72,7 @@
 			</br>
 			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
 		</p>
-		<h3>jq</h3>
+		<h3 id="iiko3">jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
 			</br>
@@ -71,14 +96,14 @@ chocolatey install jq
 			</ul>
 		</p>
 		</br>
-		<h3>python</h3>
+		<h3 id="iiko4">python</h3>
 		<p>
 			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy go ze
 			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
 		</p>
 		</br>
-		<h2>Elasticsearch</h2>
-		<h3>Przekształcenie danych</h3>			
+		<h2 id="el">Elasticsearch</h2>
+		<h3 id="el1">przekształcenie danych</h3>			
 		<p>
 			<a href="http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson">Pobierz</a> dane.
 			</br></br>
@@ -119,7 +144,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 			Wykonanie trwało ok. 35 minut.
 		</p>
 		</br>
-		<h3>Import danych</h3>
+		<h3 id="e2">import danych</h3>
 		<p>
 			Pobieramy ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
 			</br>
@@ -136,7 +161,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka wykonywany jest projekt]\curl.exe
 				</code>
 			</div>
-			W nowej konsoli tworzymy bazę danych z mappingiem, który konieczny jest do wykonywania działań na współrzędnych (w moim przypadku o nazwie test), polecenie:
+			W nowej konsoli tworzymy bazę danych z mappingiem, który konieczny jest do wykonywania działań na współrzędnych, polecenie:
 			<div class="command">
 				<code>
 curl -XPUT http://localhost:9200/test -d "{\"mappings\": {\"place\": {\"properties\": {\"objectid\": {\"type\": \"integer\"},\"pcd2\": {\"type\": \"string\"},\"pcds\": {\"type\": \"string\"},\"dointr\": {\"type\": \"string\"},\"oseast100m\": {\"type\": \"string\"},\"osnrth100m\": {\"type\": \"string\"},\"oscty\": {\"type\": \"string\"},\"odslaua\": {\"type\": \"string\"},\"oslaua\": {\"type\": \"string\"},\"osward\": {\"type\": \"string\"},\"usertype\": {\"type\": \"string\"},\"osgrdind\": {\"type\": \"string\"},\"ctry\": {\"type\": \"string\"},\"oshlthau\": {\"type\": \"string\"},\"gor\": {\"type\": \"string\"},\"oldha\": {\"type\": \"string\"},\"nhscr\": {\"type\": \"string\"},\"ccg\": {\"type\": \"string\"},\"psed\": {\"type\": \"string\"},\"cened\": {\"type\": \"string\"},\"edind\": {\"type\": \"string\"},\"ward98\": {\"type\": \"string\"},\"oa01\": {\"type\": \"string\"},\"nhsrg\": {\"type\": \"string\"},\"hro\": {\"type\": \"string\"},\"lsoa01\": {\"type\": \"string\"},\"ur01ind\": {\"type\": \"string\"},\"msoa01\": {\"type\": \"string\"},\"cannet\": {\"type\": \"string\"},\"scn\": {\"type\": \"string\"},\"oshaprev\": {\"type\": \"string\"},\"oldpct\": {\"type\": \"string\"},\"oldhro\": {\"type\": \"string\"},\"pcon\": {\"type\": \"string\"},\"canreg\": {\"type\": \"string\"},\"pct\": {\"type\": \"string\"},\"oseast1m\": {\"type\": \"string\"},\"osnrth1m\": {\"type\": \"string\"},\"oa11\": {\"type\": \"string\"},\"lsoa11\": {\"type\": \"string\"},\"msoa11\": {\"type\": \"string\"},\"location\": {\"type\": \"geo_point\" }}}}}"
@@ -184,7 +209,7 @@ curl -XGET localhost:9200/test/_count
 				</pre>
 			</div>
 		</p>
-		<h3>Przykładowe pole</h3>
+		<h3 id="el3">przykładowy rekord</h3>
 		<p>
 			Po zaimportowaniu danych podajemy polecenie:
 		</p>
@@ -249,7 +274,7 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 				</pre>
 			</div>
 		</p>
-		<h3>Mapki</h3>
+		<h3 id="el4">mapki</h3>
 			Pierwsze 2000 danych zobrazowanych, polecenie:
 			<div class="command">
 				<code>
@@ -270,12 +295,12 @@ curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"boo
 				<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map2.geojson"></script>
 			</div>
 		</p>
-		<h2>PostgreSQL</h2>
-		<h3>Import danych</h3>
+		<h2 id="post">PostgreSQL</h2>
+		<h3 id="post1">import danych</h3>
 		<p>
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
-			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a>
+			 <a href="../../scripts/s1.py" download>Pobierz</a>
 			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
 			</br>
 			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
@@ -337,7 +362,7 @@ psql -U postgres
 			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
 			</br></br>
 		</p>
-		<h3>Przykładowe pole</h3>
+		<h3 id="post2">przykładowy rekord</h3>
 		<p>
 			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
 			<div class="command">
@@ -350,6 +375,10 @@ select * from import.test limit 1;
 				<img src="../images/screen14.PNG" height="150em" width="1200em">
 			</div>
 			<div class="description-image">Przykładowe pole postreSQL</div>
+		</p>
+		<h3 id="post3">mapki</h3>
+		<p>
+
 		</p>
 	</div>
 	</br>
