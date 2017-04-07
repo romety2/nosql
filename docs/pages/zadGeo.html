@@ -161,7 +161,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka wykonywany jest projekt]\curl.exe
 				</code>
 			</div>
-			W nowej konsoli tworzymy bazę danych z mappingiem, który konieczny jest do wykonywania działań na współrzędnych, polecenie:
+			W nowej konsoli tworzymy bazę danych z mappingiem, polecenie:
 			<div class="command">
 				<code>
 curl -XPUT http://localhost:9200/test -d "{\"mappings\": {\"place\": {\"properties\": {\"objectid\": {\"type\": \"integer\"},\"pcd2\": {\"type\": \"string\"},\"pcds\": {\"type\": \"string\"},\"dointr\": {\"type\": \"string\"},\"oseast100m\": {\"type\": \"string\"},\"osnrth100m\": {\"type\": \"string\"},\"oscty\": {\"type\": \"string\"},\"odslaua\": {\"type\": \"string\"},\"oslaua\": {\"type\": \"string\"},\"osward\": {\"type\": \"string\"},\"usertype\": {\"type\": \"string\"},\"osgrdind\": {\"type\": \"string\"},\"ctry\": {\"type\": \"string\"},\"oshlthau\": {\"type\": \"string\"},\"gor\": {\"type\": \"string\"},\"oldha\": {\"type\": \"string\"},\"nhscr\": {\"type\": \"string\"},\"ccg\": {\"type\": \"string\"},\"psed\": {\"type\": \"string\"},\"cened\": {\"type\": \"string\"},\"edind\": {\"type\": \"string\"},\"ward98\": {\"type\": \"string\"},\"oa01\": {\"type\": \"string\"},\"nhsrg\": {\"type\": \"string\"},\"hro\": {\"type\": \"string\"},\"lsoa01\": {\"type\": \"string\"},\"ur01ind\": {\"type\": \"string\"},\"msoa01\": {\"type\": \"string\"},\"cannet\": {\"type\": \"string\"},\"scn\": {\"type\": \"string\"},\"oshaprev\": {\"type\": \"string\"},\"oldpct\": {\"type\": \"string\"},\"oldhro\": {\"type\": \"string\"},\"pcon\": {\"type\": \"string\"},\"canreg\": {\"type\": \"string\"},\"pct\": {\"type\": \"string\"},\"oseast1m\": {\"type\": \"string\"},\"osnrth1m\": {\"type\": \"string\"},\"oa11\": {\"type\": \"string\"},\"lsoa11\": {\"type\": \"string\"},\"msoa11\": {\"type\": \"string\"},\"location\": {\"type\": \"geo_point\" }}}}}"
@@ -266,8 +266,8 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
   "lsoa11": "S01006526",
   "msoa11": "S02001239",
   "location": [
-    -2.14614501355345,
-    57.12107567680422
+    -2.134,
+    57.123
   ]
 }
 					</code>
@@ -289,6 +289,15 @@ curl -s "http://localhost:9200/test/test/_search?size=2000&pretty=1" | jq .hits.
 			<div class="command">
 				<code>
 curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_distance\":{\"distance\":\"1000km\",\"location\":{\"lat\":57.149651,\"lon\":-2.099075}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map2.geojson
+				</code>
+			</div>
+			<div class="text-center">
+				<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map2.geojson"></script>
+			</div>
+			Poligon pomiędzy miejscowościami Aberdeen (współrzędne: [-2.1, 57.15]), Footdee (współrzędne: [-2.08,57.14]), Gilcomston (współrzędne: [-2.11,57.14]), Kittybrewster (współrzędne: [-2.12,57.16])
+			<div class="command">
+				<code>
+curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":100,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_polygon\":{\"location\":{\"points\":[[-2.1, 57.15],[-2.08,57.14],[-2.11,57.14],[-2.12,57.16]]}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map3.geojson 				
 				</code>
 			</div>
 			<div class="text-center">
