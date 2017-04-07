@@ -49,8 +49,7 @@
 		</p>
 		<h3>jq</h3>
 		<p>
-			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać tylko te dane które nas interesują.
-			W naszym przypadku będą to dane które zawierają współrzędne geograficzne.
+			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
 			</br>
 			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
 			Uruchamiamy konsolę cmd <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
@@ -72,12 +71,17 @@ chocolatey install jq
 			</ul>
 		</p>
 		</br>
+		<h3>python</h3>
+		<p>
+			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy go ze
+			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
+		</p>
+		</br>
 		<h2>Elasticsearch</h2>
 		<h3>Przekształcenie danych</h3>			
 		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a>
-			pobieramy plik z rozszeżeniem  <i>geojson</i>.
-			</br>
+			<a href="http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson">Pobierz</a> dane.
+			</br></br>
 			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego zaokrąglone dane geograficzne pod nazwa <i>location</i>
 			, aby móc na nich odpowiednio operować. Zaokrąglenia są konieczne, aby zapytania w elasticsearch działały poprawnie.
 			</br>
@@ -256,10 +260,10 @@ curl -s "http://localhost:9200/test/test/_search?size=2000&pretty=1" | jq .hits.
 				<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map1.geojson"></script>
 			</div>
 			</br>
-			Wspórzędne w promieniu 500 km od Aberdeen (współrzędne: [-2.099075, 57.149651]), polecenie:
+			Wspórzędne w promieniu 1000 km od Aberdeen (współrzędne: [-2.099075, 57.149651]), polecenie:
 			<div class="command">
 				<code>
-curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_distance\":{\"distance\":\"500km\",\"location\":{\"lat\":57.149651,\"lon\":-2.099075}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map2.geojson
+curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_distance\":{\"distance\":\"1000km\",\"location\":{\"lat\":57.149651,\"lon\":-2.099075}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map2.geojson
 				</code>
 			</div>
 			<div class="text-center">
@@ -269,13 +273,24 @@ curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"boo
 		<h2>PostgreSQL</h2>
 		<h3>Import danych</h3>
 		<p>
-			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
+			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
+			</br></br>
+			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a>
+			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
+			</br>
+			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			<div class="command">
+				<code>
+py s1.py
+				</code>
+			</div>
+			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
 			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
 			</br>
 			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
 			<div class="command">
 				<code>
-pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
+pgfutter --pass "[hasło]" --table "test" csv map.csv
 				</code>
 			</div>
 			</br>
@@ -302,7 +317,9 @@ pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Cent
 			<div class="text-center">
 				<img src="../images/screen13.PNG" height="30em" width="1200em">
 			</div>
-			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.	
+			<div class="description-image">Import danych do posgreSQL</div>
+			</br>
+			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
 		<p>
 			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
@@ -319,69 +336,24 @@ psql -U postgres
 			</div>
 			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
 			</br></br>
+		</p>
+		<h3>Przykładowe pole</h3>
+		<p>
 			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
 			<div class="command">
 				<code>
 select * from import.test limit 1;
 				</code>
 			</div>
+			Wówczas otrzymano: 
+			<div class="text-center">
+				<img src="../images/screen14.PNG" height="150em" width="1200em">
+			</div>
+			<div class="description-image">Przykładowe pole postreSQL</div>
 		</p>
 	</div>
 	</br>
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
-</body>
-
-			<!--
-			Następnie tworzymy tymczasową tabelę, polecenie:	
-			<div class="command">
-				<code>
-create table public.test(
-	x float,
-	y float,
-	objectid integer primary key,
-	pcd2 varchar,
-	pcds varchar,
-	dointr integer,
-	doterm integer,
-	oseast100m integer,
-	osnrth100m integer,
-	oscty varchar,
-	odslaua varchar,
-	oslaua varchar,
-	osward varchar,
-	usertype integer,
-	osgrdind integer,
-	ctry varchar,
-	oshlthau varchar,
-	gor varchar,
-	oldha varchar,
-	nhscr varchar,
-	ccg varchar,
-	psed varchar,
-	cened varchar,
-	edind integer,
-	ward98 varchar,
-	oa01 varchar,
-	nhsrg varchar,
-	hro varchar,
-	lsoa01 varchar,
-	ur01ind integer,
-	msoa01 varchar,
-	cannet varchar,
-	scn varchar,
-	oshaprev varchar,
-	oldpct varchar,
-	oldhro varchar,
-	pcon varchar,
-	canreg varchar,
-	pct varchar,
-	oseast1m integer,
-	osnrth1m integer,
-	oa11 varchar,
-	lsoa11 varchar,
-	msoa11 varchar
-);
-				</code>
-			</div>-->		
+</body>		
