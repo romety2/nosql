@@ -24,18 +24,18 @@
 					<li><a href="#iiko3">jq</a></li>
 					<li><a href="#iiko4">python</a></li>
 				</ul>
+				<li><a href="#post">PostgreSQL</a></li>
+				<ul>
+					<li><a href="#post1">import danych</a></li>
+					<li><a href="#post2">przykładowy rekord</a></li>
+					<li><a href="#post3">zapytania geodezyjne</a></li>
+				</ul>
 				<li><a href="#el">Elasticsearch</a></li>
 				<ul>
 					<li><a href="#el1">przekształcenie danych</a></li>
 					<li><a href="#el2">import danych</a></li>
 					<li><a href="#el3">przykładowy rekord</a></li>
-					<li><a href="#el4">mapki</a></li>
-				</ul>
-				<li><a href="#post">PostgreSQL</a></li>
-				<ul>
-					<li><a href="#post1">import danych</a></li>
-					<li><a href="#post2">przykładowy rekord</a></li>
-					<li><a href="#post3">mapki</a></li>
+					<li><a href="#el4">zapytania geodezyjne (mapki)</a></li>
 				</ul>
 			</ul>
 		</div>
@@ -102,6 +102,111 @@ chocolatey install jq
 			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
 		</p>
 		</br>
+		<h2 id="post">PostgreSQL</h2>
+		<h3 id="post1">import danych</h3>
+		<p>
+			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
+			</br></br>
+			 <a href="../../scripts/s1.py" download>Pobierz</a>
+			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
+			</br>
+			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			<div class="command">
+				<code>
+py s1.py
+				</code>
+			</div>
+			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
+			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
+			</br>
+			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
+			<div class="command">
+				<code>
+pgfutter --pass "[hasło]" --table "test" csv map.csv
+				</code>
+			</div>
+			</br>
+			Import danych średnio zużywał zasoby komputera.
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen7.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas importu danych do postreSQL</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen8.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas importu danych do postreSQL</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen9.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas importu danych do postreSQL</div>
+			</br></br>
+			Wykonanie trwało ok. 2 minut, 35 sekund.
+			</br>
+			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
+			<div class="text-center">
+				<img src="../images/screen13.PNG" height="30em" width="1200em">
+			</div>
+			<div class="description-image">Import danych do posgreSQL</div>
+			</br>
+			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
+		</p>
+		<h3 id="post2">przykładowy rekord</h3>
+		<p>
+			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
+				</code>
+			</div>
+			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			<div class="command">
+				<code>
+psql -U postgres
+				</code>
+			</div>
+			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			</br></br>
+		</p>
+		<p>
+			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
+			<div class="command">
+				<code>
+select * from import.test limit 1;
+				</code>
+			</div>
+			Wówczas otrzymano: 
+			<div class="text-center">
+				<img src="../images/screen14.PNG" height="150em" width="1200em">
+			</div>
+			<div class="description-image">Przykładowe pole postreSQL</div>
+		</p>
+		<h3 id="post3">zapytania geodezyjne</h3>
+		<p>
+			Aby korzystać z zapytań geodezyjnych musimy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
+			Po czym zmieniamy nazwy kolumn</br>
+			<i>x</i> na <i>Longitude</i>
+			<div class="command">
+				<code>
+alter table import.test rename x to longitude;
+				</code>
+			</div>
+			<i>y</i> na <i>Latitude</i>
+			<div class="command">
+				<code>
+alter table import.test rename y to latitude;
+				</code>
+			</div>
+			Ptzykładowe zapytanie, które tworzy poligon w: [-2.1, 57.15],[-2.11,57.14],[-2.12,57.16]]
+			<div class="command">
+				<code>
+select * from import.test where ST_MakeEnvelope(-2.1, 57.15, -2.11, 57.14, -2.12, 57.16 4326);
+				</code>
+			</div>
+			Więcej można przeczytać w <a href="http://postgis.net/docs/manual-2.3/" target="_blank">dokumentacji</a>.
+		</p>
 		<h2 id="el">Elasticsearch</h2>
 		<h3 id="el1">przekształcenie danych</h3>			
 		<p>
@@ -154,7 +259,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 [ścieżka gdzie pobrano elasticsearch]\elasticsearch-5.3.0\bin\elasticsearch.bat
 				</code>
 			</div>
-			Pobieramy ze <a href="https://curl.haxx.se/download.html">strony</a> <i>curl'a</i> po czym kopijemy plik binarny do folderu w ktorym pracujemy,
+			Pobieramy ze <a href="https://curl.haxx.se/download.html" target="_blank">strony</a> <i>curl'a</i> po czym kopijemy plik binarny do folderu w ktorym pracujemy,
 			polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
@@ -274,7 +379,7 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 				</pre>
 			</div>
 		</p>
-		<h3 id="el4">mapki</h3>
+		<h3 id="el4">polecenia geodezyjne (mapki)</h3>
 			Pierwsze 2000 danych zobrazowanych, polecenie:
 			<div class="command">
 				<code>
@@ -294,104 +399,19 @@ curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":500,\"query\":{\"boo
 			<div class="text-center">
 				<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map2.geojson"></script>
 			</div>
-			Poligon pomiędzy miejscowościami Aberdeen (współrzędne: [-2.1, 57.15]), Footdee (współrzędne: [-2.08,57.14]), Gilcomston (współrzędne: [-2.11,57.14]), Kittybrewster (współrzędne: [-2.12,57.16])
+			Poligon pomiędzy miejscowościami Aberdeen (współrzędne: [-2.1, 57.15]), Gilcomston (współrzędne: [-2.11,57.14]), Kittybrewster (współrzędne: [-2.12,57.16])
 			<div class="command">
 				<code>
-curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":100,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_polygon\":{\"location\":{\"points\":[[-2.1, 57.15],[-2.08,57.14],[-2.11,57.14],[-2.12,57.16]]}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map3.geojson 				
+curl -XGET localhost:9200/test/_search?pretty -d "{\"size\":100,\"query\":{\"bool\":{\"must\":{\"match_all\":{}}, \"filter\":{\"geo_polygon\":{\"location\":{\"points\":[[-2.1, 57.15],[-2.11,57.14],[-2.12,57.16]]}}}}}}" | jq .hits.hits[]._source | jq "{type:\"Feature\", properties: {objectid, pcd2, pcds, dointr, doterm, oseast100m, osnrth100m,oscty, odslaua, oslaua, osward, usertype, osgrdind, ctry, oshlthau, gor, oldha, nhscr, ccg, psed, cened ,edind, ward98, oa01, nhsrg, hro, lsoa01, ur01ind, msoa01, cannet, scn, oshaprev, oldpct, oldhro, pcon, canreg, pct, oseast1m, osnrth1m, oa11, lsoa11,msoa11,}, geometry: {type:\"Point\", coordinates: .location}}" | jq --slurp . | jq {type:\"FeatureCollection\",features:.} > map3.geojson 				
 				</code>
 			</div>
 			<div class="text-center">
 				<script src="https://embed.github.com/view/geojson/romety2/nosql/master/data/map3.geojson"></script>
 			</div>
 		</p>
-		<h2 id="post">PostgreSQL</h2>
-		<h3 id="post1">import danych</h3>
-		<p>
-			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
-			</br></br>
-			 <a href="../../scripts/s1.py" download>Pobierz</a>
-			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
-			</br>
-			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
-			<div class="command">
-				<code>
-py s1.py
-				</code>
-			</div>
-			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
-			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
-			</br>
-			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
-			<div class="command">
-				<code>
-pgfutter --pass "[hasło]" --table "test" csv map.csv
-				</code>
-			</div>
-			</br>
-			Import danych średnio zużywał zasoby komputera.
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen7.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Procesor podczas importu danych do postreSQL</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen8.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Pamięć podczas importu danych do postreSQL</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen9.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Dysk podczas importu danych do postreSQL</div>
-			</br></br>
-			Wykonanie trwało ok. 2 minut, 35 sekund.
-			</br>
-			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
-			<div class="text-center">
-				<img src="../images/screen13.PNG" height="30em" width="1200em">
-			</div>
-			<div class="description-image">Import danych do posgreSQL</div>
-			</br>
-			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
-		</p>
-		<p>
-			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
-			<div class="command">
-				<code>
-cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
-				</code>
-			</div>
-			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
-			<div class="command">
-				<code>
-psql -U postgres
-				</code>
-			</div>
-			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
-			</br></br>
-		</p>
-		<h3 id="post2">przykładowy rekord</h3>
-		<p>
-			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
-			<div class="command">
-				<code>
-select * from import.test limit 1;
-				</code>
-			</div>
-			Wówczas otrzymano: 
-			<div class="text-center">
-				<img src="../images/screen14.PNG" height="150em" width="1200em">
-			</div>
-			<div class="description-image">Przykładowe pole postreSQL</div>
-		</p>
-		<h3 id="post3">mapki</h3>
-		<p>
-
-		</p>
 	</div>
 	</br>
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
-</body>		
+</body> 
