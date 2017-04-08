@@ -183,6 +183,21 @@ select * from import.test limit 1;
 			<div class="description-image">Przykładowy rekord postreSQL</div>
 			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
 		</p>
+		<h3 id="psql3">ilość danych</h3>
+		<p>
+			Sprawdzamy ile danych zostało zaimportowanych, polecenie:
+			<div class="command">
+				<code>
+select count(*) from import.test;
+				</code>
+			</div>
+			Po czym pojawiła się informacja:
+			<div class="text-center">
+				<img src="../images/screen18.PNG" height="90em" width="110em">
+			</div>
+			<div class="description-image">Ilość danych postreSQL</div>
+			Wykonanie tego zapytania trwało ok. 5 sekund.
+		</p>	
 		</br>
 		<h2 id="es">Elasticsearch</h2>
 		<h3 id="es1">import danych</h3>
@@ -250,7 +265,6 @@ logstash -f btc.conf
 		<h3 id="es2">przykładowy rekord</h3>
 		<p>
 			Po zaimportowaniu danych podajemy polecenie:
-		</p>
 			<div class="command">
 				<code>
 curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
@@ -316,6 +330,24 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 			</div>
 			Podobnie ja w przypadku <i>postreSQL'a</i> to zapytanie również zostało wykonane w mgnieniu oka.	
 		</p>
+		<h3 id="es3">ilość danych</h3>
+		<p>
+			Sprawdzamy ile danych zostało zaimportowanych, polecenie:
+			<div class="command">
+				<code>
+curl -XGET localhost:9200/test/_count
+				</code>
+			</div>
+			Po czym pojawiła się informacja:
+			<div class="code">
+				<pre>
+					<code>
+{"count":2593752,"_shards":{"total":5,"successful":5,"failed":0}}
+					</code>
+				</pre>
+			</div>
+			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+		</p>		
 		<h2 id="pod">Podsumowanie</h2>
 		<table class="summary table-center">
 			<tr>
@@ -357,7 +389,7 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 			</tr>
 			<tr>
 				<td>Ilość danych</td>
-				<td>1 sek.</td>
+				<td>5 sek.</td>
 				<td>30%</td>
 				<td>30%</td>
 				<td>0%</td>
