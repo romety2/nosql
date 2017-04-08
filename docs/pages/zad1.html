@@ -12,7 +12,7 @@
 		<a href="../index.html">powrót</a>
 	</div>
 	<div class = "description">
-		<h1 class="text-center">Zadanie 1</h1>
+		<h1 class="text-center">Zadanie 1 (EDA)</h1>
 		</br>
 		<h2>Informacje o danych</h2>	
 		<p class="description-data">
@@ -47,17 +47,33 @@
 			</br>
 			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
 		</p>
-		</br>
-		<h2>Import danych</h2>	
-		<h3>Import danych do postreSQL</h3>
+		<h3 id="iiko3">python</h3>
 		<p>
-			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> pgfutter,
+			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy ze
+			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
+		</p>
+		</br>
+		<h2 id="post">PostgreSQL</h2>
+		<h3 id="post1">import danych</h3>
+		<p>
+			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
+			</br></br>
+			 <a href="../../scripts/s1.py" download>Pobierz</a>
+			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
+			</br>
+			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			<div class="command">
+				<code>
+py s1.py
+				</code>
+			</div>
+			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
 			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
 			</br>
 			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
 			<div class="command">
 				<code>
-pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Centroids.csv
+pgfutter --pass "[hasło]" --table "test" csv map.csv
 				</code>
 			</div>
 			</br>
@@ -84,8 +100,83 @@ pgfutter --pass "[hasło]" --table "test" csv NHS_Postcode_Directory_Latest_Cent
 			<div class="text-center">
 				<img src="../images/screen13.PNG" height="30em" width="1200em">
 			</div>
-			Czyli dane zostały zaimportowane to tabeli test w schemacie import, czyli import.test.
+			<div class="description-image">Import danych do posgreSQL</div>
+			</br>
+			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
+		<h3 id="post2">przykładowy rekord</h3>
+		<p>
+			Ponowanie uruchamia serwer, przypominam, że aby to zrobić, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
+				</code>
+			</div>
+			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			<div class="command">
+				<code>
+psql -U postgres
+				</code>
+			</div>
+			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			</br></br>
+		</p>
+		<p>
+			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
+			<div class="command">
+				<code>
+select * from import.test limit 1;
+				</code>
+			</div>
+			Wówczas otrzymano: 
+			<div class="text-center">
+				<img src="../images/screen14.PNG" height="150em" width="1200em">
+			</div>
+			<div class="description-image">Przykładowy rekord postreSQL</div>
+			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+		</p>
+		</br>
+		<h2 id="el">Elasticsearch</h2>
+		<h2 id="post">Podsumowanie</h2>
+		<table class="summary table-center">
+			<tr>
+				<th rowspan="2">Nazwa</th>
+				<th colspan="4">PostgreSQL</th>
+				<th colspan="4">Elasticsearch</th>
+			</tr>
+			<tr>
+				<th>czas</th>
+				<th>CPU</th>
+				<th>Pamięć</th>
+				<th>Dysk</th>	
+				<th>czas</th>
+				<th>CPU</th>
+				<th>Pamięć</th>
+				<th>Dysk</th>	
+			</tr>
+			<tr>
+				<td>Import danych</td>
+				<td>2 min. 35 sek.</td>
+				<td>70%</td>	
+				<td>40%</td>	
+				<td>100%</td>	
+				<td>?</td>
+				<td>?</td>
+				<td>?</td>
+				<td>?</td>
+			</tr>
+			<tr>
+				<td>Przykładowy rekord</td>
+				<td>1 sek.</td>
+				<td>30%</td>
+				<td>30%</td>
+				<td>0%</td>
+				<td>1 sek.</td>
+				<td>30%</td>
+				<td>30%</td>
+				<td>0%</td>
+			</tr>
+		</table>
 	</div>
 	</br>
 	<div class = "return">

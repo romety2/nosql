@@ -94,6 +94,33 @@ body
 	background: #F8F8FF;
 }
 
+.summary 
+{
+	width: 95%;
+	border-style: double;
+	border-color: #000000;
+	border-width: 3px;
+	border-collapse: collapse;
+	font-size: 20px;
+	text-align: center;
+}
+.summary th		
+{
+	border-width: 0.5px;
+	padding: 2px;
+	border-style: solid;
+	border-color: #000000;
+	background: #E6E6FA;
+}
+.summary td
+{
+	border-width: 0.5px;
+	padding: 2px;
+	border-style: solid;
+	border-color: #000000;
+	background: #F8F8FF;
+}
+
 .description
 {
 	color: #482F4B;

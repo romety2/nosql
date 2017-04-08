@@ -4,7 +4,7 @@
 
 (zaliczenie)
 
-- [ ] EDA
+- [X] EDA
 
 (egzamin)
 
