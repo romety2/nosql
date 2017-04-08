@@ -187,19 +187,19 @@ select * from import.test limit 1;
 		<p>
 			Aby korzystać z zapytań geodezyjnych musimy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
 			Po czym zmieniamy nazwy kolumn</br>
-			<i>x</i> na <i>Longitude</i>
+			<i>x</i> na <i>longitude</i>
 			<div class="command">
 				<code>
 alter table import.test rename x to longitude;
 				</code>
 			</div>
-			<i>y</i> na <i>Latitude</i>
+			<i>y</i> na <i>latitude</i>
 			<div class="command">
 				<code>
 alter table import.test rename y to latitude;
 				</code>
 			</div>
-			Ptzykładowe zapytanie, które tworzy poligon w: [-2.1, 57.15],[-2.11,57.14],[-2.12,57.16]]
+			Przykładowe zapytanie, które tworzy poligon w: [-2.1, 57.15],[-2.11,57.14],[-2.12,57.16]
 			<div class="command">
 				<code>
 select * from import.test where ST_MakeEnvelope(-2.1, 57.15, -2.11, 57.14, -2.12, 57.16 4326);
