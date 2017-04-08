@@ -24,19 +24,19 @@
 					<li><a href="#iiko3">jq</a></li>
 					<li><a href="#iiko4">python</a></li>
 				</ul>
-				<li><a href="#post">PostgreSQL</a></li>
+				<li><a href="#psql">PostgreSQL</a></li>
 				<ul>
-					<li><a href="#post1">utworzenie tabeli</a></li>
-					<li><a href="#post2">import danych</a></li>
-					<li><a href="#post3">przykładowy rekord</a></li>
-					<li><a href="#post4">zapytania geodezyjne</a></li>
+					<li><a href="#psql1">utworzenie tabeli</a></li>
+					<li><a href="#psql2">import danych</a></li>
+					<li><a href="#psql3">przykładowy rekord</a></li>
+					<li><a href="#psql4">zapytania geodezyjne</a></li>
 				</ul>
-				<li><a href="#el">Elasticsearch</a></li>
+				<li><a href="#es">Elasticsearch</a></li>
 				<ul>
-					<li><a href="#el1">przekształcenie danych</a></li>
-					<li><a href="#el2">import danych</a></li>
-					<li><a href="#el3">przykładowy rekord</a></li>
-					<li><a href="#el4">zapytania geodezyjne (mapki)</a></li>
+					<li><a href="#es1">przekształcenie danych</a></li>
+					<li><a href="#es2">import danych</a></li>
+					<li><a href="#es3">przykładowy rekord</a></li>
+					<li><a href="#es4">zapytania geodezyjne (mapki)</a></li>
 				</ul>
 			</ul>
 		</div>
@@ -102,8 +102,8 @@ chocolatey install jq
 			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
 		</p>
 		</br>
-		<h2 id="post">PostgreSQL</h2>
-		<h3 id="post1">utworzenie tabeli</h3>
+		<h2 id="psql">PostgreSQL</h2>
+		<h3 id="psql1">utworzenie tabeli</h3>
 		<p>
 			Aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
@@ -177,7 +177,7 @@ create table import.test(
 				</code>
 			</div>
 		</p>	
-		<h3 id="post2">import danych</h3>
+		<h3 id="psql2">import danych</h3>
 		<p>
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
@@ -227,7 +227,7 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 			</br>
 			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
-		<h3 id="post3">przykładowy rekord</h3>
+		<h3 id="psql3">przykładowy rekord</h3>
 		<p>
 			Ponowanie uruchamia serwer, przypominam, że aby to zrobić, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
@@ -257,7 +257,7 @@ select * from import.test limit 1;
 			</div>
 			<div class="description-image">Przykładowy rekord postreSQL</div>
 		</p>
-		<h3 id="post4">zapytania geodezyjne</h3>
+		<h3 id="psql4">zapytania geodezyjne</h3>
 		<p>
 			Aby korzystać z zapytań geodezyjnych musimy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
 			Po czym zmieniamy nazwy kolumn</br>
@@ -281,8 +281,8 @@ select * from import.test where ST_MakeEnvelope(-2.1, 57.15, -2.11, 57.14, -2.12
 			</div>
 			Więcej można przeczytać w <a href="http://postgis.net/docs/manual-2.3/" target="_blank">dokumentacji</a>.
 		</p>
-		<h2 id="el">Elasticsearch</h2>
-		<h3 id="el1">przekształcenie danych</h3>			
+		<h2 id="es">Elasticsearch</h2>
+		<h3 id="es1">przekształcenie danych</h3>			
 		<p>
 			<a href="http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson">Pobierz</a> dane.
 			</br></br>
@@ -323,7 +323,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 			Wykonanie trwało ok. 35 minut.
 		</p>
 		</br>
-		<h3 id="el2">import danych</h3>
+		<h3 id="es2">import danych</h3>
 		<p>
 			Pobieramy ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
 			</br>
@@ -370,7 +370,7 @@ curl -XPOST localhost:9200/test/_bulk --data-binary @mapPom.bulk
 			</div>
 			<div class="description-image">Dysk podczas importu danych do elasticsearch</div>
 			</br></br>
-			Wykonanie trwało ok. 5 minut.
+			Wykonanie trwało ok. 30 minut.
 			</br>
 			</br>
 			Sprawdzamy czy wszystkie dane zostały zaimportowane, polecenie:
@@ -388,7 +388,7 @@ curl -XGET localhost:9200/test/_count
 				</pre>
 			</div>
 		</p>
-		<h3 id="el3">przykładowy rekord</h3>
+		<h3 id="es3">przykładowy rekord</h3>
 		<p>
 			Po zaimportowaniu danych podajemy polecenie:
 		</p>
@@ -453,7 +453,7 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 				</pre>
 			</div>
 		</p>
-		<h3 id="el4">polecenia geodezyjne (mapki)</h3>
+		<h3 id="es4">polecenia geodezyjne (mapki)</h3>
 			Pierwsze 2000 danych zobrazowanych, polecenie:
 			<div class="command">
 				<code>

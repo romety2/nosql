@@ -14,7 +14,29 @@
 	<div class = "description">
 		<h1 class="text-center">Zadanie 1 (EDA)</h1>
 		</br>
-		<h2>Informacje o danych</h2>	
+		<div class="menu">
+			<ul>
+				<li><a href="#iod">Informacje o danych</a></li>
+				<li><a href="#iiko">Instalacja i konfiguracja oprogramowania</a></li>
+				<ul>
+					<li><a href="#iiko1">postgreSQL</a></li>
+					<li><a href="#iiko2">jdk</a></li>
+					<li><a href="#iiko3">python</a></li>
+				</ul>
+				<li><a href="#psql">PostgreSQL</a></li>
+				<ul>
+					<li><a href="#psql1">import danych</a></li>
+					<li><a href="#psql2">przykładowy rekord</a></li>
+				</ul>
+				<li><a href="#es">Elasticsearch</a></li>
+				<ul>
+					<li><a href="#es1">import danych</a></li>
+					<li><a href="#es2">przykładowy rekord</a></li>
+				</ul>
+				<li><a href="#pod">Podsumowanie</a></li>
+			</ul>
+		</div>
+		<h2 id="iod">Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
 			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>.
@@ -53,8 +75,8 @@
 			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
 		</p>
 		</br>
-		<h2 id="post">PostgreSQL</h2>
-		<h3 id="post1">import danych</h3>
+		<h2 id="psql">PostgreSQL</h2>
+		<h3 id="psql1">import danych</h3>
 		<p>
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
@@ -104,7 +126,7 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 			</br>
 			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
-		<h3 id="post2">przykładowy rekord</h3>
+		<h3 id="psql2">przykładowy rekord</h3>
 		<p>
 			Ponowanie uruchamia serwer, przypominam, że aby to zrobić, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
@@ -136,8 +158,48 @@ select * from import.test limit 1;
 			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
 		</p>
 		</br>
-		<h2 id="el">Elasticsearch</h2>
-		<h2 id="post">Podsumowanie</h2>
+		<h2 id="es">Elasticsearch</h2>
+		<h3 id="es1">import danych</h3>
+		<p>
+			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
+			</br></br>
+			 <a href="../../scripts/s1.py" download>Pobierz</a>
+			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
+			</br>
+			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			<div class="command">
+				<code>
+py s1.py
+				</code>
+			</div>
+			Ściągamy ze <a href="https://www.elastic.co/downloads/logstash">strony</a> logstash oraz <a href="../../scripts/btc.conf" download>pobierz</a>
+			plik konfiguracyjny. Przejdziedz plików binarnych logstash, polecenie <i>cmd</i>:
+			<div class="command">
+				<code>
+cd [ścieżka gdzie pobrano logstash]\logstash-5.3.0\bin	
+				</code>
+			</div>	
+			Do tego folderu przenieś plik konfiguracyjny, polecenie <i>cmd</i>:
+			<div class="command">
+				<code>
+copy [ścieżka gdzie pobrano plik konfiguracyjny]\btc.conf [ścieżka gdzie pobrano logstash]\logstash-5.3.0\bin	
+				</code>
+			</div>
+			Zaś plik map.csv przenieś na dysk C (ewentualnie możesz zmienić ścieżkę w pliku konfiguracyjnym), polecenie <i>cmd</i>:
+			<div class="command">
+				<code>
+copy [ścieżka gdzie znajduje się plik map]\map.csv C:\
+				</code>
+			</div>
+			</br>
+			Następnie wykonaj polecenie:
+			<div class="command">
+				<code>
+logstash -f btc.conf
+				</code>
+			</div>
+		</p>		
+		<h2 id="pod">Podsumowanie</h2>
 		<table class="summary table-center">
 			<tr>
 				<th rowspan="2">Nazwa</th>
