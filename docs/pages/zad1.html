@@ -381,6 +381,8 @@ curl -s "http://localhost:9200/test/_search?pretty=true&q=edind:'9'&filter_path=
 			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
 		</p>
 		<h2 id="pod">Podsumowanie</h2>
+		Tabela przedstawia podsumowanie wszystkiego.
+		</br></br>
 		<table class="summary table-center">
 			<tr>
 				<th rowspan="2">Nazwa</th>
@@ -453,6 +455,10 @@ curl -s "http://localhost:9200/test/_search?pretty=true&q=edind:'9'&filter_path=
 				<td>0%</td>
 			</tr>
 		</table>
+		</br>
+		Jak widać import danych jest dużo szybszy w <i>postreSQL</i>, zaś <i>elasticsearch</i> niewiele
+		szybszy podczas wykonywania zapytań. Generalnie łatwiejszy w obsłudze wg był <i>posgreSQL</i>,
+		<i>elasticsearch</i> wydaje się mieć bardziej ograniczone możliwości.
 	</div>
 	</br>
 	<div class = "return">
