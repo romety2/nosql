@@ -21,20 +21,21 @@
 				<ul>
 					<li><a href="#iiko1">postgreSQL</a></li>
 					<li><a href="#iiko2">jdk</a></li>
-					<li><a href="#iiko3">jq</a></li>
-					<li><a href="#iiko4">python</a></li>
+					<li><a href="#iiko3">python</a></li>
 				</ul>
 				<li><a href="#psql">PostgreSQL</a></li>
 				<ul>
 					<li><a href="#psql1">import danych</a></li>
 					<li><a href="#psql2">przykładowy rekord</a></li>
 					<li><a href="#psql3">ilość danych</a></li>
+					<li><a href="#psql4">usuwanie danych</a></li>
 				</ul>
 				<li><a href="#es">Elasticsearch</a></li>
 				<ul>
 					<li><a href="#es1">import danych</a></li>
 					<li><a href="#es2">przykładowy rekord</a></li>
 					<li><a href="#es3">ilość danych</a></li>
+					<li><a href="#es4">usuwanie danych</a></li>
 				</ul>
 				<li><a href="#pod">Podsumowanie</a></li>
 			</ul>
@@ -49,14 +50,14 @@
 			Ilość: 2593752
 		</p>
 		</br>
-		<h2>Instalacja i konfiguracja oprogramowania</h2>
-		<h3>postgreSQL</h3>
+		<h2 id="iiko">Instalacja i konfiguracja oprogramowania</h2>
+		<h3 id="iiko1">postgreSQL</h3>
 		<p>
 			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją pobrać ze 
 			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">strony</a>
 			i zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
 		</p>
-		<h3>jdk</h3>
+		<h3 id="iiko2">jdk</h3>
 		<p>
 			Aby uruchomić bazę elasticsearch potrzebny jest najnowyszy jdk, który jest możliwy do sciągniećia ze
 			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> i zainstalować.
@@ -72,30 +73,7 @@
 			</br>
 			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
 		</p>
-		<h3 id="iiko3">jq</h3>
-		<p>
-			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
-			</br>
-			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
-			Uruchamiamy konsolę cmd <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
-			<div class="command">
-				<code>
-@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-				</code>
-			</div>
-			Następnie, aby zaintalować jq należy wydać polecenie:
-			<div class="command">
-				<code>
-chocolatey install jq
-				</code>
-			</div>
-			Więcej na:
-			<ul>
-				<li><a href = "https://chocolatey.org/">chocolatey</a></li>
-				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
-			</ul>
-		</p>
-		<h3 id="iiko4">python</h3>
+		<h3 id="iiko3">python</h3>
 		<p>
 			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy ze
 			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
@@ -198,6 +176,17 @@ select count(*) from import.test;
 			<div class="description-image">Ilość danych postreSQL</div>
 			Wykonanie tego zapytania trwało ok. 5 sekund.
 		</p>	
+		<h3 id="psql4">usuwanie danych</h3>
+		<p>
+			Niektóre kolumny zawierają puste pola np. klumny ze wspórzędnymi <i>x</i> oraz <i>y</i>, tym razem usuniemy te dane, polecenie:
+			<div class="command">
+				<code>
+delete from import.test where x='' and y='';
+				</code>
+			</div>
+			</br>
+			Wówczas zostanie usuniętych 22391 danych, zaś wykonanie tego zapytania trwało ok. 5 sekund.
+		</p>
 		</br>
 		<h2 id="es">Elasticsearch</h2>
 		<h3 id="es1">import danych</h3>
@@ -267,7 +256,7 @@ logstash -f btc.conf
 			Po zaimportowaniu danych podajemy polecenie:
 			<div class="command">
 				<code>
-curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
+curl -s "http://localhost:9200/test/_search?size=1&pretty=1&filter_path=hits.hits._source"
 				</code>
 			</div>
 			Wówczas otrzymano:
@@ -275,56 +264,65 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 				<pre>
 					<code>
 {
-  "doterm": "200604",
-  "odslaua": "416",
-  "oshaprev": "Q28",
-  "ccg": "05J",
-  "ward98": "47UBFQ",
-  "oseast1m": "396231",
-  "lsoa01": "E01032130",
-  "gor": "E12000005",
-  "osgrdind": "1",
-  "msoa11": "E02006708",
-  "path": "C:/map.csv",
-  "oldhro": "Y42",
-  "oscty": "E10000034",
-  "osward": "E05009825",
-  "nhscr": "Y55",
-  "host": "DESKTOP-GKM51PJ",
-  "osnrth100m": "02690",
-  "dointr": "200512",
-  "oseast100m": "3962",
-  "scn": "N56",
-  "hro": "Y51",
-  "pcon": "E14000605",
-  "usertype": "1",
-  "lsoa11": "E01032130",
-  "oldha": "QEN",
-  "pcd2": "B60  9BG",
-  "cannet": "N12",
-  "osnrth1m": "0269016",
-  "ur01ind": "5",
-  "canreg": "Y1201",
-  "oshlthau": "Q34",
-  "oa11": "E00172228",
-  "cened": "JSFQ04",
-  "oldpct": "5MR",
-  "nhsrg": "Q77",
-  "oslaua": "E07000234",
-  "ctry": "E92000001",
-  "psed": "25UBFQ04",
-  "@version": "1",
-  "edind": "1",
-  "oa01": "E00163889",
-  "pct": "5PL",
-  "message": "-2.056710443739379,52.319246511816203,82772,B60  9BG,B60 9BG,200512,200604,3962,02690,E10000034,416,E07000234,E05009825,1,1,E92000001,Q34,E12000005,QEN,Y55,05J,25UBFQ04,JSFQ04,1,47UBFQ,E00163889,Q77,Y51,E01032130,5,E02006708,N12,N56,Q28,5MR,Y42,E14000605,Y1201,5PL,396231,0269016,E00172228,E01032130,E02006708",
-  "msoa01": "E02006708",
-  "@timestamp": "2017-04-08T08:00:34.838Z",
-  "pcds": "B60 9BG",
-  "x": "-2.056710443739379",
-  "y": "52.319246511816203",
-  "objectid": "82772"
+  "hits" : {
+    "hits" : [
+      {
+        "_source" : {
+          "doterm" : "200604",
+          "odslaua" : "416",
+          "oshaprev" : "Q28",
+          "ccg" : "05J",
+          "ward98" : "47UBFQ",
+          "oseast1m" : "396231",
+          "lsoa01" : "E01032130",
+          "gor" : "E12000005",
+          "osgrdind" : "1",
+          "msoa11" : "E02006708",
+          "path" : "C:/map.csv",
+          "oldhro" : "Y42",
+          "oscty" : "E10000034",
+          "osward" : "E05009825",
+          "nhscr" : "Y55",
+          "host" : "DESKTOP-GKM51PJ",
+          "osnrth100m" : "02690",
+          "dointr" : "200512",
+          "oseast100m" : "3962",
+          "scn" : "N56",
+          "hro" : "Y51",
+          "pcon" : "E14000605",
+          "usertype" : "1",
+          "lsoa11" : "E01032130",
+          "oldha" : "QEN",
+          "pcd2" : "B60  9BG",
+          "cannet" : "N12",
+          "osnrth1m" : "0269016",
+          "ur01ind" : "5",
+          "canreg" : "Y1201",
+          "oshlthau" : "Q34",
+          "oa11" : "E00172228",
+          "cened" : "JSFQ04",
+          "oldpct" : "5MR",
+          "nhsrg" : "Q77",
+          "oslaua" : "E07000234",
+          "ctry" : "E92000001",
+          "psed" : "25UBFQ04",
+          "@version" : "1",
+          "edind" : "1",
+          "oa01" : "E00163889",
+          "pct" : "5PL",
+          "message" : "-2.056710443739379,52.319246511816203,82772,B60  9BG,B60 9BG,200512,200604,3962,02690,E10000034,416,E07000234,E05009825,1,1,E92000001,Q34,E12000005,QEN,Y55,05J,25UBFQ04,JSFQ04,1,47UBFQ,E00163889,Q77,Y51,E01032130,5,E02006708,N12,N56,Q28,5MR,Y42,E14000605,Y1201,5PL,396231,0269016,E00172228,E01032130,E02006708",
+          "msoa01" : "E02006708",
+          "@timestamp" : "2017-04-08T08:00:34.838Z",
+          "pcds" : "B60 9BG",
+          "x" : "-2.056710443739379",
+          "y" : "52.319246511816203",
+          "objectid" : "82772"
+        }
+      }
+    ]
+  }
 }
+
 					</code>
 				</pre>
 			</div>
@@ -347,7 +345,17 @@ curl -XGET localhost:9200/test/_count
 				</pre>
 			</div>
 			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
-		</p>		
+		</p>	
+		<h3 id="es4">usuwanie danych</h3>
+		<p>
+			Usuwamy wszystkie dane gdzie gor = N99999999, polecenie:
+			<div class="command">
+				<code>
+curl -XDELETE "http://localhost:9200/test?q=gor:'N99999999'&filter_path=hits.hits._source"	
+				</code>
+			</div>	
+			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+		</p>
 		<h2 id="pod">Podsumowanie</h2>
 		<table class="summary table-center">
 			<tr>
@@ -389,6 +397,17 @@ curl -XGET localhost:9200/test/_count
 			</tr>
 			<tr>
 				<td>Ilość danych</td>
+				<td>5 sek.</td>
+				<td>30%</td>
+				<td>30%</td>
+				<td>0%</td>
+				<td>1 sek.</td>
+				<td>30%</td>
+				<td>30%</td>
+				<td>0%</td>
+			</tr>
+			<tr>
+				<td>Usuwanie danych</td>
 				<td>5 sek.</td>
 				<td>30%</td>
 				<td>30%</td>
