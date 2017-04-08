@@ -26,9 +26,10 @@
 				</ul>
 				<li><a href="#post">PostgreSQL</a></li>
 				<ul>
-					<li><a href="#post1">import danych</a></li>
-					<li><a href="#post2">przykładowy rekord</a></li>
-					<li><a href="#post3">zapytania geodezyjne</a></li>
+					<li><a href="#post1">utworzenie tabeli</a></li>
+					<li><a href="#post2">import danych</a></li>
+					<li><a href="#post3">przykładowy rekord</a></li>
+					<li><a href="#post4">zapytania geodezyjne</a></li>
 				</ul>
 				<li><a href="#el">Elasticsearch</a></li>
 				<ul>
@@ -98,12 +99,86 @@ chocolatey install jq
 		</br>
 		<h3 id="iiko4">python</h3>
 		<p>
-			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy go ze
+			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy ze
 			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
 		</p>
 		</br>
 		<h2 id="post">PostgreSQL</h2>
-		<h3 id="post1">import danych</h3>
+		<h3 id="post1">utworzenie tabeli</h3>
+		<p>
+			Aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
+				</code>
+			</div>
+			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			<div class="command">
+				<code>
+psql -U postgres
+				</code>
+			</div>
+			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			</br></br>
+			Tworzymy tabelę, polecenie:
+			<div class="command">
+				<code>
+create table import.test(
+	x double precision,
+	y double precision,
+	objectid integer primary key,
+	pcd2 varchar,
+	pcds varchar,
+	dointr varchar,
+	doterm varchar,
+	oseast100m varchar,
+	osnrth100m varchar,
+	oscty varchar,
+	odslaua varchar,
+	oslaua varchar,
+	osward varchar,
+	usertype varchar,
+	osgrdind varchar,
+	ctry varchar,
+	oshlthau varchar,
+	gor varchar,
+	oldha varchar,
+	nhscr varchar,
+	ccg varchar,
+	psed varchar,
+	cened varchar,
+	edind varchar,
+	ward98 varchar,
+	oa01 varchar,
+	nhsrg varchar,
+	hro varchar,
+	lsoa01 varchar,
+	ur01ind varchar,
+	msoa01 varchar,
+	cannet varchar,
+	scn varchar,
+	oshaprev varchar,
+	oldpct varchar,
+	oldhro varchar,
+	pcon varchar,
+	canreg varchar,
+	pct varchar,
+	oseast1m varchar,
+	osnrth1m varchar,
+	oa11 varchar,
+	lsoa11 varchar,
+	msoa11 varchar
+);
+				</code>
+			</div>
+			oraz wychodzimy poleceniem
+			<div class="command">
+				<code>
+\q
+				</code>
+			</div>
+		</p>	
+		<h3 id="post2">import danych</h3>
 		<p>
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
@@ -153,9 +228,9 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 			</br>
 			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
-		<h3 id="post2">przykładowy rekord</h3>
+		<h3 id="post3">przykładowy rekord</h3>
 		<p>
-			Następnie aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			Ponowanie uruchamia serwer, przypominam, że aby to zrobić, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
@@ -183,7 +258,7 @@ select * from import.test limit 1;
 			</div>
 			<div class="description-image">Przykładowe pole postreSQL</div>
 		</p>
-		<h3 id="post3">zapytania geodezyjne</h3>
+		<h3 id="post4">zapytania geodezyjne</h3>
 		<p>
 			Aby korzystać z zapytań geodezyjnych musimy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
 			Po czym zmieniamy nazwy kolumn</br>
