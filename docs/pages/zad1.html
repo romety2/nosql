@@ -163,17 +163,17 @@ select * from import.test limit 1;
 		<p>
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
-			 <a href="../../scripts/s1.py" download>Pobierz</a>
+			 <a href="../../scripts/s2.py" download>Pobierz</a>
 			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
 			</br>
-			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			Następnie przypomocy skryptu usuwamy pierwszy wiersz (nazwy kolumn) polecenie w <i>cmd</i>:
 			<div class="command">
 				<code>
-py s1.py
+py s2.py
 				</code>
 			</div>
 			Ściągamy ze <a href="https://www.elastic.co/downloads/logstash">strony</a> logstash oraz <a href="../../scripts/btc.conf" download>pobierz</a>
-			plik konfiguracyjny. Przejdziedz plików binarnych logstash, polecenie <i>cmd</i>:
+			plik konfiguracyjny. Przejdź do plików binarnych logstash, polecenie <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie pobrano logstash]\logstash-5.3.0\bin	
