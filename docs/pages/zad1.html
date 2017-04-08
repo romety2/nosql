@@ -29,6 +29,7 @@
 					<li><a href="#psql2">przykładowy rekord</a></li>
 					<li><a href="#psql3">ilość danych</a></li>
 					<li><a href="#psql4">usuwanie danych</a></li>
+					<li><a href="#psql5">wyświetlenie danych</a></li>
 				</ul>
 				<li><a href="#es">Elasticsearch</a></li>
 				<ul>
@@ -36,6 +37,7 @@
 					<li><a href="#es2">przykładowy rekord</a></li>
 					<li><a href="#es3">ilość danych</a></li>
 					<li><a href="#es4">usuwanie danych</a></li>
+					<li><a href="#es5">wyświetlenie danych</a></li>
 				</ul>
 				<li><a href="#pod">Podsumowanie</a></li>
 			</ul>
@@ -186,6 +188,17 @@ delete from import.test where x='' and y='';
 			</div>
 			</br>
 			Wówczas zostanie usuniętych 22391 danych, zaś wykonanie tego zapytania trwało ok. 5 sekund.
+		</p>
+		<h3 id="psql5">wyświetlenie danych</h3>
+		<p>
+			Wykonano wyświetlenie danych takich danych gdzie ur01ind jest równe 1, polecenie:
+			<div class="command">
+				<code>
+select * from import.test where ur01ind='1';
+				</code>
+			</div>
+			</br>
+			Wykonanie tego zapytania trwało ok. 10 sekund.
 		</p>
 		</br>
 		<h2 id="es">Elasticsearch</h2>
@@ -356,6 +369,17 @@ curl -XDELETE "http://localhost:9200/test?q=gor:'N99999999'&filter_path=hits.hit
 			</div>	
 			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
 		</p>
+		<h3 id="es5">wyświetlenie danych</h3>
+		<p>
+			Wykonano wyświetlenie danych takich danych gdzie edind jest równe 9, polecenie:
+			<div class="command">
+				<code>
+curl -s "http://localhost:9200/test/_search?pretty=true&q=edind:'9'&filter_path=hits.hits._source
+				</code>
+			</div>
+			</br>
+			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+		</p>
 		<h2 id="pod">Podsumowanie</h2>
 		<table class="summary table-center">
 			<tr>
@@ -409,6 +433,17 @@ curl -XDELETE "http://localhost:9200/test?q=gor:'N99999999'&filter_path=hits.hit
 			<tr>
 				<td>Usuwanie danych</td>
 				<td>5 sek.</td>
+				<td>30%</td>
+				<td>30%</td>
+				<td>0%</td>
+				<td>1 sek.</td>
+				<td>30%</td>
+				<td>30%</td>
+				<td>0%</td>
+			</tr>
+			<tr>
+				<td>Wyświtlenie danych</td>
+				<td>10 sek.</td>
 				<td>30%</td>
 				<td>30%</td>
 				<td>0%</td>
