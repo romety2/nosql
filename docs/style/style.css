@@ -44,6 +44,16 @@ body
 	text-decoration: none;
 }
 
+.description-works ul
+{
+	list-style-type: none;
+}
+
+.description-works ul li
+{
+	margin: 5px;
+}
+
 .command
 { 
 	text-align: left;
@@ -79,6 +89,7 @@ body
 }
 .informations th		
 {
+	text-align: center;
 	border-width: 0.5px;
 	padding: 2px;
 	border-style: solid;
@@ -87,6 +98,7 @@ body
 }
 .informations td
 {
+	text-align: center;
 	border-width: 0.5px;
 	padding: 2px;
 	border-style: solid;
@@ -151,11 +163,6 @@ body
 .description-data
 {
 	font-size: 17px;
-}
-
-.description-works
-{
-	font-size: 15px;
 }
 
 .description-team
