@@ -32,9 +32,10 @@
 				</ul>
 				<li><a href="#mdb-lm">mongoDB (Łukasz Mielewczyk)</a></li>
 				<ul>
-					<li><a href="#mdb-lm1">przekształcenie danych</a></li
+					<li><a href="#mdb-lm1">przekształcenie danych</a></li>
 					<li><a href="#mdb-lm2">import danych</a></li>
 					<li><a href="#mdb-lm3">przykładowy rekord</a></li>
+					<li><a href="#mdb-lm4">sortowanie</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -232,6 +233,41 @@ db.test.findOne()
 					</code>
 				</pre>
 			</div>
+		<h3 id="mdb-lm4">sortowanie</h3>
+		<p>
+			Aby dokonać sortowania malejącego wg pola <i>canreg</i>, należy wydać polecenie
+			(należy ustawić limit wyświetlania danych, gdyż mongoDB nie radzi sobie z wyświetleniem dużych danych):
+			<div class="command">
+				<code>
+db.test.aggregate( [ { $sort: { canreg : -1 } }, { $limit: 100 } ] )
+				</code>
+			</div>
+			Sortowanie powodowało dość duże zużycie zasobów (ilustracja niżej):
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen19.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Procesor podczas sortowania danych, mongoDB</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen20.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Pamięć podczas sortowania danych, mongoDB</div>
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen21.PNG" height="400em" width="500em">
+			</div>
+			<div class="description-image">Dysk podczas sortowania danych, mongoDB</div>
+			</br></br>
+			Wykonanie trwało ok. 5 minut.
+			</br></br>
+			Ostatecznie zostało wyświetlonych 100 wierszy posortowanych malejąco wg <i>canreg</i>.
+			Ilustracja ostatniego wiersza:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen22.PNG" height="150em" width="1200em">
+			</div>
+			<div class="description-image">Wynik sortowania w MongoDB (ostanitnia dana)</div>
 		</p>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>		
 	</div>
