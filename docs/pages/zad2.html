@@ -16,10 +16,32 @@
 		</br>
 		<p class="description-team">
 			To zadanie zostało wykonane w dwuosobowym zespole o składzie Łukasz Mielewczyk oraz Marek Białousz.
+			</br>
+			Do rozwiązania zadania została wykorzystana baza danych <i>mongoDB</i>.
+			</br>
 			Każdy z nas pracował na różnych danych oraz porównywaliśmy wyniki.
+			</br>
 		</p>
-		</br>
-		<h2>Informacje o danych</h2>	
+		<div class="menu">
+			<ul>
+				<li><a href="#iod">Informacje o danych</a></li>
+				<li><a href="#iiko">Instalacja i konfiguracja oprogramowania</a></li>
+				<ul>
+					<li><a href="#iiko1">mongoDB</a></li>
+					<li><a href="#iiko2">jq</a></li>
+				</ul>
+				<li><a href="#mdb-lm">mongoDB (Łukasz Mielewczyk)</a></li>
+				<ul>
+					<li><a href="#mdb-lm1">przekształcenie danych</a></li
+					<li><a href="#mdb-lm2">import danych</a></li>
+					<li><a href="#mdb-lm3">przykładowy rekord</a></li>
+				</ul>
+				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
+				<ul>
+				</ul>
+			</ul>
+		</div>
+		<h2 id="iod">Informacje o danych</h2>	
 		<p class="description-data">
 			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
 			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>.
@@ -29,8 +51,8 @@
 			Ilość: 2593752
 		</p>
 		</br>
-		<h2>Instalacja i konfiguracja oprogramowania</h2>
-		<h3>mongoDB</h3>
+		<h2 id="iiko">Instalacja i konfiguracja oprogramowania</h2>
+		<h3 id="iiko1">mongoDB</h3>
 		<p>
 		
 			Do rozwiązania zadania użyto bazy mongoDB. Należy ją pobrać ze 
@@ -42,7 +64,7 @@ mongod
 				</code>
 			</div>
 		</p>
-		<h3>jq</h3>
+		<h3 id="iiko2">jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
 			</br>
@@ -66,12 +88,11 @@ chocolatey install jq
 			</ul>
 		</p>
 		</br>
-		<h2>Import danych</h2>	
+		<h2 id="mdb-lm">mongoDB (Łukasz Mielewczyk)</h2>
+		<h3 id="mdb-lm1">przekształcenie danych</h3>			
 		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> pobieramy plik z rozszeżeniem geojson.	
-		</p>	
-		<h3>Przekształcenie danych</h3>			
-		<p>
+			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> pobieramy plik z rozszeżeniem geojson.
+			</br>
 			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
 			</br>
 			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
@@ -102,7 +123,8 @@ jq ".features" map.geojson > mapPom.geojson
 			Wykonanie trwało ok. 35 minut.
 			</br></br>
 		</p>
-		<h3>Import danych do mongoDB</h3>
+		</br>
+		<h3 id="mdb-lm2">import danych</h3>
 		<p>
 			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w <i>cmd</i> polecenie:
 			<div class="command">
@@ -133,8 +155,7 @@ mongoimport --db test --collection test --jsonArray < mapPom.geojson
 			</br></br>
 		</p>
 		</br>
-		<h2>Przykładowe pole</h2>
-		<h3>Użycie mongoDB</h3>
+		<h3 id="mdb-lm3">przykładowe pole</h3>
 		<p>
 			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony<a/>
 			ściagamy plik z rozszeżeniem <i>geojson</i>.
@@ -211,7 +232,8 @@ db.test.findOne()
 					</code>
 				</pre>
 			</div>
-		</p>				
+		</p>
+		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>		
 	</div>
 	</br>
 	<div class = "return">
