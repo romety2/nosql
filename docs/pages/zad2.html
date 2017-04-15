@@ -34,6 +34,7 @@
 					<li><a href="#mdb-lm1">import danych</a></li>
 					<li><a href="#mdb-lm2">przykładowy rekord</a></li>
 					<li><a href="#mdb-lm3">sortowanie</a></li>
+					<li><a href="#mdb-lm4">znajdywanie danych</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -147,7 +148,7 @@ db.test.findOne()
 			Wyświetlimy pierwszych 10 najdroższych transakcji, polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( [ { $sort: { price : -1 } }, { $limit: 10 } ] )
+db.test.aggregate( [ { $sort: { price: -1 } }, { $limit: 10 } ] )
 				</code>
 			</div>
 			Wykonanie trwało ok. 30 sekund.
@@ -155,7 +156,24 @@ db.test.aggregate( [ { $sort: { price : -1 } }, { $limit: 10 } ] )
 			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen22.PNG" height="250em" width="1200em">
+				<img src="../images/screen19.PNG" height="250em" width="1200em">
+			</div>
+			<div class="description-image">Wynik sortowania w MongoDB (ostanitnia dana)</div>
+		</p>
+		<h3 id="mdb-lm4">znajdywanie danych</h3>
+		<p>
+			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z433</i>:
+			<div class="command">
+				<code>
+db.test.aggregate( [ { $match: { ticket: "z433" } }, { $limit: 10 } ] )
+				</code>
+			</div>
+			To zapytanie również zostało wykonane w mgnieniu oka.
+			</br></br>
+			Ostatecznie uzyskano:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen20.PNG" height="250em" width="1200em">
 			</div>
 			<div class="description-image">Wynik sortowania w MongoDB (ostanitnia dana)</div>
 		</p>
