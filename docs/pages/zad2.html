@@ -39,6 +39,7 @@
 					<li><a href="#mdb-lm6">sortowanie konretnych danych</a></li>
 					<li><a href="#mdb-lm7">sumowanie</a></li>
 					<li><a href="#mdb-lm8">sumowanie i sortowanie</a></li>
+					<li><a href="#mdb-lm8">tablica, średnia i sortowanie</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -206,7 +207,7 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen23.PNG" height="250em" width="300em">
+				<img src="../images/screen23.PNG" height="270em" width="300em">
 			</div>
 			<div class="description-image">Wynik sumowania danych w MongoDB</div>
 		</p>
@@ -223,9 +224,28 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen24.PNG" height="250em" width="300em">
+				<img src="../images/screen24.PNG" height="270em" width="300em">
 			</div>
-			<div class="description-image">Wynik sumowania danych w MongoDB</div>
+			<div class="description-image">Wynik sumowania i sortowania danych w MongoDB</div>
+		</p>
+		<h3 id="mdb-lm9">tablica, średnia i sortowanie</h3>
+		<p>
+			Tym razem chcemy posortować bid'y wg średniej, ponieważ występują w tablicy trzeba je odzielić (polecenie <i>$unwind</i>) -
+			wtedy jedna dana została tak jakby skopiowana tyle ile jest elementów tablicy oraz zostanie do nich przypisany pojedyńczy element tablicy
+			o nazwie kolumny jaka była wcześniej. Następnie pogrupować odzielone bilety, polecenie:
+			<div class="command">
+				<code>
+db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bids: { $avg: "$bids" } } }, { $sort: { bids: -1 } } )
+				</code>
+			</div>
+			Wykonanie trwało ok. 5 sekund.
+			</br></br>
+			Ostatecznie uzyskano:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen25.PNG" height="270em" width="300em">
+			</div>
+			<div class="description-image">Wynik średniej z tablicy danych w MongoDB</div>
 		</p>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>		
 	</div>
