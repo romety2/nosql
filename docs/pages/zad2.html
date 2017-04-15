@@ -39,7 +39,8 @@
 					<li><a href="#mdb-lm6">sortowanie konretnych danych</a></li>
 					<li><a href="#mdb-lm7">sumowanie</a></li>
 					<li><a href="#mdb-lm8">sumowanie i sortowanie</a></li>
-					<li><a href="#mdb-lm8">tablica, średnia i sortowanie</a></li>
+					<li><a href="#mdb-lm9">tablica, średnia i sortowanie</a></li>
+					<li><a href="#mdb-lm10">pomijanie pierwszych danych</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -116,6 +117,8 @@ mongo
 db.test.aggregate( { $limit: 1 } )
 				</code>
 			</div>
+			To zapytanie również zostało wykonane w mgnieniu oka.
+			</br></br>
 			Wówczas otrzymano:
 			<div class="text-center">
 				<img src="../images/screen19.PNG" height="50em" width="1200em">
@@ -232,10 +235,27 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 		<p>
 			Tym razem chcemy posortować bid'y wg średniej, ponieważ występują w tablicy trzeba je odzielić (polecenie <i>$unwind</i>) -
 			wtedy jedna dana została tak jakby skopiowana tyle ile jest elementów tablicy oraz zostanie do nich przypisany pojedyńczy element tablicy
-			o nazwie kolumny jaka była wcześniej. Następnie pogrupować odzielone bilety, polecenie:
+			o nazwie kolumny jaka była wcześniej. Następnie pogrupować oddzielone bilety  posortować, polecenie:
 			<div class="command">
 				<code>
 db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bids: { $avg: "$bids" } } }, { $sort: { bids: -1 } } )
+				</code>
+			</div>
+			Wykonanie trwało ok. 10 sekund.
+			</br></br>
+			Ostatecznie uzyskano:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen25.PNG" height="270em" width="300em">
+			</div>
+			<div class="description-image">Wynik średniej z tablicy danych w MongoDB</div>
+		</p>
+		<h3 id="mdb-lm10">pomijanie pierwszych danych</h3>
+		<p>
+			Tym razem chcemy posortować bilety wg średniej ceny, która jest większa niż 110, bez wyświetlania pierwszych 5. Polecenie:
+			<div class="command">
+				<code>
+db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, { $sort: { price: 1 } }, { $match: { price: { $gt : 110 } } }, { $skip: 5 } )
 				</code>
 			</div>
 			Wykonanie trwało ok. 5 sekund.
@@ -243,7 +263,7 @@ db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bi
 			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen25.PNG" height="270em" width="300em">
+				<img src="../images/screen26.PNG" height="270em" width="300em">
 			</div>
 			<div class="description-image">Wynik średniej z tablicy danych w MongoDB</div>
 		</p>
