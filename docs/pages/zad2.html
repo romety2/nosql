@@ -38,6 +38,7 @@
 					<li><a href="#mdb-lm5">szukanie danych</a></li>
 					<li><a href="#mdb-lm6">sortowanie konretnych danych</a></li>
 					<li><a href="#mdb-lm7">sumowanie</a></li>
+					<li><a href="#mdb-lm8">sumowanie i sortowanie</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -160,10 +161,10 @@ db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 		</br>
 		<h3 id="mdb-lm5">szukanie danych</h3>
 		<p>
-			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z433</i>:
+			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z109</i> lub <i>z433</i>:
 			<div class="command">
 				<code>
-db.test.aggregate( { $match: { ticket: "z433" } }, { $limit: 10 } )
+db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] } }, { $limit: 10 } )
 				</code>
 			</div>
 			To zapytanie również zostało wykonane w mgnieniu oka.
@@ -194,7 +195,6 @@ db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $
 		</p>
 		<h3 id="mdb-lm6">sumowanie</h3>
 		<p>
-		<p>
 			Będziemy teraz sumować ceny w danych, w tym celu musimy pogrupować dane wg biletów, polecenie:
 			<div class="command">
 				<code>
@@ -210,6 +210,22 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 			</div>
 			<div class="description-image">Wynik sumowania danych w MongoDB</div>
 		</p>
+		<h3 id="mdb-lm8">sumowanie i sortowanie</h3>
+		<p>
+			Tym razem chcemy sprawdzić jakie 10 biletów zostało wysprzedanych najlepiej, do tego celu użyjemy polecenia:
+			<div class="command">
+				<code>
+db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { $sort: { total: -1 } } )
+				</code>
+			</div>
+			Wykonanie trwało ok. 5 sekund.
+			</br></br>
+			Ostatecznie uzyskano:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen24.PNG" height="250em" width="300em">
+			</div>
+			<div class="description-image">Wynik sumowania danych w MongoDB</div>
 		</p>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>		
 	</div>
