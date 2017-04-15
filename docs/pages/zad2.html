@@ -37,6 +37,7 @@
 					<li><a href="#mdb-lm4">sortowanie</a></li>
 					<li><a href="#mdb-lm5">szukanie danych</a></li>
 					<li><a href="#mdb-lm6">sortowanie konretnych danych</a></li>
+					<li><a href="#mdb-lm7">sumowanie</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -190,6 +191,25 @@ db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $
 				<img src="../images/screen22.PNG" height="250em" width="1200em">
 			</div>
 			<div class="description-image">Wynik znalezionych i posortowanych danych w MongoDB</div>
+		</p>
+		<h3 id="mdb-lm6">sumowanie</h3>
+		<p>
+		<p>
+			Będziemy teraz sumować ceny w danych, w tym celu musimy pogrupować dane wg biletów, polecenie:
+			<div class="command">
+				<code>
+db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
+				</code>
+			</div>
+			Wykonanie trwało ok. 5 sekund.
+			</br></br>
+			Ostatecznie uzyskano:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen23.PNG" height="250em" width="300em">
+			</div>
+			<div class="description-image">Wynik sumowania danych w MongoDB</div>
+		</p>
 		</p>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>		
 	</div>
