@@ -28,14 +28,12 @@
 				<li><a href="#iiko">Instalacja i konfiguracja oprogramowania</a></li>
 				<ul>
 					<li><a href="#iiko1">mongoDB</a></li>
-					<li><a href="#iiko2">jq</a></li>
 				</ul>
 				<li><a href="#mdb-lm">mongoDB (Łukasz Mielewczyk)</a></li>
 				<ul>
-					<li><a href="#mdb-lm1">przekształcenie danych</a></li>
-					<li><a href="#mdb-lm2">import danych</a></li>
-					<li><a href="#mdb-lm3">przykładowy rekord</a></li>
-					<li><a href="#mdb-lm4">sortowanie</a></li>
+					<li><a href="#mdb-lm1">import danych</a></li>
+					<li><a href="#mdb-lm2">przykładowy rekord</a></li>
+					<li><a href="#mdb-lm3">sortowanie</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -44,12 +42,12 @@
 		</div>
 		<h2 id="iod">Informacje o danych</h2>	
 		<p class="description-data">
-			Dane zawierają najnowsze (luty 2017 r.) dane z katalogu pocztowego służb zdrowia w Wielkiej Brytanii.
-			<a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">Źródło</a>.
+			Dane zawierają informacje o transakcjach.
+			<a href="https://dl.dropboxusercontent.com/u/15056258/mongodb/trades.json" download>Pobierz</a>.
 			</br>
-			Rozmiar: 2 GB
+			Rozmiar: 230 MB
 			</br>
-			Ilość: 2593752
+			Ilość: 1000001
 		</p>
 		</br>
 		<h2 id="iiko">Instalacja i konfiguracja oprogramowania</h2>
@@ -65,72 +63,14 @@ mongod
 				</code>
 			</div>
 		</p>
-		<h3 id="iiko2">jq</h3>
-		<p>
-			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
-			</br>
-			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
-			Uruchamiamy konsolę <i>cmd</i> <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
-			<div class="command">
-				<code>
-@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-				</code>
-			</div>
-			Następnie, aby zaintalować jq należy wydać polecenie:
-			<div class="command">
-				<code>
-chocolatey install jq
-				</code>
-			</div>
-			Więcej na:
-			<ul>
-				<li><a href = "https://chocolatey.org/">chocolatey</a></li>
-				<li><a href = "https://stedolan.github.io/jq/">jq</a></li>
-			</ul>
-		</p>
 		</br>
 		<h2 id="mdb-lm">mongoDB (Łukasz Mielewczyk)</h2>
-		<h3 id="mdb-lm1">przekształcenie danych</h3>			
-		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony</a> pobieramy plik z rozszeżeniem geojson.
-			</br>
-			Musimy "wyłuskać" dane które zawierają współrzędne geograficzne.
-			</br>
-			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na map.geojson
-			</br>
-			W moim przypadku interesujące pole to features, więc aby to zrobić w <i>cmd</i> wydajemy polecenie:
-			<div class="command">
-				<code>
-jq ".features" map.geojson > mapPom.geojson
-				</code>
-			</div>
-			Podczas wykonywania tej operacji doszło do zużycia zasobów (ilustracja niżej). 
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen1.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Procesor podczas przekształcania danych</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen2.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Pamięć podczas przekształcania danych</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen3.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Dysk podczas przekształcania danych</div>
-			</br></br>
-			Wykonanie trwało ok. 35 minut.
-			</br></br>
-		</p>
-		</br>
-		<h3 id="mdb-lm2">import danych</h3>
+		<h3 id="mdb-lm1">import danych</h3>
 		<p>
 			Następnie aby zaimportwać z pliku do bazy danych (oczywiście baza danych musi być uruchomiona) należy wydać w <i>cmd</i> polecenie:
 			<div class="command">
 				<code>
-mongoimport --db test --collection test --jsonArray < mapPom.geojson
+mongoimport --db test --collection test --file trades.json
 				</code>
 			</div>
 			Również i import powodował duże zużycie zasobów (ilustracja niżej):
@@ -150,13 +90,13 @@ mongoimport --db test --collection test --jsonArray < mapPom.geojson
 			</div>
 			<div class="description-image">Dysk podczas importu danych do mongoDB</div>
 			</br></br>
-			Wykonanie trwało ok. 10 minut.
+			Wykonanie trwało ok. 2 minut.
 			</br>
-			Ostatecznie pojawił się komunikat: "imported 2593752 documents"
+			Ostatecznie pojawił się komunikat: "imported 1000001 documents"
 			</br></br>
 		</p>
 		</br>
-		<h3 id="mdb-lm3">przykładowe pole</h3>
+		<h3 id="mdb-lm2">przykładowe pole</h3>
 		<p>
 			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony<a/>
 			ściagamy plik z rozszeżeniem <i>geojson</i>.
@@ -177,95 +117,45 @@ db.test.findOne()
 			<div class="code">
 				<pre>
 					<code>
-"_id" : ObjectId("58df73b89a55fcf34cdf702b"),
-"type" : "Feature",
-"properties" : {
-	"objectid" : 2002,
-	"pcd2" : "AB1  7FG",
-	"pcds" : "AB1 7FG",
-	"dointr" : "199405",
-	"doterm" : "199606",
-	"oseast100m" : "3917",
-	"osnrth100m" : "08047",
-	"oscty" : "S99999999",
-	"odslaua" : "S92",
-	"oslaua" : "S12000033",
-	"osward" : "S13002486",
-	"usertype" : "0",
-	"osgrdind" : "1",
-	"ctry" : "S92000003",
-	"oshlthau" : "SN9",
-	"gor" : "S99999999",
-	"oldha" : "SN9",
-	"nhscr" : "S92",
-	"ccg" : "012",
-	"psed" : "99ZZ0099",
-	"cened" : "ZZ0099",
-	"edind" : "9",
-	"ward98" : "00QA38",
-	"oa01" : "S00001596",
-	"nhsrg" : "S92",
-	"hro" : "S00",
-	"lsoa01" : "S01000067",
-	"ur01ind" : "1",
-	"msoa01" : "S02000013",
-	"cannet" : "Z99",
-	"scn" : "Z99",
-	"oshaprev" : "SN9",
-	"oldpct" : "X98",
-	"oldhro" : "S00",
-	"pcon" : "S14000002",
-	"canreg" : "Z9999",
-	"pct" : "012",
-	"oseast1m" : "391763",
-	"osnrth1m" : "0804797",
-	"oa11" : "S00090654",
-	"lsoa11" : "S01006545",
-	"msoa11" : "S02001242"
-     },
-"geometry" : {
-	"type" : "Point",
-	"coordinates" : [
-		-2.1377206301181557,
-		57.133993966719444
-	]
+{
+        "_id" : ObjectId("5597a1617df886b33f839f9a"),
+        "details" : {
+                "asks" : [
+                        110.07,
+                        110.12,
+                        110.3
+                ],
+                "bids" : [
+                        109.9,
+                        109.88,
+                        109.7,
+                        109.5
+                ],
+                "lag" : 0,
+                "system" : "abc"
+        },
+        "price" : 120,
+        "shares" : 200,
+        "ticker" : "abcd",
+        "time" : ISODate("2012-03-02T22:00:00Z")
 }
 					</code>
 				</pre>
 			</div>
-		<h3 id="mdb-lm4">sortowanie</h3>
+		<h3 id="mdb-lm3">sortowanie</h3>
 		<p>
-			Aby dokonać sortowania malejącego wg pola <i>canreg</i>, należy wydać polecenie
-			(należy ustawić limit wyświetlania danych, gdyż mongoDB nie radzi sobie z wyświetleniem dużych danych):
+			Wyświetlimy pierwszych 10 najdroższych transakcji, polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( [ { $sort: { canreg : -1 } }, { $limit: 100 } ] )
+db.test.aggregate( [ { $sort: { price : -1 } }, { $limit: 10 } ] )
 				</code>
 			</div>
-			Sortowanie powodowało dość duże zużycie zasobów (ilustracja niżej):
+			Wykonanie trwało ok. 30 sekund.
+			</br></br>
+			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen19.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Procesor podczas sortowania danych, mongoDB</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen20.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Pamięć podczas sortowania danych, mongoDB</div>
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen21.PNG" height="400em" width="500em">
-			</div>
-			<div class="description-image">Dysk podczas sortowania danych, mongoDB</div>
-			</br></br>
-			Wykonanie trwało ok. 5 minut.
-			</br></br>
-			Ostatecznie zostało wyświetlonych 100 wierszy posortowanych malejąco wg <i>canreg</i>.
-			Ilustracja ostatniego wiersza:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen22.PNG" height="150em" width="1200em">
+				<img src="../images/screen22.PNG" height="250em" width="1200em">
 			</div>
 			<div class="description-image">Wynik sortowania w MongoDB (ostanitnia dana)</div>
 		</p>
