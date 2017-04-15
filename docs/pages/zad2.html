@@ -33,8 +33,10 @@
 				<ul>
 					<li><a href="#mdb-lm1">import danych</a></li>
 					<li><a href="#mdb-lm2">przykładowy rekord</a></li>
-					<li><a href="#mdb-lm3">sortowanie</a></li>
-					<li><a href="#mdb-lm4">znajdywanie danych</a></li>
+					<li><a href="#mdb-lm3">ilość danych</a></li>
+					<li><a href="#mdb-lm4">sortowanie</a></li>
+					<li><a href="#mdb-lm5">szukanie danych</a></li>
+					<li><a href="#mdb-lm6">sortowanie konretnych danych</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -99,9 +101,6 @@ mongoimport --db test --collection test --file trades.json
 		</br>
 		<h3 id="mdb-lm2">przykładowe pole</h3>
 		<p>
-			Ze <a href="https://data.gov.uk/dataset/nhs-postcode-directory-latest-centroids" target="_blank">strony<a/>
-			ściagamy plik z rozszeżeniem <i>geojson</i>.
-			</br>
 			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 			<div class="command">
 				<code>
@@ -111,44 +110,41 @@ mongo
 			Następnie należy wykonać polecenie:
 			<div class="command">
 				<code>		
-db.test.findOne()
+db.test.aggregate( { $limit: 1 } )
 				</code>
 			</div>
 			Wówczas otrzymano:
+			<div class="text-center">
+				<img src="../images/screen19.PNG" height="50em" width="1200em">
+			</div>
+			<div class="description-image">Wynik wyświetlenia pierwszego rekordu w MongoDB</div>
+		</p>
+		</br>
+		<h3 id="mdb-lm3">ilość danych</h3>
+		<p>
+			Aby zobaczyć ilość danych wykorzystano polecenie:
+			<div class="command">
+				<code>
+db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
+				</code>
+			</div>
+			Otrzymano:
 			<div class="code">
 				<pre>
 					<code>
-{
-        "_id" : ObjectId("5597a1617df886b33f839f9a"),
-        "details" : {
-                "asks" : [
-                        110.07,
-                        110.12,
-                        110.3
-                ],
-                "bids" : [
-                        109.9,
-                        109.88,
-                        109.7,
-                        109.5
-                ],
-                "lag" : 0,
-                "system" : "abc"
-        },
-        "price" : 120,
-        "shares" : 200,
-        "ticker" : "abcd",
-        "time" : ISODate("2012-03-02T22:00:00Z")
-}
+{ "_id" : null, "count" : 1000001 }
 					</code>
 				</pre>
 			</div>
-		<h3 id="mdb-lm3">sortowanie</h3>
+			Wykonanie trwało ok. 10 sekund.
+		</p>
+		</br>
+		<h3 id="mdb-lm4">sortowanie</h3>
 		<p>
 			Wyświetlimy pierwszych 10 najdroższych transakcji, polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( [ { $sort: { price: -1 } }, { $limit: 10 } ] )
+db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 				</code>
 			</div>
 			Wykonanie trwało ok. 30 sekund.
@@ -156,16 +152,17 @@ db.test.aggregate( [ { $sort: { price: -1 } }, { $limit: 10 } ] )
 			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen19.PNG" height="250em" width="1200em">
+				<img src="../images/screen20.PNG" height="250em" width="1200em">
 			</div>
-			<div class="description-image">Wynik sortowania w MongoDB (ostanitnia dana)</div>
+			<div class="description-image">Wynik sortowania w MongoDB</div>
 		</p>
-		<h3 id="mdb-lm4">znajdywanie danych</h3>
+		</br>
+		<h3 id="mdb-lm5">szukanie danych</h3>
 		<p>
 			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z433</i>:
 			<div class="command">
 				<code>
-db.test.aggregate( [ { $match: { ticket: "z433" } }, { $limit: 10 } ] )
+db.test.aggregate( { $match: { ticket: "z433" } }, { $limit: 10 } )
 				</code>
 			</div>
 			To zapytanie również zostało wykonane w mgnieniu oka.
@@ -173,9 +170,26 @@ db.test.aggregate( [ { $match: { ticket: "z433" } }, { $limit: 10 } ] )
 			Ostatecznie uzyskano:
 			</br></br>
 			<div class="text-center">
-				<img src="../images/screen20.PNG" height="250em" width="1200em">
+				<img src="../images/screen21.PNG" height="250em" width="1200em">
 			</div>
-			<div class="description-image">Wynik sortowania w MongoDB (ostanitnia dana)</div>
+			<div class="description-image">Wynik znalezionych danych w MongoDB</div>
+		</p>
+		<h3 id="mdb-lm6">sortowanie konretnych danych</h3>
+		<p>
+			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z109</i> oraz posortowano je wg ceny:
+			<div class="command">
+				<code>
+db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $limit: 10 } )
+				</code>
+			</div>
+			Wykonanie trwało ok. 5 sekund.
+			</br></br>
+			Ostatecznie uzyskano:
+			</br></br>
+			<div class="text-center">
+				<img src="../images/screen22.PNG" height="250em" width="1200em">
+			</div>
+			<div class="description-image">Wynik znalezionych i posortowanych danych w MongoDB</div>
 		</p>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>		
 	</div>
