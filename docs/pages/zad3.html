@@ -34,13 +34,6 @@
 					<li><a href="#mdb-lm1">import danych</a></li>
 					<li><a href="#mdb-lm2">przykładowy rekord</a></li>
 					<li><a href="#mdb-lm3">ilość danych</a></li>
-					<li><a href="#mdb-lm4">sortowanie</a></li>
-					<li><a href="#mdb-lm5">szukanie danych</a></li>
-					<li><a href="#mdb-lm6">sortowanie konretnych danych</a></li>
-					<li><a href="#mdb-lm7">sumowanie</a></li>
-					<li><a href="#mdb-lm8">sumowanie i sortowanie</a></li>
-					<li><a href="#mdb-lm9">tablica, średnia i sortowanie</a></li>
-					<li><a href="#mdb-lm10">pomijanie pierwszych danych</a></li>
 				</ul>
 				<li><a href="#mdb-mb">mongoDB (Marek Białousz)</a></li>
 				<ul>
@@ -114,7 +107,7 @@ mongoimport --db test --collection test --file trades.json
 			</br></br>
 		</p>
 		</br>
-		<h3 id="mdb-lm2">przykładowe pole</h3>
+		<h3 id="mdb-lm2">przykładowy pole</h3>
 		<p>
 			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 			<div class="command">
@@ -125,16 +118,41 @@ mongo
 			Następnie należy wykonać polecenie:
 			<div class="command">
 				<code>		
-db.test.aggregate( { $limit: 1 } )
+db.test.findOne()
 				</code>
 			</div>
 			To zapytanie również zostało wykonane w mgnieniu oka.
 			</br></br>
 			Wówczas otrzymano:
-			<div class="text-center">
-				<img src="../images/screen19.PNG" height="50em" width="1200em">
+			<div class="code">
+				<pre>
+					<code>
+{
+        "_id" : ObjectId("5597a1627df886b33f839f9b"),
+        "details" : {
+                "asks" : [
+                        110.07,
+                        110.12,
+                        110.3
+                ],
+                "bids" : [
+                        109.9,
+                        109.88,
+                        109.7,
+                        109.5
+                ],
+                "lag" : 0,
+                "system" : "abc"
+        },
+        "price" : 120,
+        "shares" : 200,
+        "ticker" : "abcd",
+        "ticket" : "z101",
+        "time" : ISODate("2012-03-03T07:00:00Z")
+}
+					</code>
+				</pre>
 			</div>
-			<div class="description-image">Wynik wyświetlenia pierwszego rekordu w MongoDB</div>
 		</p>
 		</br>
 		<h3 id="mdb-lm3">ilość danych</h3>
@@ -142,142 +160,14 @@ db.test.aggregate( { $limit: 1 } )
 			Aby zobaczyć ilość danych wykorzystano polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
+db.test.count()
 				</code>
 			</div>
-			Otrzymano:
-			<div class="code">
-				<pre>
-					<code>
-{ "_id" : null, "count" : 1000001 }
-					</code>
-				</pre>
-			</div>
-			Wykonanie trwało ok. 10 sekund.
+			Wówczas otrzymano informacje, że danych jest 1000001.
+			</br>
+			To zapytanie również zostało wykonane w mgnie
 		</p>
 		</br>
-		<h3 id="mdb-lm4">sortowanie</h3>
-		<p>
-			Wyświetlimy pierwszych 10 najdroższych transakcji, polecenie:
-			<div class="command">
-				<code>
-db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
-				</code>
-			</div>
-			Wykonanie trwało ok. 30 sekund.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen20.PNG" height="250em" width="1200em">
-			</div>
-			<div class="description-image">Wynik sortowania w MongoDB</div>
-		</p>
-		</br>
-		<h3 id="mdb-lm5">szukanie danych</h3>
-		<p>
-			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z109</i> lub <i>z433</i>:
-			<div class="command">
-				<code>
-db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] } }, { $limit: 10 } )
-				</code>
-			</div>
-			To zapytanie również zostało wykonane w mgnieniu oka.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen21.PNG" height="250em" width="1200em">
-			</div>
-			<div class="description-image">Wynik znalezionych danych w MongoDB</div>
-		</p>
-		<h3 id="mdb-lm6">sortowanie konretnych danych</h3>
-		<p>
-			Wyświetlimy dane gdzie <i>ticket</i> jest równe <i>z109</i> oraz posortowano je wg ceny:
-			<div class="command">
-				<code>
-db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $limit: 10 } )
-				</code>
-			</div>
-			Wykonanie trwało ok. 5 sekund.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen22.PNG" height="250em" width="1200em">
-			</div>
-			<div class="description-image">Wynik znalezionych i posortowanych danych w MongoDB</div>
-		</p>
-		<h3 id="mdb-lm6">sumowanie</h3>
-		<p>
-			Będziemy teraz sumować ceny w danych, w tym celu musimy pogrupować dane wg biletów, polecenie:
-			<div class="command">
-				<code>
-db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
-				</code>
-			</div>
-			Wykonanie trwało ok. 5 sekund.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen23.PNG" height="270em" width="300em">
-			</div>
-			<div class="description-image">Wynik sumowania danych w MongoDB</div>
-		</p>
-		<h3 id="mdb-lm8">sumowanie i sortowanie</h3>
-		<p>
-			Tym razem chcemy sprawdzić jakie 10 biletów zostało wysprzedanych najlepiej, do tego celu użyjemy polecenia:
-			<div class="command">
-				<code>
-db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { $sort: { total: -1 } } )
-				</code>
-			</div>
-			Wykonanie trwało ok. 5 sekund.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen24.PNG" height="270em" width="300em">
-			</div>
-			<div class="description-image">Wynik sumowania i sortowania danych w MongoDB</div>
-		</p>
-		<h3 id="mdb-lm9">tablica, średnia i sortowanie</h3>
-		<p>
-			Tym razem chcemy posortować bid'y wg średniej, ponieważ występują w tablicy trzeba je odzielić (polecenie <i>$unwind</i>) -
-			wtedy jedna dana została tak jakby skopiowana tyle ile jest elementów tablicy oraz zostanie do nich przypisany pojedyńczy element tablicy
-			o nazwie kolumny jaka była wcześniej. Następnie pogrupować oddzielone bilety  posortować, polecenie:
-			<div class="command">
-				<code>
-db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bids: { $avg: "$bids" } } }, { $sort: { bids: -1 } } )
-				</code>
-			</div>
-			Wykonanie trwało ok. 10 sekund.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen25.PNG" height="270em" width="300em">
-			</div>
-			<div class="description-image">Wynik średniej z tablicy danych w MongoDB</div>
-		</p>
-		<h3 id="mdb-lm10">pomijanie pierwszych danych</h3>
-		<p>
-			Tym razem chcemy posortować bilety wg średniej ceny, która jest większa niż 110, bez wyświetlania pierwszych 5. Polecenie:
-			<div class="command">
-				<code>
-db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, { $sort: { price: 1 } }, { $match: { price: { $gt : 110 } } }, { $skip: 5 } )
-				</code>
-			</div>
-			Wykonanie trwało ok. 5 sekund.
-			</br></br>
-			Ostatecznie uzyskano:
-			</br></br>
-			<div class="text-center">
-				<img src="../images/screen26.PNG" height="270em" width="300em">
-			</div>
-			<div class="description-image">Wynik średniej (bez pierwszych) danych w MongoDB</div>
-		</p>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>				
 	</div>
 	</br>
