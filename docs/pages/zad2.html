@@ -13,7 +13,7 @@
 	</div>
 	<div class = "description">
 		<h1 class="text-center">Zadanie 2 (Aggregation Pipeline)</h1>
-		</br>
+		</br></br>
 		<p class="description-team">
 			To zadanie zostało wykonane w dwuosobowym zespole o składzie Łukasz Mielewczyk oraz Marek Białousz.
 			</br>
@@ -51,6 +51,17 @@
 		<p class="description-data">
 			Dane zawierają informacje o transakcjach.
 			<a href="https://dl.dropboxusercontent.com/u/15056258/mongodb/trades.json" download>Pobierz</a>.
+			</br>
+			Kolumny:
+			<ul>
+				<li>_id: identyfikator tranzakcji</li>
+				<li>details: detale t.j.: minimalna cena, BID'y, opóźnienia, system handlowy</li>
+				<li>price: cena biletu</li>
+				<li>shares: ilość biletów</li>
+				<li>ticker: centrum sprzedaży</li>
+				<li>ticket: nazwa biletu</li>
+				<li>time: czes od którego rozpoczęto tranzakcje (data i godzina)</li>
+			</ul>
 			</br>
 			Rozmiar: 230 MB
 			</br>
@@ -233,7 +244,7 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 		</p>
 		<h3 id="mdb-lm9">tablica, średnia i sortowanie</h3>
 		<p>
-			Tym razem chcemy posortować bid'y wg średniej, ponieważ występują w tablicy trzeba je odzielić (polecenie <i>$unwind</i>) -
+			Tym razem chcemy posortować BID'y wg średniej, ponieważ występują w tablicy trzeba je odzielić (polecenie <i>$unwind</i>) -
 			wtedy jedna dana została tak jakby skopiowana tyle ile jest elementów tablicy oraz zostanie do nich przypisany pojedyńczy element tablicy
 			o nazwie kolumny jaka była wcześniej. Następnie pogrupować oddzielone bilety  posortować, polecenie:
 			<div class="command">
