@@ -107,7 +107,7 @@ mongoimport --db test --collection test --file trades.json
 			</br></br>
 		</p>
 		</br>
-		<h3 id="mdb-lm2">przykładowy pole</h3>
+		<h3 id="mdb-lm2">przykładowy rekord</h3>
 		<p>
 			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 			<div class="command">
@@ -115,10 +115,16 @@ mongoimport --db test --collection test --file trades.json
 mongo
 				</code>
 			</div>
-			Następnie należy wykonać polecenie:
+			Zefinowano funcję:
 			<div class="command">
-				<code>		
-db.test.findOne()
+				<code>
+var testExampleRecord = function() { return db.test.findOne() };
+				</code>
+			</div>
+			Oraz wywołąno ją poleceniem:
+			<div class="command">
+				<code>
+testExampleRecord()
 				</code>
 			</div>
 			To zapytanie również zostało wykonane w mgnieniu oka.
@@ -157,15 +163,21 @@ db.test.findOne()
 		</br>
 		<h3 id="mdb-lm3">ilość danych</h3>
 		<p>
-			Aby zobaczyć ilość danych wykorzystano polecenie:
+			Zefinowano funcję:
 			<div class="command">
 				<code>
-db.test.count()
+var testCount = function() { return db.test.count() };
+				</code>
+			</div>
+			Oraz wywołąno ją poleceniem:
+			<div class="command">
+				<code>
+testCount()
 				</code>
 			</div>
 			Wówczas otrzymano informacje, że danych jest 1000001.
 			</br>
-			To zapytanie również zostało wykonane w mgnie
+			To zapytanie również zostało wykonane w mgnieniu oka.
 		</p>
 		</br>
 		<h2 id="mdb-mb">mongoDB (Marek Białousz)</h2>				
