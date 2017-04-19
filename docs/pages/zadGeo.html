@@ -21,9 +21,9 @@
 			<i>posgreSQL</i> oraz <i>elasticsearch</i>.
 			</br>
 			Pokazano w jakim czasie zostały wykonane
-			oraz ile zużywały zasobów poszczególne czynności.
+			oraz ile zasobów zużywały poszczególne czynności.
 			</br>
-			Został również przedstawiony opis danych oraz instrukcja co jak zostało wykonane.
+			Został również przedstawiony opis danych oraz instrukcja co i jak zostało wykonane.
 			</br>
 		</p>
 		<div class="menu">
@@ -71,8 +71,8 @@
 		</p>
 		<h3 id="iiko2">jdk</h3>
 		<p>
-			Aby uruchomić bazę <i>elasticsearch</i> potrzebny jest najnowyszy jdk, który jest możliwy do sciągniecia ze
-			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a>, następnie należy
+			Aby uruchomić bazę <i>elasticsearch</i> potrzebny jest najnowyszy <i>jdk</i>, który jest możliwy do sciągniecia ze
+			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> oraz należy
 			to zainstalować.
 			</br></br>
 			Następnie należy upewnić się czy zmienne środowiskowe są odpowiednio skonfigurowane.
@@ -88,16 +88,16 @@
 		</p>
 		<h3 id="iiko3">jq</h3>
 		<p>
-			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
+			Narzędzie <i>jq</i> służy do przekształcenia danych w taki sposób, aby otrzymać pola które nas interesują.
 			</br>
-			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
+			Aby zainstalować <i>jq</i> wstępnie trzeba zaisntalować framework <i>Chocolatey</i>.
 			Następnie należy uruchamić konsolę <i>cmd</i> <b>z uprawnieniami administratora</b> oraz wydać polecenie:
 			<div class="command">
 				<code>
 @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 				</code>
 			</div>
-			Następnie, aby zaintalować jq należy wydać polecenie:
+			Następnie, aby zaintalować <i>jq</i> należy wydać polecenie:
 			<div class="command">
 				<code>
 chocolatey install jq
@@ -197,8 +197,8 @@ create table import.test(
 			</br></br>
 			 <a href="../../scripts/s1.py" download>Pobierz</a>
 			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
+			Następnie należy uruchomić skrypt, który usunie znaki nie kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
 			</br>
-			Następnie należy uruchomić skrypt, który usunie znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
 			<div class="command">
 				<code>
 py s1.py
@@ -239,11 +239,11 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 			</div>
 			<div class="description-image">Import danych do posgreSQL</div>
 			</br>
-			Czyli dane zostaną zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
+			Czyli dane zostaną zaimportowane to tabeli <i>test</i> w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
 		<h3 id="psql3">przykładowy rekord</h3>
 		<p>
-			Ponowanie uruchamiamy serwer, Przypomnenie, aby to zrobić należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
+			Ponowanie należy uruchomić serwer. Przypomnenie, aby to zrobić należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
@@ -266,7 +266,7 @@ psql -U postgres
 select * from import.test limit 1;
 				</code>
 			</div>
-			Wówczas powinnino się otrzymać: 
+			Wówczas powinnino zostać wyświetlone: 
 			<div class="text-center">
 				<img src="../images/screen14.PNG" height="150em" width="1200em">
 			</div>
@@ -274,6 +274,8 @@ select * from import.test limit 1;
 		</p>
 		<h3 id="psql4">zapytania geodezyjne</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql3">przeczytaj jak to zrobić</a>.
+			</br>
 			Aby korzystać z zapytań geodezyjnych należy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
 			Po czym zmienić nazwy kolumn</br>
 			<i>x</i> na <i>longitude</i>
@@ -301,21 +303,15 @@ select * from import.test where ST_MakeEnvelope(-2.1, 57.15, -2.11, 57.14, -2.12
 		<p>
 			<a href="http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson">Pobierz</a> dane.
 			</br></br>
-			Należy usunąć zbędne pola (należy zostawić dane <i>properties</i> oraz przenieść do niego zaokrąglone dane geograficzne pod nazwa <i>location</i>),
-			aby móc na nich odpowiednio operować. Zaokrąglenia są konieczne, aby zapytania w elasticsearch działały poprawnie.
+			Należy usunąć zbędne pola (zostawić dane <i>properties</i> oraz przenieść do niego zaokrąglone dane geograficzne pod nazwą <i>location</i>),
+			aby móc na nich odpowiednio operować. Zaokrąglenia są konieczne, aby zapytania w <i>elasticsearch</i> działały poprawnie.
 			</br>
 			Plik z danymi, wymaga zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Można zamienić nazwę na <i>map.geojson</i>.
 			</br>
-			W tym przypadku interesujące pole to <i>features</i>, więc aby to zrobić w <i>cmd</i> należy wydać polecenie:
+			W w/w pliku interesujące pole to <i>features</i>, aby je przekształcić w <i>cmd</i> należy wydać polecenie:
 			<div class="command">
 				<code>
 jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .properties |= .+ {location: $l} | .properties" map.geojson > mapPom.geojson
-				</code>
-			</div>
-			Następnie
-			<div class="command">
-				<code>
-< mapPom.geojson jq --compact-output "{ \"index\": { \"_type\": \"test\" } }, ." > mapPom.bulk
 				</code>
 			</div>
 			Podczas wykonywania tej operacji może dojść do zużycia zasobów (ilustracja niżej). 
@@ -336,6 +332,14 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 			<div class="description-image">Dysk podczas przekształcania danych</div>
 			</br></br>
 			Wykonanie powinno trwać ok. 35 minut.
+			</br></br>
+			Następnie należy wydać polecenie
+			<div class="command">
+				<code>
+< mapPom.geojson jq --compact-output "{ \"index\": { \"_type\": \"test\" } }, ." > mapPom.bulk
+				</code>
+			</div>
+			Tym razem dane powinny zostać dość szybko przekształcone.
 		</p>
 		</br>
 		<h3 id="es2">import danych</h3>
@@ -349,7 +353,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 				</code>
 			</div>
 			Pobierz ze <a href="https://curl.haxx.se/download.html" target="_blank">strony</a> <i>curl'a</i>
-			po czym należy przekopiować plik binarny do folderu w pracujesz,
+			po czym należy przekopiować plik binarny do folderu w którym pracujesz,
 			polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
@@ -368,7 +372,7 @@ curl -XPUT http://localhost:9200/test -d "{\"mappings\": {\"place\": {\"properti
 				<code>
 curl -XPOST localhost:9200/test/_bulk --data-binary @mapPom.bulk		
 				</code>
-			</div>.
+			</div>
 			Import danych powinien średnio zużywać zasoby komputera.
 			</br></br>
 			<div class="text-center">
@@ -386,7 +390,7 @@ curl -XPOST localhost:9200/test/_bulk --data-binary @mapPom.bulk
 			</div>
 			<div class="description-image">Dysk podczas importu danych do elasticsearch</div>
 			</br></br>
-			Wykonanie trwało ok. godziny.
+			Wykonanie powinno trwać ok. godziny.
 			</br>
 			</br>
 			Należy sprawdzić czy wszystkie dane zostały zaimportowane, polecenie:
@@ -413,7 +417,7 @@ curl -XGET localhost:9200/test/_count
 curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
 				</code>
 			</div>
-			Wówczas powinnino się otrzymać: 
+			Wówczas powinnino zostać wyświetlone: 
 			<div class="code">
 				<pre>
 					<code>
@@ -470,6 +474,8 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 			</div>
 		</p>
 		<h3 id="es4">polecenia geodezyjne (mapki)</h3>
+			Upewnij się czy zostały wykonane wszystkie powyższe instrukcje z <i>elasticsearch</i>.
+			</br></br>
 			Pierwsze 2000 danych zobrazowanych, polecenie:
 			<div class="command">
 				<code>

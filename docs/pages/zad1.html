@@ -17,15 +17,15 @@
 		<p class="description-team">
 			To zadanie zostało wykonane przez jedną osobę (Łukasz Mielewczyk).
 			</br>
-			Wykonane zostały zapytania różne zapytania w bazach danych
+			Wykonane zostały różne zapytania w bazach danych
 			<i>posgreSQL</i> oraz <i>elasticsearch</i>.
 			</br>
 			Pokazano w jakim czasie zostały wykonane
-			oraz ile zużywały zasobów poszczególne czynności.
+			oraz ile zasobów zużywały poszczególne czynności.
 			</br>
 			Dodano podsumowanie wszystkiego.
 			</br>
-			Został również przedstawiony opis danych oraz instrukcja co jak zostało wykonane.
+			Został również przedstawiony opis danych oraz instrukcja co i jak zostało wykonane.
 			</br>
 		</p>
 		<div class="menu">
@@ -75,8 +75,8 @@
 		</p>
 		<h3 id="iiko2">jdk</h3>
 		<p>
-			Aby uruchomić bazę <i>elasticsearch</i> potrzebny jest najnowyszy jdk, który jest możliwy do sciągniecia ze
-			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a>, następnie należy
+			Aby uruchomić bazę <i>elasticsearch</i> potrzebny jest najnowyszy <i>jdk</i>, który jest możliwy do sciągniecia ze
+			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> oraz należy
 			to zainstalować.
 			</br></br>
 			Następnie należy upewnić się czy zmienne środowiskowe są odpowiednio skonfigurowane.
@@ -102,9 +102,10 @@
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
 			 <a href="../../scripts/s1.py" download>Pobierz</a>
-			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
+			skrypt oraz przenieś go do folderu do którego zostały pobrane dane.
 			</br>
-			Następnie należy uruchomić skrypt, który usunie znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			Następnie należy uruchomić skrypt, który usunie znaki nie kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			</br>
 			<div class="command">
 				<code>
 py s1.py
@@ -149,7 +150,7 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 		</p>
 		<h3 id="psql2">przykładowy rekord</h3>
 		<p>
-			Ponownie należy uruchamić serwer, aby to zrobić, należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
+			Należy uruchamić serwer, aby to zrobić, należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
@@ -172,7 +173,7 @@ psql -U postgres
 select * from import.test limit 1;
 				</code>
 			</div>
-			Wówczas powinnino się otrzymać: 
+			Wówczas powinnino zostać wyświetlone: 
 			<div class="text-center">
 				<img src="../images/screen14.PNG" height="150em" width="1200em">
 			</div>
@@ -181,6 +182,8 @@ select * from import.test limit 1;
 		</p>
 		<h3 id="psql3">ilość danych</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql2">przeczytaj jak to zrobić</a>.
+			</br>
 			Aby sprawdzić ile danych zostało zaimportowanych, należy wydać polecenie:
 			<div class="command">
 				<code>
@@ -196,6 +199,8 @@ select count(*) from import.test;
 		</p>	
 		<h3 id="psql4">usuwanie danych</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql2">przeczytaj jak to zrobić</a>.
+			</br>
 			Niektóre kolumny zawierają puste pola np. klumny ze wspórzędnymi <i>x</i> oraz <i>y</i>, tym razem możemy usunąć te dane, polecenie:
 			<div class="command">
 				<code>
@@ -207,7 +212,9 @@ delete from import.test where x='' and y='';
 		</p>
 		<h3 id="psql5">wyświetlenie danych</h3>
 		<p>
-			Wykonano wyświetlenie danych takich danych gdzie <i>ur01ind</i> jest równe 1, polecenie:
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql2">przeczytaj jak to zrobić</a>.
+			</br>
+			Aby wykonać wyświetlenie danych takich danych gdzie <i>ur01ind</i> jest równe 1, polecenie:
 			<div class="command">
 				<code>
 select * from import.test where ur01ind='1';
@@ -225,14 +232,22 @@ select * from import.test where ur01ind='1';
 			 <a href="../../scripts/s2.py" download>Pobierz</a>
 			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
 			</br>
-			Następnie przypomocy skryptu usuwamy pierwszy wiersz (nazwy kolumn) polecenie w <i>cmd</i>:
+			Następnie uruchamiamy skrypt który usuwa pierwszy wiersz (nazwy kolumn) oraz zapisuje do pliku <i>map.csv</i> polecenie w <i>cmd</i>:
 			<div class="command">
 				<code>
 py s2.py
 				</code>
 			</div>
-			Ściągamy ze <a href="https://www.elastic.co/downloads/logstash">strony</a> logstash oraz <a href="../../scripts/btc.conf" download>pobierz</a>
-			plik konfiguracyjny. Przejdź do plików binarnych logstash, polecenie <i>cmd</i>:
+			Pobierz ze <a href="https://curl.haxx.se/download.html" target="_blank">strony</a> <i>curl'a</i>
+			po czym należy przekopiować plik binarny do folderu w którym pracujesz,
+			polecenie w konsoli <i>cmd</i>:
+			<div class="command">
+				<code>
+copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka w której ]\curl.exe
+				</code>
+			</div>
+			Pobierz ze <a href="https://www.elastic.co/downloads/logstash">strony</a> <i>logstash</i> oraz <a href="../../scripts/btc.conf" download>pobierz</a>
+			plik konfiguracyjny. Przejdź do plików binarnych <i>logstash</i>, polecenie <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie pobrano logstash]\logstash-5.3.0\bin	
@@ -244,7 +259,7 @@ cd [ścieżka gdzie pobrano logstash]\logstash-5.3.0\bin
 copy [ścieżka gdzie pobrano plik konfiguracyjny]\btc.conf [ścieżka gdzie pobrano logstash]\logstash-5.3.0\bin	
 				</code>
 			</div>
-			Zaś plik <i>map.csv</i> przenieś na dysk C (ewentualnie możesz zmienić ścieżkę w pliku konfiguracyjnym), polecenie <i>cmd</i>:
+			Plik <i>map.csv</i> przenieś na dysk <i>C</i> (ewentualnie możesz zmienić ścieżkę w pliku konfiguracyjnym), polecenie <i>cmd</i>:
 			<div class="command">
 				<code>
 copy [ścieżka gdzie znajduje się plik map]\map.csv C:\
@@ -258,7 +273,7 @@ logstash -f btc.conf
 				</code>
 			</div>
 			</br>
-			Import danych średnio zużywał zasoby komputera.
+			Import danych średnio zużywa zasoby komputera. 
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen15.PNG" height="400em" width="500em">
@@ -277,8 +292,8 @@ logstash -f btc.conf
 			</br></br>
 			Wykonanie trwało ok. 2 godzin, 30 minut.
 			</br>
-			Co ciekawe te dane są zupełnie inne (czas oraz zużycie zasobów) niż w przypadku
-			importu pliku json w <a href="zadGeo.html">zadaniu Geo</a>.
+			Co ciekawe te wyniki są zupełnie inne (czas oraz zużycie zasobów) niż w przypadku
+			importu pliku <i>json</i> w <i><a href="zadGeo.html">zadaniu Geo</a></i>.
 		</p>
 		<h3 id="es2">przykładowy rekord</h3>
 		<p>
@@ -288,7 +303,7 @@ logstash -f btc.conf
 curl -s "http://localhost:9200/test/_search?size=1&pretty=1&filter_path=hits.hits._source"
 				</code>
 			</div>
-			Wówczas powinnino się otrzymać: 
+			Wówczas powinnino zostać wyświetlone: 
 			<div class="code">
 				<pre>
 					<code>
@@ -387,7 +402,7 @@ curl -XDELETE "http://localhost:9200/test?q=gor:'N99999999'&filter_path=hits.hit
 		</p>
 		<h3 id="es5">wyświetlenie danych</h3>
 		<p>
-			Następnie można wykonąć wyświetlenie danych takich danych gdzie <i>edind</i> jest równe 9, polecenie:
+			Następnie można wykonać wyświetlenie danych takich danych gdzie <i>edind</i> jest równe 9, polecenie:
 			<div class="command">
 				<code>
 curl -s "http://localhost:9200/test/_search?pretty=true&q=edind:'9'&filter_path=hits.hits._source
@@ -397,7 +412,7 @@ curl -s "http://localhost:9200/test/_search?pretty=true&q=edind:'9'&filter_path=
 			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 		</p>
 		<h2 id="pod">Podsumowanie</h2>
-		Tabela przedstawia podsumowanie wszystkiego.
+		Tabela przedstawia podsumowanie.
 		</br></br>
 		<table class="summary table-center">
 			<tr>
