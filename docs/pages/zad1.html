@@ -20,12 +20,12 @@
 			Wykonane zostały zapytania różne zapytania w bazach danych
 			<i>posgreSQL</i> oraz <i>elasticsearch</i>.
 			</br>
-			Pokazano w jakim czasie zostały wykonane zostały wykonane
-			i ile zużywały zasobów poszczególne czynności.
+			Pokazano w jakim czasie zostały wykonane
+			oraz ile zużywały zasobów poszczególne czynności.
 			</br>
 			Dodano podsumowanie wszystkiego.
 			</br>
-			Zostały również przedstawione opis danych oraz instrukcja co jak zostało wykonane.
+			Został również przedstawiony opis danych oraz instrukcja co jak zostało wykonane.
 			</br>
 		</p>
 		<div class="menu">
@@ -71,28 +71,29 @@
 		<p>
 			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją pobrać ze 
 			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">strony</a>
-			i zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
+			i zainstalować. Podczas instalacji możliwe, że będzie konieczne podanie hasła domyślnego użytkownika <i>postgres</i>.
 		</p>
 		<h3 id="iiko2">jdk</h3>
 		<p>
-			Aby uruchomić bazę elasticsearch potrzebny jest najnowyszy jdk, który jest możliwy do sciągniećia ze
-			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> i zainstalować.
+			Aby uruchomić bazę <i>elasticsearch</i> potrzebny jest najnowyszy jdk, który jest możliwy do sciągniecia ze
+			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a>, następnie należy
+			to zainstalować.
 			</br></br>
-			Upewnijmy się czy zmienne środowiskowe są odpowiednio skonfigurowane.
+			Następnie należy upewnieć się czy zmienne środowiskowe są odpowiednio skonfigurowane.
 			</br>
 			<div class="text-center">
 				<i>Panel sterowania -> System -> Zmień ustawienia -> Zaawansowane (zakładka) -> Zmienne środowiskowe...</i>
 			</div>
 			</br>
-			W <i>zmienne systemowe</i> szukamy zmiennej <i>JAVA_HOME</i> oraz sprawdzamy czy ścieżka
+			W <i>zmienne systemowe</i> należy znaleźć zmienną <i>JAVA_HOME</i> (jeśli jej nie ma należy ją dodać) oraz sprawdzić czy ścieżka
 			jest ustawiona na zainstalowany przez z nas <i>jdk</i>.
 			</br>
-			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
+			Jeśli nie, należy zaznaczyć zmienną, kliknąć <i>Edytuj...</i> oraz zmienić ścieżkę i ponownie uruchamiamy komputer.
 		</p>
 		<h3 id="iiko3">python</h3>
 		<p>
-			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy ze
-			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
+			Python będzie potrzebny do uruchomienia skryptów. Pobierz ze
+			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję, następnie należy zainstalować.
 		</p>
 		</br>
 		<h2 id="psql">PostgreSQL</h2>
@@ -103,23 +104,23 @@
 			 <a href="../../scripts/s1.py" download>Pobierz</a>
 			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
 			</br>
-			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			Następnie należy uruchomić skrypt, który usunie znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
 			<div class="command">
 				<code>
 py s1.py
 				</code>
 			</div>
-			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
-			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
+			Pobierz ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
+			oraz zamień nazwę pobranego pliku na <i>pgfutter.exe</i>.
 			</br>
-			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
+			Następnie należy zaimportować dane do <i>postreSQL'a</i> (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
 			<div class="command">
 				<code>
 pgfutter --pass "[hasło]" --table "test" csv map.csv
 				</code>
 			</div>
 			</br>
-			Import danych średnio zużywał zasoby komputera.
+			Import danych średnio zużywa zasoby komputera.
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen7.PNG" height="400em" width="500em">
@@ -138,81 +139,82 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 			</br></br>
 			Wykonanie trwało ok. 2 minut, 35 sekund.
 			</br>
-			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
+			Ostatecznie powinien pojawić się komunikat: "2593752 rows imported into import.test"
 			<div class="text-center">
 				<img src="../images/screen13.PNG" height="30em" width="1200em">
 			</div>
 			<div class="description-image">Import danych do posgreSQL</div>
 			</br>
-			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
+			Czyli dane zostaną zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
 		<h3 id="psql2">przykładowy rekord</h3>
 		<p>
-			Ponowanie uruchamia serwer, przypominam, że aby to zrobić, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			Ponownie należy uruchamić serwer, aby to zrobić, należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
 				</code>
 			</div>
-			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			Następnie należy zalogować się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
 			<div class="command">
 				<code>
 psql -U postgres
 				</code>
 			</div>
-			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			oraz podać hasło które zostało ustawione przy instalacji postgreSQL'a
+			(jeśli podczas instalacji nie było wymagane podanie hasła - domyślne hasło to <i>postgrespass</i>).
 			</br></br>
 		</p>
 		<p>
-			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
+			Następnie aby wyświetlić przykładową daną należy wydać polecenie:
 			<div class="command">
 				<code>
 select * from import.test limit 1;
 				</code>
 			</div>
-			Wówczas otrzymano: 
+			Wówczas powinnino się otrzymać: 
 			<div class="text-center">
 				<img src="../images/screen14.PNG" height="150em" width="1200em">
 			</div>
 			<div class="description-image">Przykładowy rekord postreSQL</div>
-			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 		</p>
 		<h3 id="psql3">ilość danych</h3>
 		<p>
-			Sprawdzamy ile danych zostało zaimportowanych, polecenie:
+			Aby sprawdzić ile danych zostało zaimportowanych, należy wydać polecenie:
 			<div class="command">
 				<code>
 select count(*) from import.test;
 				</code>
 			</div>
-			Po czym pojawiła się informacja:
+			Po czym powinna pojawić się informacja:
 			<div class="text-center">
 				<img src="../images/screen18.PNG" height="90em" width="110em">
 			</div>
 			<div class="description-image">Ilość danych postreSQL</div>
-			Wykonanie tego zapytania trwało ok. 5 sekund.
+			Wykonanie tego zapytania trwa ok. 5 sekund.
 		</p>	
 		<h3 id="psql4">usuwanie danych</h3>
 		<p>
-			Niektóre kolumny zawierają puste pola np. klumny ze wspórzędnymi <i>x</i> oraz <i>y</i>, tym razem usuniemy te dane, polecenie:
+			Niektóre kolumny zawierają puste pola np. klumny ze wspórzędnymi <i>x</i> oraz <i>y</i>, tym razem możemy usunąć te dane, polecenie:
 			<div class="command">
 				<code>
 delete from import.test where x='' and y='';
 				</code>
 			</div>
 			</br>
-			Wówczas zostanie usuniętych 22391 danych, zaś wykonanie tego zapytania trwało ok. 5 sekund.
+			Wówczas zostanie usuniętych 22391 danych, zaś wykonanie tego zapytania powinno trwać ok. 5 sekund.
 		</p>
 		<h3 id="psql5">wyświetlenie danych</h3>
 		<p>
-			Wykonano wyświetlenie danych takich danych gdzie ur01ind jest równe 1, polecenie:
+			Wykonano wyświetlenie danych takich danych gdzie <i>ur01ind</i> jest równe 1, polecenie:
 			<div class="command">
 				<code>
 select * from import.test where ur01ind='1';
 				</code>
 			</div>
 			</br>
-			Wykonanie tego zapytania trwało ok. 10 sekund.
+			Wykonanie tego zapytania powinno trwać ok. 10 sekund.
 		</p>
 		</br>
 		<h2 id="es">Elasticsearch</h2>
@@ -280,13 +282,13 @@ logstash -f btc.conf
 		</p>
 		<h3 id="es2">przykładowy rekord</h3>
 		<p>
-			Po zaimportowaniu danych podajemy polecenie:
+			Po zaimportowaniu danych należy wydać polecenie:
 			<div class="command">
 				<code>
 curl -s "http://localhost:9200/test/_search?size=1&pretty=1&filter_path=hits.hits._source"
 				</code>
 			</div>
-			Wówczas otrzymano:
+			Wówczas powinnino się otrzymać: 
 			<div class="code">
 				<pre>
 					<code>
@@ -353,17 +355,17 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1&filter_path=hits.hit
 					</code>
 				</pre>
 			</div>
-			Podobnie ja w przypadku <i>postreSQL'a</i> to zapytanie również zostało wykonane w mgnieniu oka.	
+			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.	
 		</p>
 		<h3 id="es3">ilość danych</h3>
 		<p>
-			Sprawdzamy ile danych zostało zaimportowanych, polecenie:
+			Aby sprawdzić ile danych zostało zaimportowanych należy wydać polecenie:
 			<div class="command">
 				<code>
 curl -XGET localhost:9200/test/_count
 				</code>
 			</div>
-			Po czym pojawiła się informacja:
+			Po czym powinna pojawić się informacja:
 			<div class="code">
 				<pre>
 					<code>
@@ -371,28 +373,28 @@ curl -XGET localhost:9200/test/_count
 					</code>
 				</pre>
 			</div>
-			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 		</p>	
 		<h3 id="es4">usuwanie danych</h3>
 		<p>
-			Usuwamy wszystkie dane gdzie gor = N99999999, polecenie:
+			Można usunąć wszystkie dane gdzie <i>gor</i> = N99999999, polecenie:
 			<div class="command">
 				<code>
 curl -XDELETE "http://localhost:9200/test?q=gor:'N99999999'&filter_path=hits.hits._source"	
 				</code>
 			</div>	
-			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 		</p>
 		<h3 id="es5">wyświetlenie danych</h3>
 		<p>
-			Wykonano wyświetlenie danych takich danych gdzie edind jest równe 9, polecenie:
+			Następnie można wykonąć wyświetlenie danych takich danych gdzie <i>edind</i> jest równe 9, polecenie:
 			<div class="command">
 				<code>
 curl -s "http://localhost:9200/test/_search?pretty=true&q=edind:'9'&filter_path=hits.hits._source
 				</code>
 			</div>
 			</br>
-			Wykonanie tego zapytania pojawiło się w mgnieniu oka.
+			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 		</p>
 		<h2 id="pod">Podsumowanie</h2>
 		Tabela przedstawia podsumowanie wszystkiego.

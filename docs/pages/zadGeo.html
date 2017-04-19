@@ -23,7 +23,7 @@
 			Pokazano w jakim czasie zostały wykonane
 			oraz ile zużywały zasobów poszczególne czynności.
 			</br>
-			Zostały również przedstawione opis danych oraz instrukcja co jak zostało wykonane
+			Został również przedstawiony opis danych oraz instrukcja co jak zostało wykonane.
 			</br>
 		</p>
 		<div class="menu">
@@ -67,30 +67,31 @@
 		<p>
 			Do rozwiązania zadania użyto bazy postgreSQL. Należy ją pobrać ze 
 			<a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads" target="_blank">strony</a>
-			i zainstalować. Podczas instalacji możliwe, że będziemy musieli podać hasło do domyślnego użytkownika <i>postgres</i>.
+			i zainstalować. Podczas instalacji możliwe, że będzie konieczne podanie hasła domyślnego użytkownika <i>postgres</i>.
 		</p>
 		<h3 id="iiko2">jdk</h3>
 		<p>
-			Aby uruchomić bazę elasticsearch potrzebny jest najnowyszy jdk, który jest możliwy do sciągniećia ze
-			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a> i zainstalować.
+			Aby uruchomić bazę <i>elasticsearch</i> potrzebny jest najnowyszy jdk, który jest możliwy do sciągniecia ze
+			<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">strony</a>, następnie należy
+			to zainstalować.
 			</br></br>
-			Upewnijmy się czy zmienne środowiskowe są odpowiednio skonfigurowane.
+			Następnie należy upewnieć się czy zmienne środowiskowe są odpowiednio skonfigurowane.
 			</br>
 			<div class="text-center">
 				<i>Panel sterowania -> System -> Zmień ustawienia -> Zaawansowane (zakładka) -> Zmienne środowiskowe...</i>
 			</div>
 			</br>
-			W <i>zmienne systemowe</i> szukamy zmiennej <i>JAVA_HOME</i> oraz sprawdzamy czy ścieżka
+			W <i>zmienne systemowe</i> należy znaleźć zmienną <i>JAVA_HOME</i> (jeśli jej nie ma należy ją dodać) oraz sprawdzić czy ścieżka
 			jest ustawiona na zainstalowany przez z nas <i>jdk</i>.
 			</br>
-			Jeśli nie, zaznaczamy zmienną, klikamy <i>Edytuj...</i> oraz zmieniamy ścieżkę i ponownie uruchamiamy komputer.
+			Jeśli nie, należy zaznaczyć zmienną, kliknąć <i>Edytuj...</i> oraz zmienić ścieżkę i ponownie uruchamiamy komputer.
 		</p>
 		<h3 id="iiko3">jq</h3>
 		<p>
 			Narzędzie jq służy do przekształcenia danych w taki sposób, aby otrzymać dane, pola które nas interesują.
 			</br>
 			Aby zainstalować jq wstępnie trzeba zaisntalować framework Chocolatey.
-			Uruchamiamy konsolę cmd <b>z uprawnieniami administratora</b> oraz wydajemy polecenie:
+			Następnie należy uruchamić konsolę <i>cmd</i> <b>z uprawnieniami administratora</b> oraz wydać polecenie:
 			<div class="command">
 				<code>
 @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
@@ -110,28 +111,29 @@ chocolatey install jq
 		</p>
 		<h3 id="iiko4">python</h3>
 		<p>
-			Python nam będzie potrzebny do uruchomienia skryptów. Pobieramy ze
-			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję oraz instalujemy.
+			Python będzie potrzebny do uruchomienia skryptów. Pobierz ze
+			<a href="https://www.python.org/downloads/windows/" target="_blank">strony</a> najnowaszą wesję, następnie należy zainstalować.
 		</p>
 		</br>
 		<h2 id="psql">PostgreSQL</h2>
 		<h3 id="psql1">utworzenie tabeli</h3>
 		<p>
-			Aby uruchomić serwer, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			Aby uruchomić serwer, należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
 				</code>
 			</div>
-			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			Następnie należy zalogować się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
 			<div class="command">
 				<code>
 psql -U postgres
 				</code>
 			</div>
-			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			oraz podać hasło które zostało ustawione przy instalacji postgreSQL'a
+			(jeśli podczas instalacji nie było wymagane podanie hasła - domyślne hasło to <i>postgrespass</i>).
 			</br></br>
-			Tworzymy tabelę, polecenie:
+			Następnie należy utworzyć tabelę poleceniem:
 			<div class="command">
 				<code>
 create table import.test(
@@ -182,7 +184,7 @@ create table import.test(
 );
 				</code>
 			</div>
-			oraz wychodzimy poleceniem
+			oraz wyjść poleceniem
 			<div class="command">
 				<code>
 \q
@@ -196,23 +198,23 @@ create table import.test(
 			 <a href="../../scripts/s1.py" download>Pobierz</a>
 			skrypt oraz przenieś go do folderu gdzie pobrane są dane.
 			</br>
-			Następnie przypomocy skryptu usuwamy znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
+			Następnie należy uruchomić skrypt, który usunie znaki które nie są kodowane w <i>windows-1250</i>, polecenie w <i>cmd</i>:
 			<div class="command">
 				<code>
 py s1.py
 				</code>
 			</div>
-			Pobieramy ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
-			oraz zmieniamy nazwę pobranego pliku na <i>pgfutter.exe</i>.
+			Pobierz ze <a href="https://github.com/lukasmartinelli/pgfutter/releases/tag/v1.1" target="_blank">strony</a> <i>pgfutter</i>,
+			oraz zamień nazwę pobranego pliku na <i>pgfutter.exe</i>.
 			</br>
-			Następnie importujemy dane do postreSQL'a (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
+			Następnie zaimportuj dane do <i>postreSQL'a</i> (plik z danymi oraz pgfutter muszą znajdować się w tym samym katalogu), polecenie:
 			<div class="command">
 				<code>
 pgfutter --pass "[hasło]" --table "test" csv map.csv
 				</code>
 			</div>
 			</br>
-			Import danych średnio zużywał zasoby komputera.
+			Import danych średnio zużywa zasoby komputera.
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen7.PNG" height="400em" width="500em">
@@ -231,39 +233,40 @@ pgfutter --pass "[hasło]" --table "test" csv map.csv
 			</br></br>
 			Wykonanie trwało ok. 2 minut, 35 sekund.
 			</br>
-			Ostatecznie pojawił się komunikat: "2593752 rows imported into import.test"
+			Ostatecznie powinien pojawić się komunikat: "2593752 rows imported into import.test"
 			<div class="text-center">
 				<img src="../images/screen13.PNG" height="30em" width="1200em">
 			</div>
 			<div class="description-image">Import danych do posgreSQL</div>
 			</br>
-			Czyli dane zostały zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
+			Czyli dane zostaną zaimportowane to <i>tabeli</i>test w schemacie <i>import</i>, czyli <i>import.test</i>.	
 		</p>
 		<h3 id="psql3">przykładowy rekord</h3>
 		<p>
-			Ponowanie uruchamia serwer, przypominam, że aby to zrobić, przemieszczamy się do pliku binarnego posgreSQL'a, polecenie w konsoli <i>cmd</i>:
+			Ponowanie uruchamiamy serwer, Przypomnenie, aby to zrobić należy przemieścić się do pliku binarnego <i>posgreSQL'a</i>, polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 cd [ścieżka gdzie jest zainstalowany postgreSQL]\PostgreSQL\9.6\bin
 				</code>
 			</div>
-			Następnie logujemy się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
+			Następnie należy zalogować się jako domyślnie utworzony użytkownik <i>postgres</i> polecenie:
 			<div class="command">
 				<code>
 psql -U postgres
 				</code>
 			</div>
-			oraz podajemy hasło które ustawiliśmy przy instalacji postgreSQL'a (jeśli instalator nie wymagał podania domyślne hasło to postgrespass).
+			oraz podać hasło które zostało ustawione przy instalacji postgreSQL'a
+			(jeśli podczas instalacji nie było wymagane podanie hasła - domyślne hasło to <i>postgrespass</i>).
 			</br></br>
 		</p>
 		<p>
-			Następnie aby wyświetlić przykładową daną wydajemy polecenie.
+			Następnie aby wyświetlić przykładową daną należy wydać polecenie:
 			<div class="command">
 				<code>
 select * from import.test limit 1;
 				</code>
 			</div>
-			Wówczas otrzymano: 
+			Wówczas powinnino się otrzymać: 
 			<div class="text-center">
 				<img src="../images/screen14.PNG" height="150em" width="1200em">
 			</div>
@@ -271,8 +274,8 @@ select * from import.test limit 1;
 		</p>
 		<h3 id="psql4">zapytania geodezyjne</h3>
 		<p>
-			Aby korzystać z zapytań geodezyjnych musimy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
-			Po czym zmieniamy nazwy kolumn</br>
+			Aby korzystać z zapytań geodezyjnych należy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
+			Po czym zmienić nazwy kolumn</br>
 			<i>x</i> na <i>longitude</i>
 			<div class="command">
 				<code>
@@ -298,12 +301,12 @@ select * from import.test where ST_MakeEnvelope(-2.1, 57.15, -2.11, 57.14, -2.12
 		<p>
 			<a href="http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson">Pobierz</a> dane.
 			</br></br>
-			Usuwamy zbędne pola, zostawiamy dane <i>properties</i> oraz przenosimy do niego zaokrąglone dane geograficzne pod nazwa <i>location</i>
-			, aby móc na nich odpowiednio operować. Zaokrąglenia są konieczne, aby zapytania w elasticsearch działały poprawnie.
+			Należy usunąć zbędne pola (należy zostawić dane <i>properties</i> oraz przenieść do niego zaokrąglone dane geograficzne pod nazwa <i>location</i>),
+			aby móc na nich odpowiednio operować. Zaokrąglenia są konieczne, aby zapytania w elasticsearch działały poprawnie.
 			</br>
-			Plik z danymi, który pobrałem wymagał zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Zamieniłem nazwę na <i>map.geojson</i>.
+			Plik z danymi, wymaga zmiany nazwy gdyż nie może zawierać znaków takich jak: _. Można zamienić nazwę na <i>map.geojson</i>.
 			</br>
-			W moim przypadku interesujące pole to <i>features</i>, więc aby to zrobić w <i>cmd</i> wydajemy polecenie:
+			W tym przypadku interesujące pole to <i>features</i>, więc aby to zrobić w <i>cmd</i> należy wydać polecenie:
 			<div class="command">
 				<code>
 jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .properties |= .+ {location: $l} | .properties" map.geojson > mapPom.geojson
@@ -315,7 +318,7 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 < mapPom.geojson jq --compact-output "{ \"index\": { \"_type\": \"test\" } }, ." > mapPom.bulk
 				</code>
 			</div>
-			Podczas wykonywania tej operacji doszło do zużycia zasobów (ilustracja niżej). 
+			Podczas wykonywania tej operacji może dojść do zużycia zasobów (ilustracja niżej). 
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen1.PNG" height="400em" width="500em">
@@ -332,12 +335,12 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 			</div>
 			<div class="description-image">Dysk podczas przekształcania danych</div>
 			</br></br>
-			Wykonanie trwało ok. 35 minut.
+			Wykonanie powinno trwać ok. 35 minut.
 		</p>
 		</br>
 		<h3 id="es2">import danych</h3>
 		<p>
-			Pobieramy ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
+			Pobierz ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
 			</br>
 			Następnie aby uruchomić serwer wykonujemy polecenie w konsoli <i>cmd</i>:
 			<div class="command">
@@ -345,27 +348,28 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 [ścieżka gdzie pobrano elasticsearch]\elasticsearch-5.3.0\bin\elasticsearch.bat
 				</code>
 			</div>
-			Pobieramy ze <a href="https://curl.haxx.se/download.html" target="_blank">strony</a> <i>curl'a</i> po czym kopijemy plik binarny do folderu w ktorym pracujemy,
+			Pobierz ze <a href="https://curl.haxx.se/download.html" target="_blank">strony</a> <i>curl'a</i>
+			po czym należy przekopiować plik binarny do folderu w pracujesz,
 			polecenie w konsoli <i>cmd</i>:
 			<div class="command">
 				<code>
 copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka wykonywany jest projekt]\curl.exe
 				</code>
 			</div>
-			W nowej konsoli tworzymy bazę danych z mappingiem, polecenie:
+			W nowej konsoli należy stworzyć bazę danych z mappingiem, polecenie:
 			<div class="command">
 				<code>
 curl -XPUT http://localhost:9200/test -d "{\"mappings\": {\"place\": {\"properties\": {\"objectid\": {\"type\": \"integer\"},\"pcd2\": {\"type\": \"string\"},\"pcds\": {\"type\": \"string\"},\"dointr\": {\"type\": \"string\"},\"oseast100m\": {\"type\": \"string\"},\"osnrth100m\": {\"type\": \"string\"},\"oscty\": {\"type\": \"string\"},\"odslaua\": {\"type\": \"string\"},\"oslaua\": {\"type\": \"string\"},\"osward\": {\"type\": \"string\"},\"usertype\": {\"type\": \"string\"},\"osgrdind\": {\"type\": \"string\"},\"ctry\": {\"type\": \"string\"},\"oshlthau\": {\"type\": \"string\"},\"gor\": {\"type\": \"string\"},\"oldha\": {\"type\": \"string\"},\"nhscr\": {\"type\": \"string\"},\"ccg\": {\"type\": \"string\"},\"psed\": {\"type\": \"string\"},\"cened\": {\"type\": \"string\"},\"edind\": {\"type\": \"string\"},\"ward98\": {\"type\": \"string\"},\"oa01\": {\"type\": \"string\"},\"nhsrg\": {\"type\": \"string\"},\"hro\": {\"type\": \"string\"},\"lsoa01\": {\"type\": \"string\"},\"ur01ind\": {\"type\": \"string\"},\"msoa01\": {\"type\": \"string\"},\"cannet\": {\"type\": \"string\"},\"scn\": {\"type\": \"string\"},\"oshaprev\": {\"type\": \"string\"},\"oldpct\": {\"type\": \"string\"},\"oldhro\": {\"type\": \"string\"},\"pcon\": {\"type\": \"string\"},\"canreg\": {\"type\": \"string\"},\"pct\": {\"type\": \"string\"},\"oseast1m\": {\"type\": \"string\"},\"osnrth1m\": {\"type\": \"string\"},\"oa11\": {\"type\": \"string\"},\"lsoa11\": {\"type\": \"string\"},\"msoa11\": {\"type\": \"string\"},\"location\": {\"type\": \"geo_point\" }}}}}"
 				</code>
 			</div>
 			</br>
-			Następnie dokonujemy importu poprzez polecenie: 
+			Następnie należy dokonać importu poprzez polecenie: 
 			<div class="command">
 				<code>
 curl -XPOST localhost:9200/test/_bulk --data-binary @mapPom.bulk		
 				</code>
-			</div>
-			Import danych średnio zużywał zasoby komputera.
+			</div>.
+			Import danych powinien średnio zużywać zasoby komputera.
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen10.PNG" height="400em" width="500em">
@@ -385,13 +389,13 @@ curl -XPOST localhost:9200/test/_bulk --data-binary @mapPom.bulk
 			Wykonanie trwało ok. godziny.
 			</br>
 			</br>
-			Sprawdzamy czy wszystkie dane zostały zaimportowane, polecenie:
+			Należy sprawdzić czy wszystkie dane zostały zaimportowane, polecenie:
 			<div class="command">
 				<code>
 curl -XGET localhost:9200/test/_count
 				</code>
 			</div>
-			Po czym pojawiła się informacja:
+			Po czym powinna pojawić się informacja:
 			<div class="code">
 				<pre>
 					<code>
@@ -402,14 +406,14 @@ curl -XGET localhost:9200/test/_count
 		</p>
 		<h3 id="es3">przykładowy rekord</h3>
 		<p>
-			Po zaimportowaniu danych podajemy polecenie:
+			Po zaimportowaniu danych należy wydać polecenie:
 		</p>
 			<div class="command">
 				<code>
 curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\"_source\"
 				</code>
 			</div>
-			Wówczas otrzymano:
+			Wówczas powinnino się otrzymać: 
 			<div class="code">
 				<pre>
 					<code>
