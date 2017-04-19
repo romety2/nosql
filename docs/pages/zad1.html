@@ -183,7 +183,7 @@ select * from import.test limit 1;
 		<h3 id="psql3">ilość danych</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql2">przeczytaj jak to zrobić</a>.
-			</br>
+			</br></br>
 			Aby sprawdzić ile danych zostało zaimportowanych, należy wydać polecenie:
 			<div class="command">
 				<code>
@@ -200,7 +200,7 @@ select count(*) from import.test;
 		<h3 id="psql4">usuwanie danych</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql2">przeczytaj jak to zrobić</a>.
-			</br>
+			</br></br>
 			Niektóre kolumny zawierają puste pola np. klumny ze wspórzędnymi <i>x</i> oraz <i>y</i>, tym razem możemy usunąć te dane, polecenie:
 			<div class="command">
 				<code>
@@ -213,7 +213,7 @@ delete from import.test where x='' and y='';
 		<h3 id="psql5">wyświetlenie danych</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql2">przeczytaj jak to zrobić</a>.
-			</br>
+			</br></br>
 			Aby wykonać wyświetlenie danych takich danych gdzie <i>ur01ind</i> jest równe 1, polecenie:
 			<div class="command">
 				<code>
@@ -297,6 +297,9 @@ logstash -f btc.conf
 		</p>
 		<h3 id="es2">przykładowy rekord</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony 
+			oraz wszystko poprawnie skonfigurowanie. Jeśli nie: <a href="#es1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Po zaimportowaniu danych należy wydać polecenie:
 			<div class="command">
 				<code>
@@ -374,6 +377,9 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1&filter_path=hits.hit
 		</p>
 		<h3 id="es3">ilość danych</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony 
+			oraz wszystko poprawnie skonfigurowanie. Jeśli nie: <a href="#es1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Aby sprawdzić ile danych zostało zaimportowanych należy wydać polecenie:
 			<div class="command">
 				<code>
@@ -391,7 +397,13 @@ curl -XGET localhost:9200/test/_count
 			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 		</p>	
 		<h3 id="es4">usuwanie danych</h3>
-		<p>
+
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony 
+			oraz wszystko poprawnie skonfigurowanie. Jeśli nie: <a href="#es1">przeczytaj jak to zrobić</a>.
+			</br></br>
+			Przed wykonaniem czynności upewnij się czy serwer oraz wszystko poprawnie skonfigurowanie
+			jest uruchiomony. Jeśli nie: <a href="#es1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Można usunąć wszystkie dane gdzie <i>gor</i> = N99999999, polecenie:
 			<div class="command">
 				<code>
@@ -402,6 +414,9 @@ curl -XDELETE "http://localhost:9200/test?q=gor:'N99999999'&filter_path=hits.hit
 		</p>
 		<h3 id="es5">wyświetlenie danych</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony 
+			oraz wszystko poprawnie skonfigurowanie. Jeśli nie: <a href="#es1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Następnie można wykonać wyświetlenie danych takich danych gdzie <i>edind</i> jest równe 9, polecenie:
 			<div class="command">
 				<code>

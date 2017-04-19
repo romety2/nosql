@@ -193,6 +193,8 @@ create table import.test(
 		</p>	
 		<h3 id="psql2">import danych</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały przekształcone. Jeśli nie: <a href="#es1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			<a href="http:geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv">Pobierz</a> dane.
 			</br></br>
 			 <a href="../../scripts/s1.py" download>Pobierz</a>
@@ -275,7 +277,7 @@ select * from import.test limit 1;
 		<h3 id="psql4">zapytania geodezyjne</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony. Jeśli nie: <a href="#psql3">przeczytaj jak to zrobić</a>.
-			</br>
+			</br></br>
 			Aby korzystać z zapytań geodezyjnych należy pobrać ze  <a href="http://postgis.net/" target="_blank">strony</a> <i>PostGis</i>.</br>
 			Po czym zmienić nazwy kolumn</br>
 			<i>x</i> na <i>longitude</i>
@@ -344,6 +346,9 @@ jq ".features[] | (.geometry.coordinates | map( .*1000|floor|./1000)) as $l | .p
 		</br>
 		<h3 id="es2">import danych</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały przekształcone, serwer
+			oraz wszystko poprawnie skonfigurowanie jest uruchiomony. Jeśli nie: <a href="#es2">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Pobierz ze <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank">strony</a> elasticsearch.
 			</br>
 			Następnie aby uruchomić serwer wykonujemy polecenie w konsoli <i>cmd</i>:
@@ -410,6 +415,9 @@ curl -XGET localhost:9200/test/_count
 		</p>
 		<h3 id="es3">przykładowy rekord</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony
+			oraz wszystko poprawnie skonfigurowanie. Jeśli nie: <a href="#es2">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Po zaimportowaniu danych należy wydać polecenie:
 		</p>
 			<div class="command">
@@ -474,7 +482,8 @@ curl -s "http://localhost:9200/test/_search?size=1&pretty=1" | jq .hits.hits[].\
 			</div>
 		</p>
 		<h3 id="es4">polecenia geodezyjne (mapki)</h3>
-			Upewnij się czy zostały wykonane wszystkie powyższe instrukcje z <i>elasticsearch</i>.
+			Przed wykonaniem czynności upewnij się czy serwer jest uruchiomony
+			oraz wszystko poprawnie skonfigurowanie. Jeśli nie: <a href="#es2">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Pierwsze 2000 danych zobrazowanych, polecenie:
 			<div class="command">
