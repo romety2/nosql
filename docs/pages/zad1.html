@@ -246,6 +246,12 @@ py s2.py
 copy [ścieżka gdzie pobrano curl]\curl\src\curl.exe [ścieżka w której ]\curl.exe
 				</code>
 			</div>
+W nowej konsoli należy stworzyć bazę danych z mappingiem, polecenie:
+			<div class="command">
+				<code>
+curl -XPUT http://localhost:9200/test -d "{\"mappings\": {\"place\": {\"properties\": {\"x\": {\"type\": \"string\"}, \"y\": {\"type\": \"string\"}, \"objectid\": {\"type\": \"integer\"},\"pcd2\": {\"type\": \"string\"},\"pcds\": {\"type\": \"string\"},\"dointr\": {\"type\": \"string\"},\"oseast100m\": {\"type\": \"string\"},\"osnrth100m\": {\"type\": \"string\"},\"oscty\": {\"type\": \"string\"},\"odslaua\": {\"type\": \"string\"},\"oslaua\": {\"type\": \"string\"},\"osward\": {\"type\": \"string\"},\"usertype\": {\"type\": \"string\"},\"osgrdind\": {\"type\": \"string\"},\"ctry\": {\"type\": \"string\"},\"oshlthau\": {\"type\": \"string\"},\"gor\": {\"type\": \"string\"},\"oldha\": {\"type\": \"string\"},\"nhscr\": {\"type\": \"string\"},\"ccg\": {\"type\": \"string\"},\"psed\": {\"type\": \"string\"},\"cened\": {\"type\": \"string\"},\"edind\": {\"type\": \"string\"},\"ward98\": {\"type\": \"string\"},\"oa01\": {\"type\": \"string\"},\"nhsrg\": {\"type\": \"string\"},\"hro\": {\"type\": \"string\"},\"lsoa01\": {\"type\": \"string\"},\"ur01ind\": {\"type\": \"string\"},\"msoa01\": {\"type\": \"string\"},\"cannet\": {\"type\": \"string\"},\"scn\": {\"type\": \"string\"},\"oshaprev\": {\"type\": \"string\"},\"oldpct\": {\"type\": \"string\"},\"oldhro\": {\"type\": \"string\"},\"pcon\": {\"type\": \"string\"},\"canreg\": {\"type\": \"string\"},\"pct\": {\"type\": \"string\"},\"oseast1m\": {\"type\": \"string\"},\"osnrth1m\": {\"type\": \"string\"},\"oa11\": {\"type\": \"string\"},\"lsoa11\": {\"type\": \"string\"},\"msoa11\": {\"type\": \"string\"}}}}}"
+				</code>
+			</div>
 			Pobierz ze <a href="https://www.elastic.co/downloads/logstash">strony</a> <i>logstash</i> oraz <a href="../../scripts/btc.conf" download>pobierz</a>
 			plik konfiguracyjny. Przejdź do plików binarnych <i>logstash</i>, polecenie <i>cmd</i>:
 			<div class="command">
