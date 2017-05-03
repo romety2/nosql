@@ -299,6 +299,136 @@ db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, {
 		</p>	
 	</div>
 	</br>
+
+
+==================================================================================================================
+
+
+		<h2 id="mdb">mongoDB (Marek Białousz)</h2>
+		<h3 id="mdb1">import danych</h3>
+		<p>
+			1. Urucomić bazę danych.
+			2. Polecenie - import z pliku do bazy danych:
+			<div class="command">
+				<code>
+mongoimport --db test --collection test --file trades.json
+				</code>
+			</div>
+			Zużycie zasobów podczas importu danych:
+			</br></br>
+			TODO
+			</br></br>
+			Proces importu trwał TODO.
+			</br>
+			Komunikat TODO
+			</br></br>
+		</p>
+		</br>
+		<h3 id="mdb2">przykładowy rekord</h3>
+		<p>
+			Do wyświetlenia przykładowych danych należy włączyć mongo shell.
+			</br>
+			Polecenie:
+			<div class="command">
+				<code>
+mongo
+				</code>
+			</div>
+			Następnie należy wykonać polecenie:
+			<div class="command">
+				<code>		
+db.test.aggregate( { $limit: 1 } )
+				</code>
+			</div>
+			</br></br>
+			Wynik zapytania: 
+			TODO
+		</p>
+		</br>
+		<h3 id="mdb3">ilość danych</h3>
+		<p>
+			Polecenie - wyświetl ilość danych:
+			<div class="command">
+				<code>
+db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
+				</code>
+			</div>
+			Wynik zapytania:
+		</br>
+		TODO
+		</p>
+		</br>
+		<h3 id="mdb4">sortowanie</h3>
+		<p>
+			Następnie można wyświetlić pierwszych 10 najdroższych transakcji, polecenie:
+			<div class="command">
+				<code>
+db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
+				</code>
+			</div>
+			Wynik zapytania: 
+			</br></br>
+			TODO
+		</p>
+		</br>
+		<h3 id="mdb5">szukanie danych</h3>
+		<p>
+			Wyświetlenie danych gdzie TODO:
+			<div class="command">
+				<code>
+TODO
+				</code>
+			</div>
+			Wynik zapytania: 
+			</br></br>
+			TODO
+		</p>
+		<h3 id="mdb6">sortowanie konretnych danych</h3>
+		<p>
+			Wyświetlenie danych gdzie TODO:
+			<div class="command">
+				<code>
+TODO
+				</code>
+			</div>
+			wynik zapytania: 
+			</br></br>
+			TODO
+		</p>
+		<h3 id="mdb7">sumowanie</h3>
+		<p>
+			TODO
+			</br></br>
+			Wynik zapytania: 
+			</br></br>
+			TODO
+		</p>
+		<h3 id="mdb8">sumowanie i sortowanie</h3>
+		<p>
+			TODO
+			</br></br>
+			Wynik zapytania: 
+			</br></br>
+			TODO
+		</p>
+		<h3 id="mdb9">tablica, średnia i sortowanie</h3>
+		<p>
+			TODO
+			</br></br>
+			Wynik zapytania: 
+			</br></br>
+			TODO
+		</p>
+		<h3 id="mdb10">pomijanie pierwszych danych</h3>
+		<p>
+			TODO
+			</br></br>
+			Wynik zapytania: 
+			</br></br>
+			TODO
+		</p>	
+	</div>
+	</br>
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
