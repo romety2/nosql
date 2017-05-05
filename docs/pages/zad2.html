@@ -117,7 +117,7 @@ mongoimport --db test --collection test --file trades.json
 		</br>
 		<h3 id="mdb2">przykładowy rekord</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 			<div class="command">
@@ -142,7 +142,7 @@ db.test.aggregate( { $limit: 1 } )
 		</br>
 		<h3 id="mdb3">ilość danych</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Aby zobaczyć ilość danych należy wykorzystać polecenie:
 			<div class="command">
@@ -163,7 +163,7 @@ db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
 		</br>
 		<h3 id="mdb4">sortowanie</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Następnie można wyświetlić pierwszych 10 najdroższych transakcji, polecenie:
 			<div class="command">
@@ -183,7 +183,7 @@ db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 		</br>
 		<h3 id="mdb5">szukanie danych</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Następnie można wyświetlić dane gdzie <i>ticket</i> jest równe <i>z109</i> lub <i>z433</i>:
 			<div class="command">
@@ -202,7 +202,7 @@ db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] }
 		</p>
 		<h3 id="mdb6">sortowanie konretnych danych</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Następnie można wyświetlić dane gdzie <i>ticket</i> jest równe <i>z109</i> oraz posortowano je wg ceny:
 			<div class="command">
@@ -221,7 +221,7 @@ db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $
 		</p>
 		<h3 id="mdb7">sumowanie</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Następnie można sumować ceny dla biletów, w tym celu musimy pogrupować dane wg biletów, polecenie:
 			<div class="command">
@@ -240,7 +240,7 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 		</p>
 		<h3 id="mdb8">sumowanie i sortowanie</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Następnie można sprawdzić jakie 10 pierwszych biletów zostało wysprzedanych za największą cenę, w tym cale należy uzyć polecenia:
 			<div class="command">
@@ -259,7 +259,7 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 		</p>
 		<h3 id="mdb9">tablica, średnia i sortowanie</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Tym razem można posortować BID'y wg średniej, ponieważ występują w tablicy trzeba je odzielić (polecenie <i>$unwind</i>) -
 			wtedy jedna dana została tak jakby skopiowana tyle ile jest elementów tablicy oraz zostanie do nich przypisany pojedyńczy element tablicy
@@ -280,7 +280,7 @@ db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bi
 		</p>
 		<h3 id="mdb10">pomijanie pierwszych danych</h3>
 		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb-lm1">przeczytaj jak to zrobić</a>.
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Tym razem można posortować bilety wg średniej ceny, która jest większa niż 110, bez wyświetlania pierwszych 5. Polecenie:
 			<div class="command">
