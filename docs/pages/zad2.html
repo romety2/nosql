@@ -42,8 +42,7 @@
 					<li><a href="#mdb9">tablica, średnia i sortowanie</a></li>
 					<li><a href="#mdb10">pomijanie pierwszych danych</a></li>
 				</ul>
-				<ul>
-				</ul>
+				<li><a href="#pa">Pomiar agregacji</a></li>
 			</ul>
 		</div>
 		<h2 id="iod">Informacje o danych</h2>	
@@ -131,7 +130,6 @@ mongo
 db.test.aggregate( { $limit: 1 } )
 				</code>
 			</div>
-			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
 			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			<div class="text-center">
@@ -158,7 +156,6 @@ db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
 					</code>
 				</pre>
 			</div>
-			Wykonanie powinno trwać ok. 10 sekund.
 		</p>
 		</br>
 		<h3 id="mdb4">sortowanie</h3>
@@ -171,8 +168,6 @@ db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
 db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 				</code>
 			</div>
-			Wykonanie powinno trwać ok. 30 sekund.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
@@ -191,8 +186,6 @@ db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] } }, { $limit: 10 } )
 				</code>
 			</div>
-			Wykonanie tego zapytania powinno pojawić się w mgnieniu oka.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
@@ -210,8 +203,6 @@ db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] }
 db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $limit: 10 } )
 				</code>
 			</div>
-			Wykonanie powinno trwać ok. 5 sekund.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
@@ -229,8 +220,6 @@ db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $
 db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 				</code>
 			</div>
-			Wykonanie powinno trwać ok. 5 sekund.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
@@ -248,8 +237,6 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { $sort: { total: -1 } } )
 				</code>
 			</div>
-			Wykonanie powinno trwać ok. 5 sekund.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
@@ -269,8 +256,6 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bids: { $avg: "$bids" } } }, { $sort: { bids: -1 } } )
 				</code>
 			</div>
-			Wykonanie powinno trwać ok. 10 sekund.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
@@ -288,18 +273,80 @@ db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bi
 db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, { $sort: { price: 1 } }, { $match: { price: { $gt : 110 } } }, { $skip: 5 } )
 				</code>
 			</div>
-			Wykonanie powinno trwać ok. 5 sekund.
-			</br></br>
 			Wówczas powinnino zostać wyświetlone: 
 			</br></br>
 			<div class="text-center">
 				<img src="../images/screen26.PNG" height="270em" width="300em">
 			</div>
 			<div class="description-image">Wynik średniej (bez pierwszych) danych w MongoDB</div>
-		</p>	
+		</p>
+		<h2 id="pa">Pomiar agregacji</h2>
+		Pomiar został wykonany przy pomocy polecenia:
+			<div class="command">
+				<code>
+var before = new Date()</br>
+#komenda wykonująca agregację</br>
+var after = new Date()</br>
+execution_mills = after - before
+				</code>
+			</div>
+		Tabela przedstawia podsumowanie.
+		</br></br>
+		<table class="summary table-center">
+			<tr>
+				<th>Agregacja</th>
+				<th>Ł. Mielewczyk</th>
+				<th>M. Białousz</th>
+			</tr>
+			<tr>
+				<td>Przykładowy rekord</td>
+				<td>79 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Ilość danych</td>
+				<td>2327 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Sortowanie</td>
+				<td>5651 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Szukanie danych</td>
+				<td>166 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Sortowanie konretnych danych</td>
+				<td>1049 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Sumowanie</td>
+				<td>1898 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Sumowanie i sortowanie</td>
+				<td>1943 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Tablica, średnia i sortowanie</td>
+				<td>6241 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Pomijanie pierwszych danych</td>
+				<td>1889 ms</td>
+				<td></td>
+			</tr>
+		</table>
+		</br>
 	</div>
 	</br>
-
 	<div class = "return">
 		<a href="../index.html">powrót</a>
 	</div>
