@@ -72,11 +72,12 @@ mongod
 		</p>
 		</br>
 		<h2 id="mr">Map-Reduce</h2>
-			Map-Reduce to najbardziej zaawansowany mechanizm przetwarzania zawartości bazy danych, ale jednocześnie najwolniejszy.</br>
-			Na proces Map-Reduce składa się kilka etapów.
+			Map-Reduce to najbardziej zaawansowany mechanizm przetwarzania zawartości bazy danych, ale jednocześnie najwolniejszy.
+			Na proces Map-Reduce składa się kilka etapów.</br>
 			Na etapie mapowania (ang. map) funkcja użytkownika wywoływana dla każdego dokumentu emituje dowolną liczbę (0 lub więcej)
-			par klucz-wartość. W efekcie otrzymujemy olbrzymią ilość par klucz-wartość, przy czym klucz często powtarza się w wielu parach.
-			Na etapie tasowania (ang. shuffle) pary o tym samym kluczu są agregowane w parę klucz-tablica_wartości.
+			par klucz-wartość.
+			W efekcie otrzymujemy olbrzymią ilość par klucz-wartość, przy czym klucz często powtarza się w wielu parach.</br>
+			Na etapie tasowania (ang. shuffle) pary o tym samym kluczu są agregowane w parę klucz-tablica_wartości.</br>
 			Funkcja redukcji (ang. reduce) napisana przez użytkownika pobiera na wejściu parametry klucz,
 			tablica_wartości i redukuje tablicę do jednego elementu. Funkcja reduce musi mieć taką własność,
 			że jej wynik może być użyty jako element tablicy przekazanej jako drugi argument do kolejnego wywołania reduce.</br>
