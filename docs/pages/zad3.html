@@ -33,6 +33,8 @@
 				<li><a href="#mdb">mongoDB</a></li>
 				<ul>
 					<li><a href="#mdb1">import danych</a></li>
+					<li><a href="#mdb2">przykładowy rekord</a></li>
+					<li><a href="#mdb3">ilość danych</a></li>
 				</ul>
 			</ul>
 		</div>
@@ -113,80 +115,50 @@ mongoimport --db test --collection test --file trades.json
 			</br></br>
 		</p>
 		</br>
-		<!--
 		<h3 id="mdb2">przykładowy rekord</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
 			<div class="command">
 				<code>
 mongo
 				</code>
 			</div>
-			Zefinowano funcję:
+			Następnie należy wykonać polecenie:
 			<div class="command">
-				<code>
-var testExampleRecord = function() { return db.test.findOne() };
+				<code>		
+db.test.aggregate( { $limit: 1 } )
 				</code>
 			</div>
-			Oraz wywołąno ją poleceniem:
-			<div class="command">
-				<code>
-testExampleRecord()
-				</code>
-			</div>
-			To zapytanie również zostało wykonane w mgnieniu oka.
 			</br></br>
-			Wówczas otrzymano:
+			Wówczas powinnino zostać wyświetlone: 
+			<div class="text-center">
+				<img src="../images/screen19.PNG" height="50em" width="1200em">
+			</div>
+			<div class="description-image">Wynik wyświetlenia pierwszego rekordu w MongoDB</div>
+		</p>
+		</br>
+		<h3 id="mdb3">ilość danych</h3>
+		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
+			</br></br>
+			Aby zobaczyć ilość danych należy wykorzystać polecenie:
+			<div class="command">
+				<code>
+db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
+				</code>
+			</div>
+			Powinno zostać wyświetlone:
 			<div class="code">
 				<pre>
 					<code>
-{
-        "_id" : ObjectId("5597a1627df886b33f839f9b"),
-        "details" : {
-                "asks" : [
-                        110.07,
-                        110.12,
-                        110.3
-                ],
-                "bids" : [
-                        109.9,
-                        109.88,
-                        109.7,
-                        109.5
-                ],
-                "lag" : 0,
-                "system" : "abc"
-        },
-        "price" : 120,
-        "shares" : 200,
-        "ticker" : "abcd",
-        "ticket" : "z101",
-        "time" : ISODate("2012-03-03T07:00:00Z")
-}
+{ "_id" : null, "count" : 1000001 }
 					</code>
 				</pre>
 			</div>
 		</p>
 		</br>
-		<h3 id="mdb3">ilość danych</h3>
-		<p>
-			Zefinowano funcję:
-			<div class="command">
-				<code>
-var testCount = function() { return db.test.count() };
-				</code>
-			</div>
-			Oraz wywołąno ją poleceniem:
-			<div class="command">
-				<code>
-testCount()
-				</code>
-			</div>
-			Wówczas otrzymano informacje, że danych jest 1000001.
-			</br>
-			To zapytanie również zostało wykonane w mgnieniu oka.
-		</p>
-		</br> -->			
 	</div>
 	</br>
 	<div class = "return">

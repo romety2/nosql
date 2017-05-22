@@ -8,5 +8,5 @@
 
 (egzamin)
 
-- [ ] Aggregation Pipeline
-- [ ] MapReduce
+- [X] Aggregation Pipeline
+- [ ] Map-Reduce
