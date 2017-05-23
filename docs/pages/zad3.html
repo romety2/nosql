@@ -158,7 +158,61 @@ db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
 				</pre>
 			</div>
 		</p>
-		</br>
+		</br>	
+		<h3 id="mdb4">1</h3>
+		<p>
+			<div class="command">
+				<code>
+var mapFun = function() {for( var key in this ) { emit( key, { count: 1 });}};
+				</code>
+			</div>
+			<div class="command">
+				<code>
+var reduceFun = function(key, emits) {total = 0; for( var i in emits ) {total += emits[i].count;} return { "count": total };};
+				</code>
+			</div>
+			<div class="command">
+				<code>
+mr = db.test.mapReduce(mapFun, reduceFun, { out: "countFields" })
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen27.PNG" height="150em" width="200em">
+			</div>
+			<div class="description-image">Wykonanie Map-Reduce</div>
+			<div class="command">
+				<code>
+db[mr.result].find();
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen28.PNG" height="100em" width="300em">
+			</div>
+			<div class="description-image">Wykonanie Map-Reduce</div>
+		</p>
+		<h3 id="mdb4">2</h3>
+		<p>
+			<div class="command">
+				<code>
+var mapFun = function() { emit(this.ticket, this.price); };
+				</code>
+			</div>
+			<div class="command">
+				<code>
+var reduceFun = function(key, emits) { return Array.sum(emits); };
+				</code>
+			</div>
+			<div class="command">
+				<code>
+mr = db.test.mapReduce(mapFun, reduceFun, { out: "sumPrice" })
+				</code>
+			</div>
+			<div class="command">
+				<code>
+db[mr.result].find();
+				</code>
+			</div>
+		</p>
 	</div>
 	</br>
 	<div class = "return">
