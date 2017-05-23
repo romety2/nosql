@@ -30,12 +30,17 @@
 					<li><a href="#iiko1">mongoDB</a></li>
 				</ul>
 				<li><a href="#mr">Map-Reduce</a></li>
+				<ul>
+					<li><a href="#mr1">Schemat Map-Reduce</a></li>
+				</ul>
 				<li><a href="#mdb">mongoDB</a></li>
 				<ul>
 					<li><a href="#mdb1">import danych</a></li>
 					<li><a href="#mdb2">przykładowy rekord</a></li>
 					<li><a href="#mdb3">ilość danych</a></li>
+					<li><a href="#mdb4">ilość kluczy</a></li>
 				</ul>
+				<li><a href="#pom">Pomiar</a></li>
 			</ul>
 		</div>
 		<h2 id="iod">Informacje o danych</h2>	
@@ -74,15 +79,31 @@ mongod
 		</p>
 		</br>
 		<h2 id="mr">Map-Reduce</h2>
-			Map-Reduce to najbardziej zaawansowany mechanizm przetwarzania zawartości bazy danych, ale jednocześnie najwolniejszy.
-			Na proces Map-Reduce składa się kilka etapów.</br>
-			Na etapie mapowania (ang. map) funkcja użytkownika wywoływana dla każdego dokumentu emituje dowolną liczbę (0 lub więcej)
-			par klucz-wartość.
-			W efekcie otrzymujemy olbrzymią ilość par klucz-wartość, przy czym klucz często powtarza się w wielu parach.</br>
-			Na etapie tasowania (ang. shuffle) pary o tym samym kluczu są agregowane w parę klucz-tablica_wartości.</br>
-			Funkcja redukcji (ang. reduce) napisana przez użytkownika pobiera na wejściu parametry klucz,
-			tablica_wartości i redukuje tablicę do jednego elementu. Funkcja reduce musi mieć taką własność,
-			że jej wynik może być użyty jako element tablicy przekazanej jako drugi argument do kolejnego wywołania reduce.</br>
+		Map-Reduce to najbardziej zaawansowany mechanizm przetwarzania zawartości bazy danych, ale jednocześnie najwolniejszy.
+		Na proces Map-Reduce składa się kilka etapów.</br>
+		Na etapie mapowania (ang. map) funkcja użytkownika wywoływana dla każdego dokumentu emituje dowolną liczbę (0 lub więcej) par klucz-wartość.
+		W efekcie otrzymujemy olbrzymią ilość par klucz-wartość, przy czym klucz często powtarza się w wielu parach.</br>
+		Na etapie tasowania (ang. shuffle) pary o tym samym kluczu są agregowane w parę klucz-tablica_wartości.</br>
+		Funkcja redukcji (ang. reduce) napisana przez użytkownika pobiera na wejściu parametry klucz,
+		tablica_wartości i redukuje tablicę do jednego elementu. Funkcja reduce musi mieć taką własność,
+		że jej wynik może być użyty jako element tablicy przekazanej jako drugi argument do kolejnego wywołania reduce.</br>
+		<h3 id="mr1">Schemat Map-Reduce</h3>
+		Schemat wywołania procesu Map-Reduce: 
+		<div class="command">
+			<code>
+{</br>
+&nbsp;&nbsp;"result": "result", <i>//miejsce w którym został zapisany wynik obliczeń umieszczony</i></br>
+&nbsp;&nbsp;"timeMillis": 1, <i>//czas obliczeń w milisekundach</i></br>
+&nbsp;&nbsp;"counts": {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;"input": 1000001, <i>//ilość danych</i></br>
+&nbsp;&nbsp;&nbsp;&nbsp;"emit": 0, <i>//ilość wygenerowanych par klucz-wartość</i></br>
+&nbsp;&nbsp;&nbsp;&nbsp;"reduse": 0, <i>//??</i></br>
+&nbsp;&nbsp;&nbsp;&nbsp;"output": 0 <i>//ilość elementów kolekcji wynikowej</i></br>
+&nbsp;&nbsp;},</br>
+&nbsp;&nbsp;"ok": 1</br>
+}
+			</code>
+		</div>
 		<h2 id="mdb">mongoDB</h2>
 		<h3 id="mdb1">import danych</h3>
 		<p>
@@ -159,39 +180,48 @@ db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
 			</div>
 		</p>
 		</br>	
-		<h3 id="mdb4">1</h3>
+		<h3 id="mdb4">Ilość kluczy</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
+			</br></br>
+			Aby poznać listę oraz ilość kluczy, należy
+			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
 var mapFun = function() {for( var key in this ) { emit( key, { count: 1 });}};
 				</code>
 			</div>
+			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
 var reduceFun = function(key, emits) {total = 0; for( var i in emits ) {total += emits[i].count;} return { "count": total };};
 				</code>
 			</div>
+			Wywołać proces Map-Reduce:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, { out: "countFields" })
+mr = db.test.mapReduce(mapFun, reduceFun, { out: "quantityKeys" })
 				</code>
 			</div>
 			<div class="text-center">
-				<img src="../images/screen27.PNG" height="150em" width="200em">
+				<img src="../images/screen27.PNG" height="150em" width="300em">
 			</div>
-			<div class="description-image">Wykonanie Map-Reduce</div>
+			<div class="description-image">Proces Map-Reduce - ilość kluczy</div>
+			Aby zobaczyć wynik należy wykonać polecenie:
 			<div class="command">
 				<code>
 db[mr.result].find();
 				</code>
 			</div>
 			<div class="text-center">
-				<img src="../images/screen28.PNG" height="100em" width="300em">
+				<img src="../images/screen28.PNG" height="100em" width="400em">
 			</div>
-			<div class="description-image">Wykonanie Map-Reduce</div>
+			<div class="description-image">Wynik wykonania Map-Reduce - ilość kluczy</div>
 		</p>
-		<h3 id="mdb4">2</h3>
+		<h3 id="mdb5">2</h3>
 		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
+			</br></br>
 			<div class="command">
 				<code>
 var mapFun = function() { emit(this.ticket, this.price); };
@@ -213,6 +243,23 @@ db[mr.result].find();
 				</code>
 			</div>
 		</p>
+		<h2 id="pom">Pomiar</h2>
+		Pomiar został wykonany podczasz wywołania procesu Map-Reduce.</br>
+		Tabela przedstawia podsumowanie.
+		</br></br>
+		<table class="summary table-center">
+			<tr>
+				<th>Map-Reduce</th>
+				<th>Ł. Mielewczyk</th>
+				<th>M. Białousz</th>
+			</tr>
+			<tr>
+				<td>Ilość kluczy</td>
+				<td>56238 ms</td>
+				<td></td>
+			</tr>
+		</table>
+		</br>
 	</div>
 	</br>
 	<div class = "return">
