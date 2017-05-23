@@ -31,7 +31,7 @@
 				</ul>
 				<li><a href="#mr">Map-Reduce</a></li>
 				<ul>
-					<li><a href="#mr1">Schemat Map-Reduce</a></li>
+					<li><a href="#mr1">schemat Map-Reduce</a></li>
 				</ul>
 				<li><a href="#mdb">mongoDB</a></li>
 				<ul>
@@ -86,7 +86,7 @@ mongod
 		Funkcja redukcji (ang. reduce) napisana przez użytkownika pobiera na wejściu parametry klucz,
 		tablica_wartości i redukuje tablicę do jednego elementu. Funkcja reduce musi mieć taką własność,
 		że jej wynik może być użyty jako element tablicy przekazanej jako drugi argument do kolejnego wywołania reduce.</br>
-		<h3 id="mr1">Schemat Map-Reduce</h3>
+		<h3 id="mr1">schemat Map-Reduce</h3>
 		Schemat wywołania procesu Map-Reduce: 
 		<div class="command">
 			<code>
@@ -96,7 +96,7 @@ mongod
 &nbsp;&nbsp;"counts": {</br>
 &nbsp;&nbsp;&nbsp;&nbsp;"input": 1000001, <i>//ilość danych</i></br>
 &nbsp;&nbsp;&nbsp;&nbsp;"emit": 0, <i>//ilość wygenerowanych par klucz-wartość</i></br>
-&nbsp;&nbsp;&nbsp;&nbsp;"reduse": 0, <i>//??</i></br>
+&nbsp;&nbsp;&nbsp;&nbsp;"reduce": 0, <i>//??</i></br>
 &nbsp;&nbsp;&nbsp;&nbsp;"output": 0 <i>//ilość elementów kolekcji wynikowej</i></br>
 &nbsp;&nbsp;},</br>
 &nbsp;&nbsp;"ok": 1</br>
@@ -136,16 +136,6 @@ mongoimport --db test --collection test --file trades.json
 		</p>
 		</br>
 		<h3 id="mdb2">przykładowy rekord</h3>
-		<p>
-			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
-			</br></br>
-			Aby wyświetlić przykładową daną, początkowo trzeba włączyć mongo shell. Polecenie:
-			<div class="command">
-				<code>
-mongo
-				</code>
-			</div>
-		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
 			Aby poznać listę oraz ilość kluczy, należy
