@@ -37,8 +37,7 @@
 				<ul>
 					<li><a href="#mdb1">import danych</a></li>
 					<li><a href="#mdb2">przykładowy rekord</a></li>
-					<li><a href="#mdb3">ilość danych</a></li>
-					<li><a href="#mdb4">ilość kluczy</a></li>
+					<li><a href="#mdb3">ilość kluczy</a></li>
 				</ul>
 				<li><a href="#pom">Pomiar</a></li>
 			</ul>
@@ -146,41 +145,48 @@ mongoimport --db test --collection test --file trades.json
 mongo
 				</code>
 			</div>
-			Następnie należy wykonać polecenie:
-			<div class="command">
-				<code>		
-db.test.aggregate( { $limit: 1 } )
-				</code>
-			</div>
-			</br></br>
-			Wówczas powinnino zostać wyświetlone: 
-			<div class="text-center">
-				<img src="../images/screen19.PNG" height="50em" width="1200em">
-			</div>
-			<div class="description-image">Wynik wyświetlenia pierwszego rekordu w MongoDB</div>
-		</p>
-		</br>
-		<h3 id="mdb3">ilość danych</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
-			Aby zobaczyć ilość danych należy wykorzystać polecenie:
+			Aby poznać listę oraz ilość kluczy, należy
+			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
+var mapFun = function() { emit(null, this); };
 				</code>
 			</div>
-			Powinno zostać wyświetlone:
-			<div class="code">
-				<pre>
-					<code>
-{ "_id" : null, "count" : 1000001 }
-					</code>
-				</pre>
+			Strzworzyć poniższą funcję <i>reduce</i>:
+			<div class="command">
+				<code>
+var reduceFun = function( key, emits ) { return emits[0];};
+				</code>
 			</div>
+			Wywołać proces Map-Reduce:
+			<div class="command">
+				<code>
+mr = db.test.mapReduce(mapFun, reduceFun, { out: "exampleRecord" } })
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen29.PNG" height="150em" width="300em">
+			</div>
+			<div class="description-image">Proces Map-Reduce - przykładowy rekord</div>
+			Aby zobaczyć wynik należy wykonać polecenie:
+			<div class="command">
+				<code>
+db[mr.result].find();
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen30.PNG" height="50em" width="1200em">
+			</div>
+			<div class="description-image">Wynik wykonania Map-Reduce - przykładowy rekord</div>
+			</br>
+			Map-Reduce nie jest najlepszym narzędziem do wyświetlania przykładowego rekordu.
+		</p>
 		</p>
 		</br>	
-		<h3 id="mdb4">Ilość kluczy</h3>
+		<h3 id="mdb3">ilość kluczy</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
@@ -217,8 +223,10 @@ db[mr.result].find();
 				<img src="../images/screen28.PNG" height="100em" width="400em">
 			</div>
 			<div class="description-image">Wynik wykonania Map-Reduce - ilość kluczy</div>
+			</br>
+			Można zaobserwować, że ilość danych wynosi 1000001 (klucz _id) oraz wszystkie elementy zawierają wszystkie klucze.
 		</p>
-		<h3 id="mdb5">2</h3>
+		<h3 id="mdb4">2</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
@@ -252,6 +260,11 @@ db[mr.result].find();
 				<th>Map-Reduce</th>
 				<th>Ł. Mielewczyk</th>
 				<th>M. Białousz</th>
+			</tr>
+			<tr>
+				<td>Przykładowy rekord</td>
+				<td>15616 ms</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>Ilość kluczy</td>
