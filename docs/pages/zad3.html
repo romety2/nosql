@@ -98,7 +98,7 @@ mongod
 &nbsp;&nbsp;"counts": {</br>
 &nbsp;&nbsp;&nbsp;&nbsp;"input": 1000001, <i>//ilość danych</i></br>
 &nbsp;&nbsp;&nbsp;&nbsp;"emit": 0, <i>//ilość wygenerowanych par klucz-wartość</i></br>
-&nbsp;&nbsp;&nbsp;&nbsp;"reduce": 0, <i>//??</i></br>
+&nbsp;&nbsp;&nbsp;&nbsp;"reduce": 0, <i>//odpowiedź na główny problem</i></br>
 &nbsp;&nbsp;&nbsp;&nbsp;"output": 0 <i>//ilość elementów kolekcji wynikowej</i></br>
 &nbsp;&nbsp;},</br>
 &nbsp;&nbsp;"ok": 1</br>
@@ -311,17 +311,17 @@ db[mr.result].find();
 			<tr>
 				<td>Przykładowy rekord</td>
 				<td>15616 ms</td>
-				<td></td>
+				<td>16011 ms</td>
 			</tr>
 			<tr>
 				<td>Ilość kluczy</td>
 				<td>56238 ms</td>
-				<td></td>
+				<td>57885 ms</td>
 			</tr>
 			<tr>
 				<td>Suma cen jednego biletu</td>
 				<td>1403 ms</td>
-				<td></td>
+				<td>1496 ms</td>
 			</tr>
 			<tr>
 				<td>Średnia cen sprzedaży</td>
@@ -329,6 +329,93 @@ db[mr.result].find();
 				<td></td>
 			</tr>
 		</table>
+		</br>
+-----------------------------
+		</br>
+		Porównanie obu komputerów.
+		</br>
+		<h3 id="iok-lm">Łukasz Mielewczyk</h3>
+		<table class="informations table-center">
+			<tr>
+				<th>Nazwa</th>
+				<th>Wartosć</th>
+			</tr>
+			<tr>
+				<td>Procesor</td>
+				<td>Core(TM) i3-4005U CPU 1,7 GHz 1,7 GHz</td>
+			</tr>
+			<tr>
+				<td>RAM</td>
+				<td>12 GB</td>
+			</tr>
+			<tr>
+				<td>Dysk</td>
+				<td>HDD</td>
+			</tr>
+			<tr>
+				<td>System operacyjny</td>
+				<td>Windows 10 64-bit</td>
+			</tr>
+			<tr>
+				<td>Wersje użytych baz danych</td>
+				<td>elasticsearch 5.3.0, mongoDB 3.2.6, postgreSQL 9.6.2</td>
+			</tr>
+		</table>
+		<h3 id="iok-mb">Marek Białousz</h3>
+		<table class="informations table-center">
+			<tr>
+				<th>Nazwa</th>
+				<th>Wartość</th>
+			</tr>
+			<tr>
+				<td>Procesor</td>
+				<td>Intel Core i7-4510U 2.0 GHz</td>
+			</tr>
+			<tr>
+				<td>RAM</td>
+				<td>8,0 GB</td>
+			</tr>
+			<tr>
+				<td>Dysk</td>
+				<td>Toshiba MQ01ABD025 1TB</td>
+			</tr>
+			<tr>
+				<td>System operacyjny</td>
+				<td>Windows 8.1 x64</td>
+			</tr>
+			<tr>
+				<td>Wersje użytych baz danych</td>
+				<td>elasticsearch 5.2.2, mongoDB 3.2.6, postgreSQL 9.6.2</td>
+			</tr>
+		</table>
+		</br>
+		1. Na obu komputerach jest ta sama wersja bazy MongoDB.
+		</br>
+		2. Komputer Łukasza ustępuje pola jeśli chodzi o procesor (i3 - i7) - i nie odgrywa to tutaj znaczącej roli gdyż różnica GHz jest niewielka w porównaniu z różnicą pamięci RAM.
+		</br>
+		3. Natomiast jest lepszy jeżeli chodzi o ilość dostępnej pamięci RAM względem komputera Marka (12 - 8).
+		</br>
+		4. Ponadto system operacyjny, na którym codziennie pracuje Łukasz jest nowszy (Win 10 - Win 8.1).
+		</br>
+		5. Jak widać w tabelkach porównawczych wyników, każdy z pomiarów na komputerze Łukasza wykonał się szybciej, aniżeli u Marka.
+		</br>
+		Wyjaśnienie obserwacji:
+		</br>
+		- Okazuje się, że pojemność pamięci RAM ma kluczowy wpływ na oceny uzystkiwane w teście RAM i bez względu na szybkość transmisji determinuje maksymalny możliwy rezultat.
+		</br>
+			- Jeśli Twój komputer będzie służyć do podstawowych zastosowań, optymalne i zalecane jest wyposażenie go w minimum 4-6 GB RAM.
+		</br>
+		</br>
+			Komputer oferujący wyższą wydajność oraz większy komfort pracy z otwartymi kilkoma aplikacjami równocześnie, oraz komputer dla gracza, powinien dysponować minimum 8 GB RAM.
+		</br>
+		</br>
+			Komputer do profesjonalnych prac, który ma sprostać bardzo wymagającym aplikacjom (np: do prac graficznych 2D lub 3D, montażu wideo), oraz komputery dla wymagających graczy, dobrze wyposażyć w co najmniej 16 GB RAM.
+		</br>
+		</br>
+			Niektóre profesjonalne aplikacje mogą zaoferować wyższy komfort pracy, gdy komputer wyposażony jest jeszcze więcej pamięci RAM, np: 24 lub 32GB. Szczególnie gdy pracujemy z bardzo dużymi plikami danych.
+		</br>
+		</br>
+		- Pamięć RAM jaką posiada komputer Marka jest zatem wymaganym minimum potrzebnym do tych badań, jednakże przy pamięci Łukasza, różnica jest zauważalna (tylko przy sprawdzeniu czasu zapytania, gdyż czynności niekiedy trwają kilka sekund).
 		</br>
 	</div>
 	</br>
