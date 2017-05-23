@@ -39,6 +39,7 @@
 					<li><a href="#mdb2">przykładowy rekord</a></li>
 					<li><a href="#mdb3">ilość kluczy</a></li>
 					<li><a href="#mdb4">suma cen jednego biletu</a></li>
+					<li><a href="#mdb5">średnia cen sprzedaży</a></li>
 				</ul>
 				<li><a href="#pom">Pomiar</a></li>
 			</ul>
@@ -237,7 +238,7 @@ var reduceFun = function(key, emits) { return Array.sum(emits); };
 			Wywołać proces Map-Reduce:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, {  query: { ticket: "z385" }, out: "exampleRecord" })
+mr = db.test.mapReduce(mapFun, reduceFun, {  query: { ticket: "z385" }, out: "sumPrices" })
 				</code>
 			</div>
 			<div class="text-center">
@@ -250,10 +251,53 @@ db[mr.result].find();
 				</code>
 			</div>
 			<div class="text-center">
-				<img src="../images/screen32.PNG" height="50em" width="600em">
+				<img src="../images/screen32.PNG" height="25em" width="400em">
 			</div>
 			<div class="description-image">Wynik wykonania Map-Reduce - suma cen jednego biletu</div>
 		</p>
+		<h3 id="mdb5">średnia cen sprzedaży</h3>
+		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
+			</br></br>
+			Aby poznać sumę cen biletu <i>z385</i>, należy:</br>
+			Strzworzyć poniższą funcję <i>map</i>:
+			<div class="command">
+				<code>
+var mapFun = function() { emit(this.ticket, { count: 1, price: this.price });};
+				</code>
+			</div>
+			Strzworzyć poniższą funcję <i>reduce</i>:
+			<div class="command">
+				<code>
+var reduceFun = function(key, emits) { reducedVal = { count: 0, price: 0 }; for (var i = 0; i < emits.length; i++) { reducedVal.count += emits[i].count; reducedVal.price += emits[i].price;} return reducedVal;};
+				</code>
+			</div>
+			Strzworzyć poniższą funcję <i>finalize</i>:
+			<div class="command">
+				<code>
+var finalizeFun = function (key, reducedVal) {reducedVal.avg = reducedVal.price/reducedVal.count; return reducedVal;};
+				</code>
+			</div>
+			Wywołać proces Map-Reduce:
+			<div class="command">
+				<code>
+mr = db.test.mapReduce(mapFun, reduceFun, {  out: "averagePrices", finalize: finalizeFun })
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen33.PNG" height="150em" width="300em">
+			</div>	
+			<div class="description-image">Proces Map-Reduce - średnia cen sprzedaży</div>
+			<div class="command">
+				<code>
+db[mr.result].find();
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen34.PNG" height="250em" width="500em">
+			</div>
+			<div class="description-image">Wynik wykonania Map-Reduce - średnia cen sprzedaży</div>
+		</p>		
 		<h2 id="pom">Pomiar</h2>
 		Pomiar został wykonany podczasz wywołania procesu Map-Reduce.</br>
 		Tabela przedstawia podsumowanie.
@@ -277,6 +321,11 @@ db[mr.result].find();
 			<tr>
 				<td>Suma cen jednego biletu</td>
 				<td>1403 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Średnia cen sprzedaży</td>
+				<td>19599 ms</td>
 				<td></td>
 			</tr>
 		</table>
