@@ -38,6 +38,7 @@
 					<li><a href="#mdb1">import danych</a></li>
 					<li><a href="#mdb2">przykładowy rekord</a></li>
 					<li><a href="#mdb3">ilość kluczy</a></li>
+					<li><a href="#mdb4">Suma cen jednego biletu</a></li>
 				</ul>
 				<li><a href="#pom">Pomiar</a></li>
 			</ul>
@@ -138,7 +139,7 @@ mongoimport --db test --collection test --file trades.json
 		<h3 id="mdb2">przykładowy rekord</h3>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
-			Aby poznać listę oraz ilość kluczy, należy
+			Aby poznać listę oraz ilość kluczy, należy:</br>
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
@@ -148,13 +149,13 @@ var mapFun = function() { emit(null, this); };
 			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
-var reduceFun = function( key, emits ) { return emits[0];};
+var reduceFun = function(key, emits) { return emits[0];};
 				</code>
 			</div>
 			Wywołać proces Map-Reduce:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, { out: "exampleRecord" } })
+mr = db.test.mapReduce(mapFun, reduceFun, { out: "exampleRecord" })
 				</code>
 			</div>
 			<div class="text-center">
@@ -180,7 +181,7 @@ db[mr.result].find();
 		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
-			Aby poznać listę oraz ilość kluczy, należy
+			Aby poznać listę oraz ilość kluczy, należy:</br>
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
@@ -216,30 +217,42 @@ db[mr.result].find();
 			</br>
 			Można zaobserwować, że ilość danych wynosi 1000001 (klucz _id) oraz wszystkie elementy zawierają wszystkie klucze.
 		</p>
-		<h3 id="mdb4">2</h3>
+		<h3 id="mdb4">suma cen jednego biletu</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
+			Aby poznać sumę cen biletu <i>z385</i>, należy:</br>
+			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
 var mapFun = function() { emit(this.ticket, this.price); };
 				</code>
 			</div>
+			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
 var reduceFun = function(key, emits) { return Array.sum(emits); };
 				</code>
 			</div>
+			Wywołać proces Map-Reduce:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, { out: "sumPrice" })
+mr = db.test.mapReduce(mapFun, reduceFun, {  query: { ticket: "z385" }, out: "exampleRecord" })
 				</code>
 			</div>
+			<div class="text-center">
+				<img src="../images/screen31.PNG" height="150em" width="300em">
+			</div>	
+			<div class="description-image">Proces Map-Reduce - suma cen jednego biletu</div>
 			<div class="command">
 				<code>
 db[mr.result].find();
 				</code>
 			</div>
+			<div class="text-center">
+				<img src="../images/screen32.PNG" height="50em" width="600em">
+			</div>
+			<div class="description-image">Wynik wykonania Map-Reduce - suma cen jednego biletu</div>
 		</p>
 		<h2 id="pom">Pomiar</h2>
 		Pomiar został wykonany podczasz wywołania procesu Map-Reduce.</br>
@@ -259,6 +272,11 @@ db[mr.result].find();
 			<tr>
 				<td>Ilość kluczy</td>
 				<td>56238 ms</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Suma cen jednego biletu</td>
+				<td>1403 ms</td>
 				<td></td>
 			</tr>
 		</table>
