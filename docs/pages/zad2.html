@@ -135,7 +135,7 @@ db.test.aggregate( { $limit: 1 } )
 			<div class="text-center">
 				<img src="../images/screen19.PNG" height="50em" width="1200em">
 			</div>
-			<div class="description-image">Wynik wyświetlenia pierwszego rekordu w MongoDB</div>
+			<div class="description-image">Agregacja - przykładowy rekord</div>
 		</p>
 		</br>
 		<h3 id="mdb3">ilość danych</h3>
@@ -173,7 +173,7 @@ db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 			<div class="text-center">
 				<img src="../images/screen20.PNG" height="250em" width="1200em">
 			</div>
-			<div class="description-image">Wynik sortowania w MongoDB</div>
+			<div class="description-image">Agregacja - sortowanie</div>
 		</p>
 		</br>
 		<h3 id="mdb5">szukanie danych</h3>
@@ -191,7 +191,7 @@ db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] }
 			<div class="text-center">
 				<img src="../images/screen21.PNG" height="250em" width="1200em">
 			</div>
-			<div class="description-image">Wynik znalezionych danych w MongoDB</div>
+			<div class="description-image">Agregacja - szukanie danych</div>
 		</p>
 		<h3 id="mdb6">sortowanie konretnych danych</h3>
 		<p>
@@ -208,7 +208,7 @@ db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $
 			<div class="text-center">
 				<img src="../images/screen22.PNG" height="250em" width="1200em">
 			</div>
-			<div class="description-image">Wynik znalezionych i posortowanych danych w MongoDB</div>
+			<div class="description-image">Agregacja - sortowanie konretnych danych</div>
 		</p>
 		<h3 id="mdb7">sumowanie</h3>
 		<p>
@@ -225,7 +225,7 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 			<div class="text-center">
 				<img src="../images/screen23.PNG" height="270em" width="300em">
 			</div>
-			<div class="description-image">Wynik sumowania danych w MongoDB</div>
+			<div class="description-image">Agregacja - sumowanie</div>
 		</p>
 		<h3 id="mdb8">sumowanie i sortowanie</h3>
 		<p>
@@ -242,7 +242,7 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 			<div class="text-center">
 				<img src="../images/screen24.PNG" height="270em" width="300em">
 			</div>
-			<div class="description-image">Wynik sumowania i sortowania danych w MongoDB</div>
+			<div class="description-image">Agregacja - sumowanie i sortowanie</div>
 		</p>
 		<h3 id="mdb9">tablica, średnia i sortowanie</h3>
 		<p>
@@ -261,7 +261,7 @@ db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bi
 			<div class="text-center">
 				<img src="../images/screen25.PNG" height="270em" width="300em">
 			</div>
-			<div class="description-image">Wynik średniej z tablicy danych w MongoDB</div>
+			<div class="description-image">Agregacja - tablica, średnia i sortowanie</div>
 		</p>
 		<h3 id="mdb10">pomijanie pierwszych danych</h3>
 		<p>
@@ -278,7 +278,7 @@ db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, {
 			<div class="text-center">
 				<img src="../images/screen26.PNG" height="270em" width="300em">
 			</div>
-			<div class="description-image">Wynik średniej (bez pierwszych) danych w MongoDB</div>
+			<div class="description-image">Agregacja - pomijanie pierwszych danych</div>
 		</p>
 		<h2 id="pom">Pomiar</h2>
 		Pomiar został wykonany przy użyciu polecenia:
