@@ -39,7 +39,8 @@
 					<li><a href="#mdb2">przykładowy rekord</a></li>
 					<li><a href="#mdb3">ilość kluczy</a></li>
 					<li><a href="#mdb4">suma cen jednego biletu</a></li>
-					<li><a href="#mdb5">średnia cen sprzedaży</a></li>
+					<li><a href="#mdb5">średnia ilość biletów</a></li>
+					<li><a href="#mdb6">średnia cen sprzedaży</a></li>
 				</ul>
 				<li><a href="#pom">Pomiar</a></li>
 			</ul>
@@ -98,7 +99,7 @@ mongod
 &nbsp;&nbsp;"counts": {</br>
 &nbsp;&nbsp;&nbsp;&nbsp;"input": 1000001, <i>//ilość danych</i></br>
 &nbsp;&nbsp;&nbsp;&nbsp;"emit": 0, <i>//ilość wygenerowanych par klucz-wartość</i></br>
-&nbsp;&nbsp;&nbsp;&nbsp;"reduce": 0, <i>//odpowiedź na główny problem</i></br>
+&nbsp;&nbsp;&nbsp;&nbsp;"reduce": 0, <i>//ilość odpowiedzi na główny problem</i></br>
 &nbsp;&nbsp;&nbsp;&nbsp;"output": 0 <i>//ilość elementów kolekcji wynikowej</i></br>
 &nbsp;&nbsp;},</br>
 &nbsp;&nbsp;"ok": 1</br>
@@ -255,7 +256,47 @@ db[mr.result].find();
 			</div>
 			<div class="description-image">Wynik wykonania Map-Reduce - suma cen jednego biletu</div>
 		</p>
-		<h3 id="mdb5">średnia cen sprzedaży</h3>
+		<h3 id="mdb5">średnia ilość biletów</h3>
+		<p>
+			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
+			</br></br>
+			Aby poznać średnią ilość biletów wydaną przez <i>abcd</i>, należy:</br>
+			Strzworzyć poniższą funcję <i>map</i>:
+			<div class="command">
+				<code>
+var mapFun = function() { emit(this.ticker, this.shares); };
+				</code>
+			</div>
+			Strzworzyć poniższą funcję <i>reduce</i>:
+			<div class="command">
+				<code>
+var reduceFun = function(key, emits) { return Array.sum(emits)/emits.length; };
+				</code>
+			</div>
+			Wywołać proces Map-Reduce:
+			<div class="command">
+				<code>
+mr = db.test.mapReduce(mapFun, reduceFun, { query: { ticker: "abcd" }, out: "averageQuantity" })
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen35.PNG" height="150em" width="300em">
+			</div>	
+			<div class="description-image">Proces Map-Reduce - średnia ilość biletów</div>
+			<div class="command">
+				<code>
+db[mr.result].find();
+				</code>
+			</div>
+			<div class="text-center">
+				<img src="../images/screen36.PNG" height="25em" width="400em">
+			</div>
+			<div class="description-image">Wynik wykonania Map-Reduce - średnia ilość biletów</div>
+			</br>
+			Pomimo podobnego zastosowanie <i>Map-Reduce</i> jak <a href="#mdb4">suma cen jednego biletu</a>, czas jest dużo gorszy.</br>
+			Powodem najpradopodobniej jest większa ilość wystąpienia <i>abcd</i> niż biletu <i>z385</i>
+		</p>
+		<h3 id="mdb6">średnia cen sprzedaży</h3>
 		<p>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
@@ -263,7 +304,7 @@ db[mr.result].find();
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-var mapFun = function() { emit(this.ticket, { count: 1, price: this.price });};
+var mapFun = function() { emit(this.ticket, { count: this.shares, price: this.price });};
 				</code>
 			</div>
 			Strzworzyć poniższą funcję <i>reduce</i>:
@@ -322,6 +363,11 @@ db[mr.result].find();
 				<td>Suma cen jednego biletu</td>
 				<td>1382 ms</td>
 				<td>1496 ms</td>
+			</tr>
+			<tr>
+				<td>Średnia ilość biletów</td>
+				<td>14377 ms</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>Średnia cen sprzedaży</td>
