@@ -132,7 +132,9 @@ mongo
 			Następnie należy wykonać polecenie:
 			<div class="command">
 				<code>		
-db.test.aggregate( { $limit: 1 } )
+db.test.aggregate(</br>
+&nbsp;&nbsp;{ $limit: 1 }</br>
+)
 				</code>
 			</div>
 			</br></br>
@@ -150,7 +152,12 @@ db.test.aggregate( { $limit: 1 } )
 			Aby zobaczyć ilość danych należy wykorzystać polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
+db.test.aggregate( [</br> 
+&nbsp;&nbsp;{ $group: {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;_id: null,</br>
+&nbsp;&nbsp;&nbsp;&nbsp;count: { $sum: 1 }</br>
+&nbsp;&nbsp;} }</br>
+] )
 				</code>
 			</div>
 			Powinno zostać wyświetlone:
@@ -170,7 +177,10 @@ db.test.aggregate([{ $group: { _id: null , count: { $sum: 1 }}}])
 			Następnie można wyświetlić pierwszych 10 najdroższych transakcji, polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
+db.test.aggregate(</br> 
+&nbsp;&nbsp;{ $sort: { price: -1 } },</br> 
+&nbsp;&nbsp;{ $limit: 10 }</br> 
+)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
@@ -188,7 +198,15 @@ db.test.aggregate( { $sort: { price: -1 } }, { $limit: 10 } )
 			Następnie można wyświetlić dane gdzie <i>ticket</i> jest równe <i>z109</i> lub <i>z433</i>:
 			<div class="command">
 				<code>
-db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] } }, { $limit: 10 } )
+db.test.aggregate(</br> 
+&nbsp;&nbsp;{ $match: {</br> 
+&nbsp;&nbsp;&nbsp;&nbsp;$or: [</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ ticket: "z109" },</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ ticket: "z433" } </br>
+&nbsp;&nbsp;&nbsp;&nbsp;]</br>
+&nbsp;&nbsp;} },</br> 
+&nbsp;&nbsp;{ $limit: 10 }</br> 
+)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
@@ -205,7 +223,11 @@ db.test.aggregate( { $match: { $or: [ { ticket: "z109" }, { ticket: "z433" } ] }
 			Następnie można wyświetlić dane gdzie <i>ticket</i> jest równe <i>z109</i> oraz posortowano je wg ceny:
 			<div class="command">
 				<code>
-db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $limit: 10 } )
+db.test.aggregate(</br> 
+&nbsp;&nbsp;{ $match: { ticket: "z109" } },</br> 
+&nbsp;&nbsp;{ $sort: { price: -1 } },</br> 
+&nbsp;&nbsp;{ $limit: 10 }</br> 
+)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
@@ -222,7 +244,12 @@ db.test.aggregate( { $match: { ticket: "z109" } }, { $sort: { price: -1 } }, { $
 			Następnie można sumować ceny dla biletów, w tym celu musimy pogrupować dane wg biletów, polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
+db.test.aggregate(</br>
+&nbsp;&nbsp;{ $group: {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;_id: "$ticket",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;total: { $sum: "$price" } }</br>
+&nbsp;&nbsp;}</br>
+)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
@@ -239,7 +266,13 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } } )
 			Następnie można sprawdzić jakie 10 pierwszych biletów zostało wysprzedanych za największą cenę, w tym cale należy uzyć polecenia:
 			<div class="command">
 				<code>
-db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { $sort: { total: -1 } } )
+db.test.aggregate(</br>
+&nbsp;&nbsp;{ $group: {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;_id: "$ticket",</br>
+&nbsp;&nbsp;&nbsp;&nbsp;total: { $sum: "$price" }</br>
+&nbsp;&nbsp;} },</br>
+&nbsp;&nbsp;{ $sort: { total: -1 } }</br>
+)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
@@ -258,7 +291,14 @@ db.test.aggregate( { $group: { _id: "$ticket", total: { $sum: "$price" } } }, { 
 			o nazwie kolumny jaka była wcześniej. Następnie pogrupować oddzielone bilety  posortować, polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bids: { $avg: "$bids" } } }, { $sort: { bids: -1 } } )
+db.test.aggregate(</br>
+&nbsp;&nbsp;{ $unwind: "$details.bids" },</br>
+&nbsp;&nbsp;{ $group: {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;_id: "$ticket",</br>
+&nbsp;&nbsp;&nbsp;&nbsp;bids: { $avg: "$bids" }</br>
+&nbsp;&nbsp;} },</br>
+&nbsp;&nbsp;{ $sort: { bids: -1 } }</br>
+)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
@@ -275,7 +315,15 @@ db.test.aggregate( { $unwind: "$details.bids" }, { $group: { _id: "$ticket" , bi
 			Tym razem można posortować bilety wg średniej ceny, która jest większa niż 110, bez wyświetlania pierwszych 5. Polecenie:
 			<div class="command">
 				<code>
-db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, { $sort: { price: 1 } }, { $match: { price: { $gt : 110 } } }, { $skip: 5 } )
+db.test.aggregate(</br>
+&nbsp;&nbsp;{ $group: {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;_id: "$ticket",</br>
+&nbsp;&nbsp;&nbsp;&nbsp;price: { $avg: "$price" }</br>
+&nbsp;&nbsp;} },</br>
+&nbsp;&nbsp;{ $sort: { price: 1 } },</br>
+&nbsp;&nbsp;{ $match: { price: { $gt : 110 } } },</br>
+&nbsp;&nbsp;{ $skip: 5 }</br>
+&nbsp;&nbsp;)
 				</code>
 			</div>
 			Wówczas powinnino zostać wyświetlone: 
