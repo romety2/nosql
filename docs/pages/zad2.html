@@ -42,7 +42,12 @@
 					<li><a href="#mdb9">tablica, średnia i sortowanie</a></li>
 					<li><a href="#mdb10">pomijanie pierwszych danych</a></li>
 				</ul>
-				<li><a href="#pom">Pomiar</a></li>
+				<li><a href="#wn">Wnioski</a></li>
+				<ul>
+					<li><a href="#wn1">pomiar</a></li>
+					<li><a href="#wn2">informacje o komputerach</a></li>
+					<li><a href="#wn3">podsumowanie</a></li>
+				</ul>
 			</ul>
 		</div>
 		<h2 id="iod">Informacje o danych</h2>	
@@ -280,16 +285,17 @@ db.test.aggregate( { $group: { _id: "$ticket" , price: { $avg: "$price" } } }, {
 			</div>
 			<div class="description-image">Agregacja - pomijanie pierwszych danych</div>
 		</p>
-		<h2 id="pom">Pomiar</h2>
+		<h2 id="wn">Wnioski</h2>
+		<h3 id="wn1">pomiar</h3>
 		Pomiar został wykonany przy użyciu polecenia:
-			<div class="command">
-				<code>
+		<div class="command">
+			<code>
 var before = new Date()</br>
 #komenda wykonująca agregację</br>
 var after = new Date()</br>
 execution_mills = after - before
-				</code>
-			</div>
+			</code>
+		</div>
 		Tabela przedstawia podsumowanie.
 		</br></br>
 		<table class="summary table-center">
@@ -345,7 +351,6 @@ execution_mills = after - before
 			</tr>
 		</table>
 		</br>
-		</br>
 		Zobrazowanie różnicy czasu wykonania zapytania:
 		</br></br>
 		<div class="text-center">
@@ -353,12 +358,59 @@ execution_mills = after - before
 			</div>
 			<div class="description-image">Porównanie czasu wykonania zapytania (w ms).</div>
 		</br>
-		Jak widać na powyższej grafice, różnice są wręcz niezauważalne gołym okiem.
+		<h3 id="wn2">informację o komputerach</h3>
+		Każdy z nas pracował na komputerze o parametrach przedstawionych w poniżeszej tabeli.
+		</br></br>
+		<table class="summary table-center">
+			<tr>
+				<th rowspan="2">Nazwa</th>
+				<th colspan="2">Wartosć</th>
+			</tr>
+			<tr>
+				<th>Ł. Mielewczyk</th>
+				<th>M. Białousz</th>
+			</tr>
+			<tr>
+				<td>Procesor</td>
+				<td>Core(TM) i3-4005U CPU 1,7 GHz 1,7 GHz</td>
+				<td>Intel Core i7-4510U 2.0 GHz</td>
+			</tr>
+			<tr>
+				<td>RAM</td>
+				<td>12 GB</td>
+				<td>8,0 GB</td>
+			</tr>
+			<tr>
+				<td>Dysk</td>
+				<td>HDD</td>
+				<td>Toshiba MQ01ABD025 1TB</td>
+			</tr>
+			<tr>
+				<td>System operacyjny</td>
+				<td>Windows 10 64-bit</td>
+				<td>Windows 8.1 x64</td>
+			</tr>
+			<tr>
+				<td>Wersje mongoDB</td>
+				<td>mongoDB 3.2.6</td>
+				<td>mongoDB 3.2.6</td>
+			</tr>
+		</table>
+		<h3 id="wn3">podsumowanie</h3>
+		<!-- Jak widać na powyższej grafice, różnice są wręcz niezauważalne gołym okiem.
 		</br>
 		Spostrzeżenie:</br>
 		Największe różnice między komputerami są w momencie kiedy przychodzi działanie sortowania całego zbioru danych.
 		</br>
-		Wyjaśnienie, dlaczego tak się dzieje, znajduje się na stronie z Zad MapReduce.
+		Wyjaśnienie, dlaczego tak się dzieje, znajduje się na stronie z Zad MapReduce. -->
+		<ul>
+			<li>Na obu komputerach jest zainstalawona ta sama wersja bazy MongoDB.</li>
+			<li>Komputer Łukasza posiada procesor i3, zaś Marka i7. Jednak nie odgrywa to znaczącej roli gdyż
+			różnica GHz jest niewielka w porównaniu z różnicą pamięci RAM.</li>
+			<li>Komputer Łukasza jest lepszy jeżeli chodzi o ilość dostępnej pamięci RAM (12 GB) względem komputera Marka (8 GB)</li>
+			<li>System operacyjny, na którym codziennie pracuje Łukasz jest nowszy (Windows 10), niż system operacyjny Marka (Windows 8.1).</li>
+			<li>Każdy z pomiarów na komputerze Łukasza wykonał się szybciej niż u Marka.</li>
+		</ul>
 	</div>
 	</br>
 	<div class = "return">
