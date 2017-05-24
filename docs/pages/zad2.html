@@ -113,7 +113,7 @@ mongoimport --db test --collection test --file trades.json
 			</div>
 			<div class="description-image">Dysk podczas importu danych do mongoDB</div>
 			</br></br>
-			Wykonanie trwało ok. 2 minut.
+			Wykonanie trwało ok. 2 minut.</br>Wyniki były podobne na komputerach Łukasza i Marka.
 			</br>
 			Ostatecznie powinien pojawić się komunikat: "imported 1000001 documents"
 			</br></br>
@@ -448,20 +448,33 @@ execution_mills = after - before
 			</tr>
 		</table>
 		<h3 id="wn3">podsumowanie</h3>
-
-		<ul>
-			<li>Na obu komputerach jest zainstalawona ta sama wersja bazy MongoDB.</li>
-			<li>Komputer Łukasza posiada procesor i3, zaś Marka i7. Jednak nie odgrywa to znaczącej roli gdyż
-			różnica GHz jest niewielka w porównaniu z różnicą pamięci RAM.</li>
-			<li>Komputer Łukasza jest lepszy jeżeli chodzi o ilość dostępnej pamięci RAM (12 GB) względem komputera Marka (8 GB)</li>
-			<li>System operacyjny, na którym codziennie pracuje Łukasz jest nowszy (Windows 10), niż system operacyjny Marka (Windows 8.1).</li>
-			<li>Każdy z pomiarów na komputerze Łukasza wykonał się szybciej niż u Marka.</li>
-			<li>Okazuje się, że pojemność pamięci RAM ma kluczowy wpływ na oceny uzystkiwane w teście RAM i bez względu na szybkość transmisji determinuje maksymalny możliwy rezultat.</li>
-			<li>Komputer oferujący wyższą wydajność oraz większy komfort pracy z otwartymi kilkoma aplikacjami równocześnie, oraz komputer dla gracza, powinien dysponować minimum 8 GB RAM.</li>
-			<li>Pamięć RAM jaką posiada komputer Marka jest zatem wymaganym minimum potrzebnym do tych badań, jednakże przy pamięci Łukasza, różnica jest zauważalna (tylko przy sprawdzeniu czasu zapytania, gdyż czynności niekiedy trwają kilka sekund).</li>
-			<li>Pojemność dysku, rodzaj procesora oraz wersja systemu operacyjnego w tych badaniach nie odgrywała znaczącej roli.</li>
-			<li>Mimo różnicy w posiadanej pamięci RAM oba komputery zużywały maksimum dostępnej pamięci podczas importu, agregacji i pozostałych badań.</li>
-		</ul>
+		Każdy z pomiarów na komputerze Łukasza są minimalnie lepsze niż u Marka. Prawdopodobne przyczyny takie zachowania:</li>
+			<ul>
+				<li>Komputer Łukasza posiada większą ilość pamięci RAM (12 GB) względem Marka (8 GB)</li>
+				<li>Łukasz posiada nowszy system operacyjny (Windows 10), niż Marek (Windows 8.1)</li>
+				<li>Komputer Łukasza posiada procesor i3, zaś Marka i7. Widocznie nie odgrywa to tak znaczącej roli jak pamięć RAM</li>
+			</ul> 
+		Mimo różnicy w posiadanej pamięci RAM oba komputery zużywały maksimum dostępnej pamięci podczas importu, agregacji i pozostałych badań.</br>
+		<table class="table-center">
+			<tr>
+				<th>
+					<div class="text-center">
+						<img src="../images/screen40.PNG" height="200em" width="250em">
+					</div>
+					<div class="description-image">Zasoby żużycia - Ł. Mielewczyk</div>
+				</th>
+				<th>
+					<div class="text-center">
+						<img src="../images/screen39.PNG" height="200em" width="250em">
+					</div>
+					<div class="description-image">Zasoby żużycia - M. Białousz</div>
+				</th>
+			</tr>
+		</table>
+		</br>
+		Okazuje się, że pojemność pamięci RAM ma kluczowy wpływ na oceny uzystkiwane w teście RAM i bez względu na szybkość transmisji determinuje maksymalny możliwy rezultat.</br>
+		Komputer oferujący wyższą wydajność oraz większy komfort pracy z otwartymi kilkoma aplikacjami równocześnie, oraz komputer dla gracza, powinien dysponować minimum 8 GB RAM.</br>
+		Pamięć RAM jaką posiada komputer Marka jest zatem wymaganym minimum potrzebnym do tych badań, jednak przy pamięci Łukasza, różnica jest zauważalna (tylko przy sprawdzeniu czasu zapytania, gdyż czynności niekiedy trwają kilka sekund).
 	</div>
 	</br>
 	<div class = "return">
