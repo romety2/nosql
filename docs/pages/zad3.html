@@ -146,23 +146,31 @@ mongoimport --db test --collection test --file trades.json
 		<h3 id="mdb2">przykładowy rekord</h3>
 			Przed wykonaniem czynności upewnij się czy dane zostały zaimportowane. Jeśli nie: <a href="#mdb1">przeczytaj jak to zrobić</a>.
 			</br></br>
-			Aby poznać listę oraz ilość kluczy, należy:</br>
+			Aby zobaczyć przykładowy rekord przy pomocy <i>Map-Reduce</i>, należy:</br>
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-var mapFun = function() { emit(null, this); };
+var mapFun = function() {</br>
+&nbsp;&nbsp;emit(null, this);</br>
+};
 				</code>
 			</div>
 			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
-var reduceFun = function(key, emits) { return emits[0];};
+var reduceFun = function(key, emits) {</br>
+&nbsp;&nbsp;return emits[0];</br>
+};
 				</code>
 			</div>
-			Wywołać proces Map-Reduce:
+			Wywołać proces <i>Map-Reduce</i>:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, { out: "exampleRecord" })
+mr = db.test.mapReduce(</br>
+&nbsp;&nbsp;mapFun,</br>
+&nbsp;&nbsp;reduceFun,</br>
+&nbsp;&nbsp;{ out: "exampleRecord" }</br>
+)
 				</code>
 			</div>
 			<div class="text-center">
@@ -180,7 +188,7 @@ db[mr.result].find();
 			</div>
 			<div class="description-image">Wynik wykonania Map-Reduce - przykładowy rekord</div>
 			</br>
-			Map-Reduce nie jest najlepszym narzędziem do wyświetlania przykładowego rekordu.
+			<i>Map-Reduce</i> nie jest najlepszym narzędziem do wyświetlania przykładowego rekordu.
 		</p>
 		</p>
 		</br>	
@@ -192,19 +200,33 @@ db[mr.result].find();
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-var mapFun = function() {for( var key in this ) { emit( key, { count: 1 });}};
+var mapFun = function() {</br>
+&nbsp;&nbsp;for( var key in this ) {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;emit( key, { count: 1 });</br>
+&nbsp;&nbsp;}</br>
+};
 				</code>
 			</div>
 			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
-var reduceFun = function(key, emits) {total = 0; for( var i in emits ) {total += emits[i].count;} return { "count": total };};
+var reduceFun = function(key, emits) {</br>
+&nbsp;&nbsp;total = 0;</br>
+&nbsp;&nbsp;for( var i in emits ) {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;total += emits[i].count;</br>
+&nbsp;&nbsp;}</br>
+&nbsp;&nbsp;return { "count": total };</br>
+};
 				</code>
 			</div>
-			Wywołać proces Map-Reduce:
+			Wywołać proces <i>Map-Reduce</i>:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, { out: "quantityKeys" })
+mr = db.test.mapReduce(</br>
+&nbsp;&nbsp;mapFun,</br>
+&nbsp;&nbsp;reduceFun,</br>
+&nbsp;&nbsp;{ out: "quantityKeys" }</br>
+)
 				</code>
 			</div>
 			<div class="text-center">
@@ -232,19 +254,30 @@ db[mr.result].find();
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-var mapFun = function() { emit(this.ticket, this.price); };
+var mapFun = function() {</br>
+&nbsp;&nbsp;emit(this.ticket, this.price);</br>
+};
 				</code>
 			</div>
 			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
-var reduceFun = function(key, emits) { return Array.sum(emits); };
+var reduceFun = function(key, emits) {</br>
+&nbsp;&nbsp;return Array.sum(emits);</br>
+};
 				</code>
 			</div>
-			Wywołać proces Map-Reduce:
+			Wywołać proces <i>Map-Reduce</i>:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, {  query: { ticket: "z385" }, out: "sumPrices" })
+mr = db.test.mapReduce(</br>
+&nbsp;&nbsp;mapFun,</br>
+&nbsp;&nbsp;reduceFun,</br>
+&nbsp;&nbsp;{</br>
+&nbsp;&nbsp;&nbsp;&nbsp;query: { ticket: "z385" },</br>
+&nbsp;&nbsp;&nbsp;&nbsp;out: "sumPrices"</br>
+&nbsp;&nbsp;}</br>
+)
 				</code>
 			</div>
 			<div class="text-center">
@@ -269,19 +302,30 @@ db[mr.result].find();
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-var mapFun = function() { emit(this.ticker, this.shares); };
+var mapFun = function() {</br>
+&nbsp;&nbsp;emit(this.ticker, this.shares);</br>
+};
 				</code>
 			</div>
 			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
-var reduceFun = function(key, emits) { return Array.sum(emits)/emits.length; };
+var reduceFun = function(key, emits) {</br>
+&nbsp;&nbsp;return Array.sum(emits)/emits.length;</br>
+};
 				</code>
 			</div>
-			Wywołać proces Map-Reduce:
+			Wywołać proces <i>Map-Reduce</i>:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, { query: { ticker: "abcd" }, out: "averageQuantity" })
+mr = db.test.mapReduce(</br>
+&nbsp;&nbsp;mapFun,</br>
+&nbsp;&nbsp;reduceFun,</br>
+&nbsp;&nbsp;{</br>
+&nbsp;&nbsp;&nbsp;&nbsp;query: { ticker: "abcd" },</br>
+&nbsp;&nbsp;&nbsp;&nbsp;out: "averageQuantity"</br>
+&nbsp;&nbsp;}</br>
+)
 				</code>
 			</div>
 			<div class="text-center">
@@ -309,25 +353,44 @@ db[mr.result].find();
 			Strzworzyć poniższą funcję <i>map</i>:
 			<div class="command">
 				<code>
-var mapFun = function() { emit(this.ticket, { count: this.shares, price: this.price });};
+var mapFun = function() {</br>
+&nbsp;&nbsp;emit(this.ticket, { count: this.shares, price: this.price });</br>
+};
 				</code>
 			</div>
 			Strzworzyć poniższą funcję <i>reduce</i>:
 			<div class="command">
 				<code>
-var reduceFun = function(key, emits) { reducedVal = { count: 0, price: 0 }; for (var i = 0; i < emits.length; i++) { reducedVal.count += emits[i].count; reducedVal.price += emits[i].price;} return reducedVal;};
+var reduceFun = function(key, emits) {</br>
+&nbsp;&nbsp;reducedVal = { count: 0, price: 0 };</br>
+&nbsp;&nbsp;for (var i = 0; i < emits.length; i++) {</br>
+&nbsp;&nbsp;&nbsp;&nbsp;reducedVal.count += emits[i].count;</br>
+&nbsp;&nbsp;&nbsp;&nbsp;reducedVal.price += emits[i].price;</br>
+&nbsp;&nbsp;}</br>
+&nbsp;&nbsp;return reducedVal;</br>
+};
 				</code>
 			</div>
-			Strzworzyć poniższą funcję <i>finalize</i>:
+			Strzworzyć poniższą funcję <i>finalize</i> - taka funckja zostanie wykonana po wyponaniu <i>Map-Reduce</i>:
 			<div class="command">
 				<code>
-var finalizeFun = function (key, reducedVal) {reducedVal.avg = reducedVal.price/reducedVal.count; return reducedVal;};
+var finalizeFun = function (key, reducedVal) {</br>
+&nbsp;&nbsp;reducedVal.avg = reducedVal.price/reducedVal.count;</br>
+&nbsp;&nbsp;return reducedVal;</br>
+};
 				</code>
 			</div>
-			Wywołać proces Map-Reduce:
+			Wywołać proces <i>Map-Reduce</i>:
 			<div class="command">
 				<code>
-mr = db.test.mapReduce(mapFun, reduceFun, {  out: "averagePrices", finalize: finalizeFun })
+mr = db.test.mapReduce(</br>
+&nbsp;&nbsp;mapFun,</br>
+&nbsp;&nbsp;reduceFun,</br>
+&nbsp;&nbsp;{</br>
+&nbsp;&nbsp;&nbsp;&nbsp;out: "averagePrices",</br>
+&nbsp;&nbsp;&nbsp;&nbsp;finalize: finalizeFun</br>
+&nbsp;&nbsp;}</br>
+)
 				</code>
 			</div>
 			<div class="text-center">
@@ -342,11 +405,11 @@ db[mr.result].find();
 			<div class="text-center">
 				<img src="../images/screen34.PNG" height="250em" width="500em">
 			</div>
-			<div class="description-image">Wynik wykonania Map-Reduce - średnia cen sprzedaży</div>
+			<div class="description-image">Wynik wykonania <i>Map-Reduce</i> - średnia cen sprzedaży</div>
 		</p>		
 		<h2 id="wn">Wnioski</h2>
 		<h3 id="wn1">pomiar</h3>
-		Pomiar został wykonany podczasz wywołania procesu Map-Reduce.</br>
+		Pomiar został wykonany podczasz wywołania procesu <i>Map-Reduce</i>.</br>
 		Tabela przedstawia podsumowanie pomiaru.</br></br>
 		<table class="summary table-center">
 			<tr>
@@ -384,7 +447,7 @@ db[mr.result].find();
 		Porównanie egzekucji zapytań na obu komputerach.
 		</br></br>
 		<div class="text-center">
-			<img src="../images/screen38.PNG" height="650em" width="1000em">
+			<img src="../images/screen38.PNG" height="550em" width="1000em">
 		</div>	
 		<div class="description-image">Egzekucja zapytań na obu komputerach</div>
 		</br>
