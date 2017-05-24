@@ -358,7 +358,7 @@ execution_mills = after - before
 			</div>
 			<div class="description-image">Porównanie czasu wykonania zapytania (w ms).</div>
 		</br>
-		<h3 id="wn2">informację o komputerach</h3>
+		<h3 id="wn2">informacje o komputerach</h3>
 		Każdy z nas pracował na komputerze o parametrach przedstawionych w poniżeszej tabeli.
 		</br></br>
 		<table class="summary table-center">
@@ -397,12 +397,10 @@ execution_mills = after - before
 			</tr>
 		</table>
 		<h3 id="wn3">podsumowanie</h3>
-		<!-- Jak widać na powyższej grafice, różnice są wręcz niezauważalne gołym okiem.
 		</br>
 		Spostrzeżenie:</br>
 		Największe różnice między komputerami są w momencie kiedy przychodzi działanie sortowania całego zbioru danych.
 		</br>
-		Wyjaśnienie, dlaczego tak się dzieje, znajduje się na stronie z Zad MapReduce. -->
 		<ul>
 			<li>Na obu komputerach jest zainstalawona ta sama wersja bazy MongoDB.</li>
 			<li>Komputer Łukasza posiada procesor i3, zaś Marka i7. Jednak nie odgrywa to znaczącej roli gdyż
@@ -410,6 +408,11 @@ execution_mills = after - before
 			<li>Komputer Łukasza jest lepszy jeżeli chodzi o ilość dostępnej pamięci RAM (12 GB) względem komputera Marka (8 GB)</li>
 			<li>System operacyjny, na którym codziennie pracuje Łukasz jest nowszy (Windows 10), niż system operacyjny Marka (Windows 8.1).</li>
 			<li>Każdy z pomiarów na komputerze Łukasza wykonał się szybciej niż u Marka.</li>
+			<li>Okazuje się, że pojemność pamięci RAM ma kluczowy wpływ na oceny uzystkiwane w teście RAM i bez względu na szybkość transmisji determinuje maksymalny możliwy rezultat.</li>
+			<li>Komputer oferujący wyższą wydajność oraz większy komfort pracy z otwartymi kilkoma aplikacjami równocześnie, oraz komputer dla gracza, powinien dysponować minimum 8 GB RAM.</li>
+			<li>Pamięć RAM jaką posiada komputer Marka jest zatem wymaganym minimum potrzebnym do tych badań, jednakże przy pamięci Łukasza, różnica jest zauważalna (tylko przy sprawdzeniu czasu zapytania, gdyż czynności niekiedy trwają kilka sekund).</li>
+			<li>Pojemność dysku, rodzaj procesora oraz wersja systemu operacyjnego w tych badaniach nie odgrywała znaczącej roli.</li>
+			<li>Mimo różnicy w posiadanej pamięci RAM oba komputery zużywały maksimum dostępnej pamięci podczas importu, agregacji i pozostałych badań.</li>
 		</ul>
 	</div>
 	</br>
